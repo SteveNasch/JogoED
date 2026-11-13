@@ -9,6 +9,7 @@ const N2: DadosCarta = preload("res://dados/cartas/numero_2.tres")
 const N5: DadosCarta = preload("res://dados/cartas/numero_5.tres")
 const SOMA: DadosCarta = preload("res://dados/cartas/soma.tres")
 const SUBTRACAO: DadosCarta = preload("res://dados/cartas/subtracao.tres")
+const GUARDA: DadosCarta = preload("res://dados/cartas/guarda.tres")
 
 var _tela: TelaBatalha
 
@@ -267,3 +268,25 @@ func test_botoes_voltam_depois_do_aviso() -> void:
 		assert_false((_no(botao) as Button).disabled, botao)
 	assert_true((_no("Confirmar") as Button).disabled)
 	assert_eq(_no("Mao").get_child_count(), 7)
+
+
+## Textos visíveis que começam com "Escudo".
+func _escudos_visiveis() -> Array[String]:
+	return _textos_visiveis().filter(func(texto: String) -> bool: return texto.begins_with("Escudo"))
+
+
+func test_guarda_mostra_o_escudo_so_no_painel_do_arthur() -> void:
+	# A Guarda vale 6 e dá 5 de escudo; o ataque 3 gasta 3 e sobram 2.
+	_preparar([GUARDA, SOMA, N5, N1, SUBTRACAO], 6)
+	assert_eq(_escudos_visiveis(), [] as Array[String])
+	_clicar_carta_da_mao(0)
+	_confirmar()
+	assert_eq((_no("Aviso") as Label).text, "Acertou! 2 de dano. +5 de escudo.\nO escudo segurou o ataque.")
+	assert_eq(_escudos_visiveis(), ["Escudo: 2"] as Array[String])
+	assert_true((_no("PainelArthur").get_node("Escudo") as Label).visible)
+	assert_false((_no("PainelInimigo").get_node("Escudo") as Label).visible)
+	assert_has(_textos_visiveis(), "Vida: 40 / 40")
+	await wait_for_signal(_tela.batalha.mudou, 1.0)
+	assert_eq(_tela.batalha.rodada, 2)
+	assert_eq(_escudos_visiveis(), [] as Array[String])
+	assert_false((_no("PainelInimigo").get_node("Escudo") as Label).visible)

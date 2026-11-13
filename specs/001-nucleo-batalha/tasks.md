@@ -199,7 +199,7 @@ especial e conferir que nada acontece (quickstart, cenário 5).
 
 ### Área: cenas
 
-- [ ] T031 [US4] Testes de integração das especiais em `batalha/testes/teste_tela_batalha.gd`: depois de um acerto com a Guarda, o painel do Arthur mostra o escudo e o aviso mostra "+5 de escudo." e "O escudo segurou o ataque."; na rodada seguinte o escudo some do painel; o painel do inimigo nunca mostra escudo; corrigir `batalha/tela_batalha.gd` ou `combatentes/painel_combatente.gd` se algum falhar (depende de T029, T030)
+- [X] T031 [US4] Testes de integração das especiais em `batalha/testes/teste_tela_batalha.gd`: depois de um acerto com a Guarda, o painel do Arthur mostra o escudo e o aviso mostra "+5 de escudo." e "O escudo segurou o ataque."; na rodada seguinte o escudo some do painel; o painel do inimigo nunca mostra escudo; corrigir `batalha/tela_batalha.gd` ou `combatentes/painel_combatente.gd` se algum falhar (depende de T029, T030)
 
 **Checkpoint**: as quatro histórias funcionando juntas.
 
