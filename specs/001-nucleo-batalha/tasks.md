@@ -162,11 +162,11 @@ o tamanho da mão (quickstart, cenário 4).
 ### Área: batalha (lógica)
 
 - [ ] T027 [US3] Acrescentar `desfazer()` e `limpar()` em `batalha/batalha.gd` (repassam ao `Baralho`, emitem `mudou`, não encerram a rodada, só valem em `MONTANDO`); testes em `batalha/testes/teste_batalha.gd` (cenários 1 e 2 da história 3: `3 + 4` → desfazer → `3 +` e o 4 de volta na mão; limpar devolve tudo e `pode_confirmar()` fica falso)
-- [ ] T028 [US3] Acrescentar `pular()` em `batalha/batalha.gd` (FR-020): expressão volta para a mão, inimigo ataca, se o Arthur continua vivo entram `regras.cartas_por_pulo` cartas, `ResultadoRodada` tipo `PULO` com `cartas_compradas`; testes em `batalha/testes/teste_batalha.gd` (cenário 3 da história 3: mão de 4 → 6 cartas depois de `avancar()`; pular com cartas na expressão as devolve; pular que zera o Arthur leva à derrota sem comprar) (depende de T027)
+- [ ] T028 [US3] Acrescentar `pular()` em `batalha/batalha.gd` (FR-020): expressão volta para a mão, inimigo ataca, se o Arthur continua vivo entram `regras.cartas_por_pulo` cartas, `ResultadoRodada` tipo `PULO` com `cartas_compradas`; testes em `batalha/testes/teste_batalha.gd` (cenário 3 da história 3: mão de 4 → 6 cartas depois de `avancar()`; pular com cartas na expressão as devolve; pular que zera o Arthur leva à derrota sem comprar) (depende de T025, que traz a derrota, e de T027)
 
 ### Área: cenas
 
-- [ ] T029 [US3] Acrescentar os botões Desfazer, Limpar e Pular em `batalha/tela_batalha.tscn` e `batalha/tela_batalha.gd`, ligados a `desfazer()`, `limpar()` e `pular()`, desabilitados durante o aviso; testes em `batalha/testes/teste_tela_batalha.gd` (cada botão muda a mão e a expressão como na lógica; Pular mostra "Pulou a rodada. Comprou 1 carta."; botões não fazem nada durante o aviso) (depende de T028)
+- [ ] T029 [US3] Acrescentar os botões Desfazer, Limpar e Pular em `batalha/tela_batalha.tscn` e `batalha/tela_batalha.gd`, ligados a `desfazer()`, `limpar()` e `pular()`, desabilitados durante o aviso; testes em `batalha/testes/teste_tela_batalha.gd` (cada botão muda a mão e a expressão como na lógica; Pular mostra "Pulou a rodada. Comprou 1 carta."; botões não fazem nada durante o aviso) (depende de T022, que cria a tela, e de T028)
 
 **Checkpoint**: histórias 1, 2 e 3 funcionando juntas.
 
@@ -181,7 +181,7 @@ especial e conferir que nada acontece (quickstart, cenário 5).
 
 ### Área: batalha (lógica)
 
-- [ ] T030 [US4] Acrescentar a aplicação dos efeitos em `batalha/batalha.gd` (research D13): uma função com `match` em `DadosCarta.Efeito`: `DANO_EXTRA` → `inimigo.receber_dano()`, `COMPRAR` → `baralho.comprar()`, `ESCUDO` → `arthur.ganhar_escudo()`, `CURA` → `arthur.curar()`; aplicada depois do dano das cartas, para todas as especiais da conta, na ordem, mesmo que o inimigo já tenha caído; preencher `dano_causado`, `escudo_ganho`, `cura` e `cartas_compradas` do `ResultadoRodada`; testes em `batalha/testes/teste_batalha.gd` conferindo **os dois lados** de cada efeito: Chama tira +3 do inimigo e não mexe no Arthur; Foco põe 1 carta na mão antes do ataque; Guarda dá 5 de escudo ao Arthur, absorve o ataque 3, o escudo do inimigo continua 0 e o do Arthur volta a 0 na rodada seguinte; Vital cura o Arthur sem passar de 40 (39 → 40) e a vida do inimigo não sobe; nenhum efeito numa conta errada (cenários 1 a 5 da história 4)
+- [ ] T030 [US4] Acrescentar a aplicação dos efeitos em `batalha/batalha.gd` (research D13): uma função com `match` em `DadosCarta.Efeito`: `DANO_EXTRA` → `inimigo.receber_dano()`, `COMPRAR` → `baralho.comprar()`, `ESCUDO` → `arthur.ganhar_escudo()`, `CURA` → `arthur.curar()`; aplicada depois do dano das cartas, para todas as especiais da conta, na ordem, mesmo que o inimigo já tenha caído; preencher `dano_causado`, `escudo_ganho`, `cura` e `cartas_compradas` do `ResultadoRodada`; testes em `batalha/testes/teste_batalha.gd` conferindo **os dois lados** de cada efeito: Chama tira +3 do inimigo e não mexe no Arthur; Foco põe 1 carta na mão antes do ataque; Guarda dá 5 de escudo ao Arthur, absorve o ataque 3, o escudo do inimigo continua 0 e o do Arthur volta a 0 na rodada seguinte; Vital cura o Arthur sem passar de 40 (39 → 40) e a vida do inimigo não sobe; nenhum efeito numa conta errada (cenários 1 a 5 da história 4) (depende de T024, que traz a conta errada)
 
 ### Área: cenas
 
@@ -209,10 +209,12 @@ especial e conferir que nada acontece (quickstart, cenário 5).
 2. **Foundational (fase 2)**: depende da fase 1 e bloqueia todas as histórias.
 3. **US1 (fase 3)**: depende da fase 2. É o MVP.
 4. **US2 (fase 4)** e **US3 (fase 5)**: dependem da US1 (precisam da `Batalha` e da tela).
-   Entre si, só disputam os arquivos `batalha/batalha.gd` e `batalha/tela_batalha.gd`;
-   podem ser feitas por pessoas diferentes se uma esperar o commit da outra nesses arquivos.
-5. **US4 (fase 6)**: a lógica (T030) só depende da US1; o teste de tela (T031) depende da US3
-   (usa a tela com todos os botões).
+   A US3 depende da US2 num ponto só: o T028 testa o Pular que leva à derrota, que vem do
+   T025. Fora isso, só disputam os arquivos `batalha/batalha.gd` e
+   `batalha/tela_batalha.gd`; podem ser feitas por pessoas diferentes se uma esperar o commit
+   da outra nesses arquivos.
+5. **US4 (fase 6)**: a lógica (T030) depende da US1 e do T024 (testa que a conta errada não
+   aplica efeito); o teste de tela (T031) depende da US3 (usa a tela com todos os botões).
 6. **Polish (fase 7)**: depois de todas as histórias.
 
 ### Dependências entre tarefas
@@ -234,7 +236,9 @@ flowchart LR
     T015 --> T024 --> T025
     T023 & T025 --> T026
     T015 --> T027 --> T028 --> T029
-    T015 --> T030
+    T025 --> T028
+    T022 --> T029
+    T024 --> T030
     T029 & T030 --> T031
     T026 & T031 --> T032 --> T033 --> T034
 ```
@@ -265,8 +269,9 @@ Pessoa C: T020 (sons_batalha)
 Pessoa D: T021 (fim_de_luta)
 ```
 
-Depois da US1: uma pessoa na US2 (T024 → T025 → T026), outra na US3 (T027 → T028 → T029),
-outra na lógica da US4 (T030), combinando a ordem dos commits em `batalha/batalha.gd`.
+Depois da US1: uma pessoa na US2 (T024 → T025 → T026), outra na US3 (T027, depois
+`(espera T025)` T028 → T029), outra na lógica da US4 (`(espera T024)` T030), combinando a
+ordem dos commits em `batalha/batalha.gd`.
 
 ---
 
