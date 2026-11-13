@@ -1,0 +1,126 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://batalha/tela_batalha.gd" id="1_tela"]
+[ext_resource type="PackedScene" path="res://combatentes/painel_combatente.tscn" id="2_painel"]
+[ext_resource type="PackedScene" path="res://cartas/fila_cartas.tscn" id="3_fila"]
+[ext_resource type="PackedScene" path="res://batalha/aviso_rodada.tscn" id="4_aviso"]
+[ext_resource type="PackedScene" path="res://batalha/sons_batalha.tscn" id="5_sons"]
+
+[node name="TelaBatalha" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tela")
+
+[node name="Margem" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Coluna" type="VBoxContainer" parent="Margem"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Topo" type="HBoxContainer" parent="Margem/Coluna"]
+custom_minimum_size = Vector2(0, 112)
+layout_mode = 2
+
+[node name="PainelArthur" parent="Margem/Coluna/Topo" instance=ExtResource("2_painel")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+
+[node name="Sprite" parent="Margem/Coluna/Topo/PainelArthur" index="0"]
+color = Color(0.25, 0.4, 0.8, 1)
+
+[node name="CaixaAlvo" type="VBoxContainer" parent="Margem/Coluna/Topo"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="TituloAlvo" type="Label" parent="Margem/Coluna/Topo/CaixaAlvo"]
+layout_mode = 2
+text = "Alvo"
+horizontal_alignment = 1
+
+[node name="Alvo" type="Label" parent="Margem/Coluna/Topo/CaixaAlvo"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+
+[node name="PainelInimigo" parent="Margem/Coluna/Topo" instance=ExtResource("2_painel")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+
+[node name="Sprite" parent="Margem/Coluna/Topo/PainelInimigo" index="0"]
+color = Color(0.8, 0.25, 0.25, 1)
+
+[node name="Meio" type="Control" parent="Margem/Coluna"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+
+[node name="Expressao" parent="Margem/Coluna/Meio" instance=ExtResource("3_fila")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+clicavel = false
+
+[node name="Aviso" parent="Margem/Coluna/Meio" instance=ExtResource("4_aviso")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Botoes" type="HBoxContainer" parent="Margem/Coluna"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Confirmar" type="Button" parent="Margem/Coluna/Botoes"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 24)
+layout_mode = 2
+text = "Confirmar"
+
+[node name="Espaco" type="Control" parent="Margem/Coluna"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Mao" parent="Margem/Coluna" instance=ExtResource("3_fila")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Sons" parent="." instance=ExtResource("5_sons")]
+unique_name_in_owner = true
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
+[editable path="Margem/Coluna/Topo/PainelArthur"]
+[editable path="Margem/Coluna/Topo/PainelInimigo"]
