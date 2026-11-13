@@ -142,3 +142,24 @@ Durante a implementação, o Claude usa `run_project` e `get_debug_output` do MC
 o jogo e ler erros, e os comandos de linha acima para a suíte de testes. O MCP não clica no
 jogo: o Claude valida os cenários 1 e 8 (tarefa T034) e uma pessoa da equipe joga os
 cenários 2 a 7 e anota o resultado no fim deste arquivo (tarefa T035).
+
+## Registro da validação
+
+### 2026-11-13: cenários 1 e 8, pelo Claude (T034)
+
+- **Cenário 1 (suíte)**: passou. 18 scripts, 194 testes, 0 falhando, com o Godot 4.7.2 pela
+  linha de comando. A suíte contém as contas de referência do motor, a comparação da busca
+  com a força bruta, a simulação de 1.000 lutas (`batalha/testes/teste_simulacao.gd`, que
+  também repete 20 sementes com as mesmas ações) e os dois lados de cada efeito especial
+  (`batalha/testes/teste_batalha.gd`). A simulação foi conferida quebrando de propósito a
+  compra com mínimo: ela falhou como devia, e o código voltou ao original.
+- **Abrir o jogo** (`run_project` e `get_debug_output` do MCP): a luta carregou sem nenhum
+  erro ou aviso vindo do projeto (scripts, cenas ou recursos). A saída de erro trouxe só
+  mensagens do ambiente desta máquina: o Mesa sondando a placa NVIDIA (`failed to load
+  driver: nvidia-drm`) e um aviso do servidor de janelas X11 do Godot sobre o método de
+  entrada (`Failed to create wd.xic`, em `display_server_x11.cpp`).
+- **Cenário 8 (placeholders)**: passou. Cada `ColorRect`, `Panel`, texto provisório e
+  `AudioStreamPlayer` sem áudio das cenas tem linha em `docs/assets-pendentes.md` (itens 1,
+  4, 7 a 22 e o ícone, 23); nenhum arquivo de imagem, som ou fonte existe fora de
+  `addons/gut/`; nenhum `.gitkeep` sobrou nas pastas `testes/`.
+- **Falta (T035)**: os cenários 2 a 7, jogados por uma pessoa da equipe.
