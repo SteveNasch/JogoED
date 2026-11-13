@@ -51,6 +51,10 @@ Referência do jogo inteiro: `docs/visao-do-jogo.md` (seção "Combate").
 - Q (no analyze): Na garantia de mão mínima, quando a carta do tipo que falta vem do
   descarte, qual sai? → A: a descartada há mais tempo. Da pilha de compra sai a mais perto
   do topo.
+- Q (no analyze): E se a pilha de compra estiver vazia quando falta um tipo? → A: a FR-005
+  vale para toda compra: o descarte é embaralhado e vira a pilha, e sai a carta do tipo mais
+  perto do topo. A descartada há mais tempo só sai quando a pilha tem cartas, mas nenhuma
+  daquele tipo.
 - Q (no analyze): Se nenhum valor da faixa é alcançável e há empate no mais próximo (um
   abaixo e um acima à mesma distância), qual vira o alvo? → A: sorteia entre os dois.
 - Q (no analyze): Quando o acerto derruba o inimigo, os efeitos das especiais da mesma conta
@@ -217,13 +221,15 @@ uma conta com carta especial e conferir que nada acontece.
   1 carta, mais as que a garantia de FR-006 exigir, antes de o alvo aparecer.
 - **FR-004**: A mão MUST persistir entre as rodadas: só saem dela as cartas confirmadas numa
   expressão (acerto ou erro), que vão para o descarte.
-- **FR-005**: Quando a pilha de compra estiver vazia e for preciso comprar, o descarte MUST
-  ser embaralhado e virar a nova pilha de compra. Sem cartas nas duas, a compra é pulada.
+- **FR-005**: Quando a pilha de compra estiver vazia e for preciso comprar (inclusive na
+  compra dirigida da FR-006), o descarte MUST ser embaralhado e virar a nova pilha de compra.
+  Sem cartas nas duas, a compra é pulada.
 - **FR-006**: No início de cada rodada, depois da compra, a mão MUST ter pelo menos 3 cartas
   de número, 1 de soma e 1 de subtração. O jogo MUST NOT tirar cartas da mão para isso:
   enquanto faltar algum desses tipos, cada carta comprada (as 5 iniciais, a da rodada e, se
   preciso, cartas extras) MUST ser uma carta do tipo que falta: a mais perto do topo da
-  pilha de compra (a que sairia primeiro) ou, se lá não houver, a descartada há mais tempo.
+  pilha de compra (a que sairia primeiro; se a pilha estiver vazia, ela é refeita antes pela
+  FR-005) ou, se a pilha tiver cartas mas nenhuma daquele tipo, a descartada há mais tempo.
   Os tipos que faltam são atendidos na ordem número, soma, subtração. Se o baralho não tiver
   cartas daquele tipo fora da mão, a rodada começa com a melhor mão possível.
 - **FR-007**: Cada rodada MUST sortear um alvo inteiro positivo dentro da faixa dos dados do

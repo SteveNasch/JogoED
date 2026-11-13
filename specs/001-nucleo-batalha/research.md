@@ -323,7 +323,9 @@ teste de simulação abaixo confere que nenhuma rodada chega ao teto
 - **Decisão** (resposta do Estêvão em 13/11): o jogo **nunca tira** cartas da mão. No início
   da rodada, enquanto faltar número, soma ou subtração na mão (atendidos nessa ordem), a
   carta comprada é a daquele tipo mais perto do topo da pilha de compra ou, se a pilha não
-  tiver, a descartada há mais tempo (decisão do Estêvão no analyze). A ordem entre os tipos
+  tiver, a descartada há mais tempo (decisão do Estêvão no analyze). Com a pilha vazia, vale
+  a FR-005 antes de tudo: o descarte é embaralhado e vira a pilha, e a busca é feita nela
+  (segunda decisão do Estêvão no analyze). A ordem entre os tipos
   não muda a mão final, porque cada tipo pega a própria carta; ela só deixa o código
   determinístico. Primeiro saem as
   cartas normais da rodada (5 na primeira, 1 nas outras); se ainda faltar algo, o jogo compra

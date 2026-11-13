@@ -182,8 +182,10 @@ Operações:
   descarte para dentro dela (FR-005). Sem cartas nas duas, para. Devolve quantas comprou.
 - `comprar_com_minimo(quantidade, regras) -> void`: compra do início de rodada (FR-006,
   research D11). Enquanto faltar número, soma ou subtração na mão (nessa ordem), compra a
-  carta daquele tipo mais perto do topo da pilha (busca a partir do fim do array) ou, se não
-  houver, a descartada há mais tempo (busca a partir do início do descarte); depois de
+  carta daquele tipo mais perto do topo da pilha (busca a partir do fim do array; com a pilha
+  vazia, antes embaralha o descarte para dentro dela, como em `comprar`) ou, se a pilha tem
+  cartas mas nenhuma daquele tipo, a descartada há mais tempo (busca a partir do início do
+  descarte); depois de
   `quantidade` cartas, continua só se ainda faltar algo e houver carta daquele tipo fora da
   mão.
 - `por_na_expressao(indice_da_mao)`: move da mão para o fim da expressão (FR-008).
