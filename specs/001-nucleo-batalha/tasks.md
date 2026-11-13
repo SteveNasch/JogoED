@@ -101,7 +101,9 @@ baralho e busca do alvo, todas sem cena.
 ## Phase 3: User Story 1 - Vencer uma luta montando contas (Priority: P1) 🎯 MVP
 
 **Goal**: uma luta jogável do começo à vitória: alvo, mão, montar a conta, confirmar, dano,
-ataque do inimigo, carta nova, alvo novo e tela de vitória com "Lutar de novo".
+ataque do inimigo, carta nova, alvo novo e tela de vitória com "Lutar de novo". Uma conta
+errada ou inválida já gasta as cartas e passa a vez (T014), para a luta nunca travar; a
+derrota e os testes da história 2 vêm na fase 4.
 
 **Independent Test**: abrir o jogo e acertar alvos até o inimigo cair, conferindo o dano de
 cada acerto, o ataque do inimigo a cada rodada, a carta nova por rodada e a tela de vitória
@@ -110,7 +112,7 @@ cada acerto, o ataque do inimigo a cada rodada, a carta nova por rodada e a tela
 ### Área: batalha (lógica)
 
 - [ ] T013 [US1] Criar `ResultadoRodada` em `batalha/resultado_rodada.gd` e `ResultadoLuta` em `batalha/resultado_luta.gd` com os campos do [data-model.md](data-model.md), e `Batalha` em `batalha/batalha.gd` (`extends RefCounted`) com os sinais `mudou`, `rodada_resolvida`, `luta_terminou`, `enum Estado { MONTANDO, MOSTRANDO_RESULTADO, TERMINADA }`, `_init(cartas, vida_arthur, dados_inimigo, regras, semente)` (um só `RandomNumberGenerator` com a semente, passado ao `Baralho` e à `BuscaAlvo`) e `iniciar()` (rodada 1: zera escudo, `comprar_com_minimo(regras.cartas_iniciais)`, sorteia o alvo, estado `MONTANDO`, emite `mudou`), conforme [contracts/batalha.md](contracts/batalha.md); testes em `batalha/testes/teste_batalha.gd` (Arthur com a vida recebida e máxima 40, escudo 0; inimigo cheio; mão de 5 com o mínimo; alvo alcançável com a mão; lista de cartas recebida intacta; mesma semente → mesma mão e mesmo alvo)
-- [ ] T014 [US1] Acrescentar em `batalha/batalha.gd` `escolher_carta(indice)`, `pode_confirmar()`, `confirmar()` para o caso de **acerto** (inimigo perde a soma do `ataque` das cartas, expressão para o descarte, inimigo vivo ataca o Arthur, `ResultadoRodada` tipo `ACERTO`, estado `MOSTRANDO_RESULTADO`, emite `rodada_resolvida`) e `avancar()` (nova rodada: soma 1 em `rodada`, zera escudo do Arthur, `comprar_com_minimo(regras.cartas_por_rodada)`, novo alvo); ações fora de `MONTANDO` e índice inválido não fazem nada; `confirmar()` com expressão vazia não faz nada; testes em `batalha/testes/teste_batalha.gd`, incluindo o cenário 2 da história 1 (inimigo com 20 de vida, alvo 11, `3 + 4 × 2` → 13 de dano, sobra 7, Arthur perde 3) e o cenário 3 (mão completa recebe exatamente 1 carta) (depende de T013)
+- [ ] T014 [US1] Acrescentar em `batalha/batalha.gd` `escolher_carta(indice)`, `pode_confirmar()`, `confirmar()` com os três desfechos: **acerto** (inimigo perde a soma do `ataque` das cartas, `ResultadoRodada` tipo `ACERTO`), **erro** (sem dano, tipo `ERRO` com o `valor` obtido) e **conta inválida** (sem dano, tipo `INVALIDA`), FR-016 e FR-019; nos três a expressão vai para o descarte, o inimigo vivo ataca o Arthur, o estado vira `MOSTRANDO_RESULTADO` e sai `rodada_resolvida` (assim o MVP nunca trava numa conta errada; efeitos especiais ficam para o T030) e `avancar()` (nova rodada: soma 1 em `rodada`, zera escudo do Arthur, `comprar_com_minimo(regras.cartas_por_rodada)`, novo alvo); ações fora de `MONTANDO` e índice inválido não fazem nada; `confirmar()` com expressão vazia não faz nada; testes em `batalha/testes/teste_batalha.gd`, incluindo o cenário 2 da história 1 (inimigo com 20 de vida, alvo 11, `3 + 4 × 2` → 13 de dano, sobra 7, Arthur perde 3) o cenário 3 (mão completa recebe exatamente 1 carta) e uma conta errada (inimigo intacto, cartas no descarte, tipo `ERRO`) (depende de T013)
 - [ ] T015 [US1] Acrescentar a vitória em `batalha/batalha.gd`: acerto que zera o inimigo não tem ataque do inimigo e marca `luta_acabou`; `avancar()` então vai para `TERMINADA` e emite `luta_terminou` com `ResultadoLuta` (`venceu = true`, vidas, rodadas), uma única vez; testes em `batalha/testes/teste_batalha.gd` (cenário 4 da história 1; Arthur não perde vida no golpe final; nenhuma ação vale depois de `TERMINADA`) (depende de T014)
 
 ### Área: cenas (peças da tela)
@@ -141,7 +143,7 @@ gastas e Arthur apanhando; repetir até a derrota (quickstart, cenário 3).
 
 ### Área: batalha (lógica)
 
-- [ ] T024 [US2] Acrescentar em `batalha/batalha.gd` o `confirmar()` com **erro** e **conta inválida**: expressão para o descarte, sem dano, sem efeitos, inimigo ataca, `ResultadoRodada` com tipo `ERRO` (e `valor`) ou `INVALIDA` (FR-019); testes em `batalha/testes/teste_batalha.gd` (cenário 1 da história 2: alvo 9, `2 + 5` → valor 7, inimigo intacto, 3 cartas no descarte; cenário 2 com `3 4`, `+ 3`, `5 ×` e `4 ÷ 1 /2`)
+- [ ] T024 [US2] Testes da história 2 na lógica, sobre o `confirmar()` que o T014 já resolve: erro e conta inválida mandam a expressão para o descarte, sem dano, sem efeitos, com ataque do inimigo e `ResultadoRodada` tipo `ERRO` (com `valor`) ou `INVALIDA` (FR-019); testes em `batalha/testes/teste_batalha.gd` (cenário 1 da história 2: alvo 9, `2 + 5` → valor 7, inimigo intacto, 3 cartas no descarte; cenário 2 com `3 4`, `+ 3`, `5 ×` e `4 ÷ 1 /2`); corrigir `batalha/batalha.gd` se algum falhar
 - [ ] T025 [US2] Acrescentar a derrota em `batalha/batalha.gd`: ataque que zera o Arthur marca `luta_acabou`; `avancar()` vai para `TERMINADA` e emite `luta_terminou` com `venceu = false`, `vida_arthur = 0` e a vida do inimigo; testes em `batalha/testes/teste_batalha.gd` (cenário 3 da história 2; vida nunca negativa; escudo absorve antes da vida) (depende de T024)
 
 ### Área: cenas e luta avulsa
