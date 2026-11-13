@@ -1,0 +1,14 @@
+{
+	"dirs": [
+		"res://cartas/testes",
+		"res://contas/testes",
+		"res://combatentes/testes",
+		"res://batalha/testes",
+		"res://luta_avulsa/testes"
+	],
+	"include_subdirs": true,
+	"prefix": "teste_",
+	"suffix": ".gd",
+	"should_exit": true,
+	"log_level": 1
+}
