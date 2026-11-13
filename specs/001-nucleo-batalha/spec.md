@@ -27,9 +27,8 @@ Referência do jogo inteiro: `docs/visao-do-jogo.md` (seção "Combate").
   chegariam pelas recompensas? → A: o baralho inicial da visão mais 1 de cada carta extra
   (Chama, Foco, Guarda, Vital, ÷, x2, /2 e ^2), 21 cartas; a partir da 002 a luta recebe o
   baralho da run.
-- Q: Quando a mão fica pequena demais para cumprir o mínimo só trocando cartas, o que vale?
-  → A: completar só o que falta: depois da carta da rodada, o jogo troca cartas que sobram e,
-  se ainda faltar, dá as cartas que faltam. "1 carta por rodada" passa a ser "pelo menos 1".
+- Q: Quando a mão fica pequena demais para cumprir o mínimo, o que vale? → A: completar só o
+  que falta: o jogo dá as cartas que faltam. "1 carta por rodada" passa a ser "pelo menos 1".
 - Q: A divisão arredonda para baixo ou só vale a divisão exata? → A: arredonda para baixo,
   como no jogo antigo (7 ÷ 2 = 3; 5 /2 = 2).
 - Q: Quando o acerto do Arthur derruba o inimigo, o inimigo ainda ataca antes de a luta
@@ -42,6 +41,11 @@ Referência do jogo inteiro: `docs/visao-do-jogo.md` (seção "Combate").
   rodada; o que sobrar zera no início da rodada seguinte.
 - Q: Depois de cada confirmação ou Pular, o jogo espera um clique ou avança sozinho? → A:
   avança sozinho; o resultado fica na tela por cerca de 1,5 s e a rodada seguinte começa.
+- Q (no plano): Para garantir o mínimo, o jogo pode trocar cartas que já estão na mão? → A:
+  não; o jogo nunca tira cartas da mão. A carta comprada já vem do tipo que falta e, se ainda
+  faltar, o jogo dá cartas extras.
+- Decisão do plano: o alvo sorteado é sempre alcançável com no máximo 3 cartas de número
+  (valor nos dados), para a busca do alvo ter custo limitado com mãos grandes.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -70,8 +74,8 @@ rodada e a tela de vitória.
    inimigo perde 3 + 1 + 4 + 3 + 2 = 13 de vida (fica com 7), as cinco cartas vão para o
    descarte e o inimigo ataca o Arthur.
 3. **Given** o fim de uma rodada com os dois vivos e a mão já cumprindo o mínimo (FR-006),
-   **When** a rodada seguinte começa, **Then** exatamente 1 carta nova entra na mão, as cartas que sobraram continuam nela e um
-   alvo novo aparece.
+   **When** a rodada seguinte começa, **Then** exatamente 1 carta nova entra na mão, as
+   cartas que sobraram continuam nela e um alvo novo aparece.
 4. **Given** um acerto que leva a vida do inimigo a 0, **When** o dano é aplicado, **Then** a
    luta acaba na hora com a tela de vitória, sem ataque do inimigo.
 5. **Given** a tela de vitória, **When** o jogador escolhe lutar de novo, **Then** uma luta
@@ -201,16 +205,16 @@ uma conta com carta especial e conferir que nada acontece.
   expressão (acerto ou erro), que vão para o descarte.
 - **FR-005**: Quando a pilha de compra estiver vazia e for preciso comprar, o descarte MUST
   ser embaralhado e virar a nova pilha de compra. Sem cartas nas duas, a compra é pulada.
-- **FR-006**: No início de cada rodada, depois da carta da rodada, a mão MUST ter pelo menos
-  3 cartas de número, 1 de soma e 1 de subtração. Para isso o jogo MUST primeiro trocar
-  cartas que sobram por cartas do tipo que falta, vindas das pilhas (as trocadas vão para o
-  descarte), e, se não houver cartas sobrando para trocar, dar as cartas que faltam. Se o
-  baralho não tiver cartas daquele tipo fora da mão, a rodada começa com a melhor mão
-  possível.
+- **FR-006**: No início de cada rodada, depois da compra, a mão MUST ter pelo menos 3 cartas
+  de número, 1 de soma e 1 de subtração. O jogo MUST NOT tirar cartas da mão para isso:
+  enquanto faltar algum desses tipos, cada carta comprada (as 5 iniciais, a da rodada e, se
+  preciso, cartas extras) MUST ser a primeira carta do tipo que falta na pilha de compra ou,
+  se lá não houver, no descarte. Se o baralho não tiver cartas daquele tipo fora da mão, a
+  rodada começa com a melhor mão possível.
 - **FR-007**: Cada rodada MUST sortear um alvo inteiro positivo dentro da faixa dos dados do
   jogo (padrão: 5 a 12) que seja alcançável com as cartas da mão naquele momento, usando cada
-  carta no máximo uma vez e as regras de FR-012 a FR-015. Valores alcançáveis com uma carta
-  só também valem. Se nenhum valor da faixa for alcançável, o alvo MUST ser o valor positivo
+  carta no máximo uma vez e as regras de FR-012 a FR-015. A busca considera contas com até
+  3 cartas de número (valor nos dados). Valores alcançáveis com uma carta só também valem. Se nenhum valor da faixa for alcançável, o alvo MUST ser o valor positivo
   alcançável mais próximo da faixa.
 
 **Montagem da expressão**
