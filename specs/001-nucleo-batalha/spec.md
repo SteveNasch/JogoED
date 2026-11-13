@@ -32,7 +32,8 @@ Referência do jogo inteiro: `docs/visao-do-jogo.md` (seção "Combate").
 - Q: A divisão arredonda para baixo ou só vale a divisão exata? → A: arredonda para baixo,
   como no jogo antigo (7 ÷ 2 = 3; 5 /2 = 2).
 - Q: Quando o acerto do Arthur derruba o inimigo, o inimigo ainda ataca antes de a luta
-  acabar? → A: não; inimigo derrotado não age e a vitória vem na hora.
+  acabar? → A: não; inimigo derrotado não age e a vitória vem na hora (sem rodada nova,
+  depois do aviso de resultado da FR-025).
 - Q: Enquanto o jogador monta a conta, o jogo mostra quanto ela está valendo? → A: não; nem
   o valor nem se ela é válida aparecem antes de confirmar.
 - Q: O alvo pode ser resolvido com uma carta só? → A: sim; qualquer valor alcançável na
@@ -87,8 +88,9 @@ rodada e a tela de vitória.
 3. **Given** o fim de uma rodada com os dois vivos e a mão já cumprindo o mínimo (FR-006),
    **When** a rodada seguinte começa, **Then** exatamente 1 carta nova entra na mão, as
    cartas que sobraram continuam nela e um alvo novo aparece.
-4. **Given** um acerto que leva a vida do inimigo a 0, **When** o dano é aplicado, **Then** a
-   luta acaba na hora com a tela de vitória, sem ataque do inimigo.
+4. **Given** um acerto que leva a vida do inimigo a 0, **When** o dano é aplicado, **Then** o
+   inimigo não ataca, o resultado do golpe aparece como em toda rodada e, quando ele sai da
+   tela (FR-025), vem a tela de vitória, sem rodada nova.
 5. **Given** a tela de vitória, **When** o jogador escolhe lutar de novo, **Then** uma luta
    nova começa do zero (vida cheia dos dois, baralho embaralhado, mão de 5).
 
@@ -299,7 +301,7 @@ uma conta com carta especial e conferir que nada acontece.
 
 **Dados e assets**
 
-- **FR-028**: Vida e ataque do Arthur e do inimigo, faixa do alvo, mínimo da mão, composição
+- **FR-028**: Vida do Arthur, vida e ataque do inimigo, faixa do alvo, mínimo da mão, composição
   do baralho e valor, ataque e efeito de cada carta MUST ficar em dados editáveis sem mexer
   no código.
 - **FR-029**: A mesma semente de sorteio MUST reproduzir a mesma luta (embaralhamento, mãos
