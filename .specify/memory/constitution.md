@@ -1,15 +1,13 @@
 <!--
 Sync Impact Report
-- Versão: (modelo em branco) → 1.0.0
-- Princípios definidos (antes eram placeholders):
-  - [PRINCIPLE_1_NAME] → I. Código Limpo e Minimalista
-  - [PRINCIPLE_2_NAME] → II. Testes Reais para Cada Área (INEGOCIÁVEL)
-  - [PRINCIPLE_3_NAME] → III. Cenas Pequenas e Separadas
-  - [PRINCIPLE_4_NAME] → IV. Assets Vêm da Equipe (INEGOCIÁVEL)
-  - [PRINCIPLE_5_NAME] → V. Tudo em Português, no Estilo da Equipe
-- Seções adicionadas: Restrições Técnicas; Fluxo de Desenvolvimento; Governança
+- Versão: 1.0.0 → 1.0.1 (PATCH: correção de um fato, sem mudar princípio nem regra)
+- Princípios modificados: nenhum
+- Restrições Técnicas: "Equipe" passa de 5 para 6 estudantes, com a lista em docs/equipe.md
+- Seções adicionadas: nenhuma
 - Seções removidas: nenhuma
 - Templates (.specify/templates/*): não alterados; leem esta constituição em tempo de execução.
+- Pendência fora da constituição: specs/001-nucleo-batalha/research.md ainda cita "cinco"
+  (D1 e D6).
 - TODOs adiados: nenhum
 -->
 
@@ -91,7 +89,8 @@ Motivo: o projeto é uma entrega da disciplina e precisa ser entendido e defendi
   tarefa própria, com a suíte de testes passando antes e depois.
 - **Linguagem:** GDScript com tipagem estática.
 - **Testes:** GUT, na versão compatível com o Godot em uso, executável pela linha de comando.
-- **Equipe:** 5 estudantes de Bacharelado em Ciência da Computação do IFSP Salto.
+- **Equipe:** 6 estudantes de Bacharelado em Ciência da Computação do IFSP Salto (lista em
+  `docs/equipe.md`).
 
 ## Fluxo de Desenvolvimento
 
@@ -113,4 +112,4 @@ Motivo: o projeto é uma entrega da disciplina e precisa ser entendido e defendi
 - Toda revisão de código e todo `/speckit-analyze` MUST verificar a conformidade com estes
   princípios.
 
-**Version**: 1.0.0 | **Ratified**: 2026-11-13 | **Last Amended**: 2026-11-13
+**Version**: 1.0.1 | **Ratified**: 2026-11-13 | **Last Amended**: 2026-11-13
