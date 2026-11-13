@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://batalha/sons_batalha.gd" id="1_sons"]
+
+[node name="SonsBatalha" type="Node"]
+script = ExtResource("1_sons")
+
+[node name="Carta" type="AudioStreamPlayer" parent="."]
+
+[node name="Acerto" type="AudioStreamPlayer" parent="."]
+
+[node name="Erro" type="AudioStreamPlayer" parent="."]
+
+[node name="Pulo" type="AudioStreamPlayer" parent="."]
+
+[node name="DanoRecebido" type="AudioStreamPlayer" parent="."]
+
+[node name="Musica" type="AudioStreamPlayer" parent="."]
+autoplay = true
