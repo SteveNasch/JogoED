@@ -215,7 +215,8 @@ que pessoas diferentes trabalhem em áreas diferentes.
 ## Ordem de construção sugerida
 
 Para o `/speckit-tasks` detalhar. Cada passo termina com os testes da área passando e com
-commit.
+commit. O `tasks.md` segue os passos 1 a 5 e, a partir do 6, reorganiza o trabalho por
+história (lógica e cenas de cada história juntas), para cada uma ser entregue sozinha.
 
 1. **Projeto**: `project.godot` com as configurações do research (D2, D3), GUT em
    `addons/gut/`, `.gutconfig.json`, `.gdignore`, e a suíte rodando vazia.

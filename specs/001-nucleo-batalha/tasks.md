@@ -15,8 +15,10 @@ T026 e T031), que conferem uma história sobre código já feito em outra tarefa
 testes falhar, a correção entra no mesmo commit, e o teste que falhou fica como o teste do
 defeito (princípio II, "bug corrigido ganha teste").
 
-**Organization**: as fases seguem a "Ordem de construção sugerida" do plano. Dentro de cada
-fase as tarefas estão agrupadas por área do jogo (cartas, contas, combatentes, batalha,
+**Organization**: as fases 1 e 2 seguem os passos 1 a 5 da "Ordem de construção sugerida" do
+plano. Daí em diante a ordem muda de propósito: em vez de toda a lógica antes de todas as
+cenas (passos 6 a 8 do plano), cada história traz a sua lógica e as suas cenas, para ser
+entregue e testada sozinha. Dentro de cada fase as tarefas estão agrupadas por área do jogo (cartas, contas, combatentes, batalha,
 cenas, luta avulsa). As fases 3 a 6 correspondem às histórias da spec e levam o rótulo
 `[US1]` a `[US4]`.
 
