@@ -22,6 +22,8 @@ flowchart TD
     B --> BU[BuscaAlvo]
     B --> M[MotorContas]
     B --> RB[RegrasBatalha]
+    B -. passa os números de RB .-> BA
+    B -. passa os números de RB .-> BU
     B --> DI[DadosInimigo]
     BA --> DC
     BU --> M
@@ -180,7 +182,8 @@ Criação: recebe a lista de cartas e o gerador de sorteio da luta; copia a list
 Operações:
 - `comprar(quantidade) -> int`: do topo da pilha para a mão. Com a pilha vazia, embaralha o
   descarte para dentro dela (FR-005). Sem cartas nas duas, para. Devolve quantas comprou.
-- `comprar_com_minimo(quantidade, regras) -> void`: compra do início de rodada (FR-006,
+- `comprar_com_minimo(quantidade, minimo_numeros, minimo_somas, minimo_subtracoes) -> void`:
+  compra do início de rodada (FR-006,
   research D11). Enquanto faltar número, soma ou subtração na mão (nessa ordem), compra a
   carta daquele tipo mais perto do topo da pilha (busca a partir do fim do array; com a pilha
   vazia, antes embaralha o descarte para dentro dela, como em `comprar`) ou, se a pilha tem
@@ -202,7 +205,9 @@ Invariantes (viram testes):
 
 ### BuscaAlvo (`contas/busca_alvo.gd`)
 
-Criada com as `RegrasBatalha`. Algoritmo, custo e testes em [research.md](research.md), D10.
+Criada com `alvo_minimo`, `alvo_maximo`, `max_numeros_no_alvo` e `limite_buscas_alvo`, que a
+`Batalha` tira da `RegrasBatalha` (a busca recebe só os números para a área `contas` não
+depender de `batalha`). Algoritmo, custo e testes em [research.md](research.md), D10.
 
 - `alcancaveis(mao: Array[DadosCarta]) -> Dictionary`: chave = valor (`int`); valor = conta
   de exemplo (`Array[DadosCarta]`) feita com cartas da mão.

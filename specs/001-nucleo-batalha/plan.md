@@ -203,8 +203,11 @@ flowchart LR
     dados -. lidos por .-> luta_avulsa
 ```
 
-`cartas` e `combatentes` não dependem de ninguém; `contas` só conhece `DadosCarta`. Isso dá
-a ordem natural de construção e permite que pessoas diferentes trabalhem em áreas diferentes.
+`cartas` e `combatentes` não dependem de ninguém; `contas` só conhece `DadosCarta`. Os
+números da `RegrasBatalha` de que o `Baralho` (mínimos da mão) e a `BuscaAlvo` (faixa e
+freios da busca) precisam chegam a eles como parâmetros, passados pela `Batalha`, para não
+criar a volta `batalha → cartas → batalha`. Isso dá a ordem natural de construção e permite
+que pessoas diferentes trabalhem em áreas diferentes.
 
 ## Ordem de construção sugerida
 
