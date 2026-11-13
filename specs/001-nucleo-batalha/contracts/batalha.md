@@ -2,7 +2,8 @@
 
 **Para quem**: quem for usar a luta sem mexer nela. Na 001 é a cena `luta_avulsa`; na 002
 será o mapa. Há dois níveis: a **cena** (com tela) e a **lógica** (sem tela, para testes e
-simulações). Tipos em [../data-model.md](../data-model.md).
+simulações). Tipos em [../data-model.md](../data-model.md). Sobre "batalha" (o sistema) e "luta"
+(uma partida dele) nos nomes, ver a convenção no início do data-model.
 
 A regra dos dois níveis é a mesma: quem chama **entrega** o baralho, a vida do Arthur, o
 inimigo, as regras e a semente, e **recebe** o resultado por sinal. A luta não lê arquivo de

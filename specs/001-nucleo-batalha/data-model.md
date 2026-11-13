@@ -6,6 +6,11 @@ Dois grupos de classes: **dados** (`Resource`, salvos em `.tres` na pasta `dados
 no Inspector) e **lógica** (`RefCounted`, criados em tempo de jogo, sem depender de cena).
 Nomes em português, sem acento, como pede a constituição.
 
+Convenção de nomes: **batalha** é o sistema (as classes e cenas que fazem a regra funcionar:
+`Batalha`, `RegrasBatalha`, `tela_batalha`, `sons_batalha`, a pasta `batalha/`); **luta** é
+uma partida desse sistema, do começo ao fim (`ResultadoLuta`, o sinal `luta_terminou`, a cena
+`luta_avulsa`, `fim_de_luta`). Na spec e nos textos do jogo as duas palavras são sinônimos.
+
 Como as peças se ligam (quem usa quem):
 
 ```mermaid
