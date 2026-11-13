@@ -46,6 +46,11 @@ Referência do jogo inteiro: `docs/visao-do-jogo.md` (seção "Combate").
   faltar, o jogo dá cartas extras.
 - Decisão do plano: o alvo sorteado é sempre alcançável com no máximo 3 cartas de número
   (valor nos dados), para a busca do alvo ter custo limitado com mãos grandes.
+- Q (no analyze): Na garantia de mão mínima, quando a carta do tipo que falta vem do
+  descarte, qual sai? → A: a descartada há mais tempo. Da pilha de compra sai a mais perto
+  do topo.
+- Q (no analyze): Se nenhum valor da faixa é alcançável e há empate no mais próximo (um
+  abaixo e um acima à mesma distância), qual vira o alvo? → A: sorteia entre os dois.
 - Q (no analyze): Quando o acerto derruba o inimigo, os efeitos das especiais da mesma conta
   ainda valem? → A: sim; a cura, o escudo e a compra valem, e a vitória vem depois deles.
   Na 001 isso quase não aparece; na 002 a cura conta, porque a vida passa para a luta
@@ -214,14 +219,16 @@ uma conta com carta especial e conferir que nada acontece.
 - **FR-006**: No início de cada rodada, depois da compra, a mão MUST ter pelo menos 3 cartas
   de número, 1 de soma e 1 de subtração. O jogo MUST NOT tirar cartas da mão para isso:
   enquanto faltar algum desses tipos, cada carta comprada (as 5 iniciais, a da rodada e, se
-  preciso, cartas extras) MUST ser a primeira carta do tipo que falta na pilha de compra ou,
-  se lá não houver, no descarte. Se o baralho não tiver cartas daquele tipo fora da mão, a
-  rodada começa com a melhor mão possível.
+  preciso, cartas extras) MUST ser uma carta do tipo que falta: a mais perto do topo da
+  pilha de compra (a que sairia primeiro) ou, se lá não houver, a descartada há mais tempo.
+  Os tipos que faltam são atendidos na ordem número, soma, subtração. Se o baralho não tiver
+  cartas daquele tipo fora da mão, a rodada começa com a melhor mão possível.
 - **FR-007**: Cada rodada MUST sortear um alvo inteiro positivo dentro da faixa dos dados do
   jogo (padrão: 5 a 12) que seja alcançável com as cartas da mão naquele momento, usando cada
   carta no máximo uma vez e as regras de FR-012 a FR-015. A busca considera contas com até
   3 cartas de número (valor nos dados). Valores alcançáveis com uma carta só também valem. Se nenhum valor da faixa for alcançável, o alvo MUST ser o valor positivo
-  alcançável mais próximo da faixa.
+  alcançável mais próximo da faixa; havendo empate (um abaixo e um acima à mesma distância),
+  o alvo MUST ser sorteado entre os dois.
 
 **Montagem da expressão**
 

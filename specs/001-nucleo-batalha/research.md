@@ -223,7 +223,8 @@ e anota o valor de cada uma:
    (padrão 10.000). Os valores achados até ali continuam valendo.
 7. **Sorteio**: se algum valor da faixa foi achado, o alvo é sorteado entre eles, em ordem
    crescente, com o gerador da luta. Se nenhum foi achado, o alvo é o valor positivo achado
-   mais próximo da faixa (FR-007). Se a mão não tem nenhum número (baralho inválido), o alvo
+   mais próximo da faixa (FR-007); se um valor abaixo e um acima estão à mesma distância, o
+   gerador sorteia entre os dois (decisão do Estêvão no analyze). Se a mão não tem nenhum número (baralho inválido), o alvo
    é o mínimo da faixa e resta ao jogador o Pular.
 
 ### Por que o alvo é sempre alcançável
@@ -317,8 +318,11 @@ teste de simulação abaixo confere que nenhuma rodada chega ao teto
 ## D11. Garantia de mão mínima: compra dirigida
 
 - **Decisão** (resposta do Estêvão em 13/11): o jogo **nunca tira** cartas da mão. No início
-  da rodada, enquanto faltar número, soma ou subtração na mão, a carta comprada é a primeira
-  daquele tipo na pilha de compra (ou no descarte, se a pilha não tiver). Primeiro saem as
+  da rodada, enquanto faltar número, soma ou subtração na mão (atendidos nessa ordem), a
+  carta comprada é a daquele tipo mais perto do topo da pilha de compra ou, se a pilha não
+  tiver, a descartada há mais tempo (decisão do Estêvão no analyze). A ordem entre os tipos
+  não muda a mão final, porque cada tipo pega a própria carta; ela só deixa o código
+  determinístico. Primeiro saem as
   cartas normais da rodada (5 na primeira, 1 nas outras); se ainda faltar algo, o jogo compra
   cartas extras do tipo que falta. Sem falta nenhuma, compra o topo da pilha.
 - **Consequência**: a mão inicial é sempre 3 números, + e −. As compras do Pular e do Foco

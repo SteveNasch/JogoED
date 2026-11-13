@@ -162,7 +162,7 @@ As quatro zonas da luta. Cada carta está em exatamente uma.
 | `compra` | `Array[DadosCarta]` | pilha de compra; o fim do array é o topo |
 | `mao` | `Array[DadosCarta]` | cartas disponíveis para jogar |
 | `expressao` | `Array[DadosCarta]` | conta em montagem, na ordem escolhida |
-| `descarte` | `Array[DadosCarta]` | cartas já usadas |
+| `descarte` | `Array[DadosCarta]` | cartas já usadas; o início do array é a descartada há mais tempo |
 
 Criação: recebe a lista de cartas e o gerador de sorteio da luta; copia a lista para
 `compra` e embaralha.
@@ -171,9 +171,11 @@ Operações:
 - `comprar(quantidade) -> int`: do topo da pilha para a mão. Com a pilha vazia, embaralha o
   descarte para dentro dela (FR-005). Sem cartas nas duas, para. Devolve quantas comprou.
 - `comprar_com_minimo(quantidade, regras) -> void`: compra do início de rodada (FR-006,
-  research D11). Enquanto faltar número, soma ou subtração na mão, compra a primeira carta
-  daquele tipo na pilha (ou no descarte); depois de `quantidade` cartas, continua só se ainda
-  faltar algo e houver carta daquele tipo fora da mão.
+  research D11). Enquanto faltar número, soma ou subtração na mão (nessa ordem), compra a
+  carta daquele tipo mais perto do topo da pilha (busca a partir do fim do array) ou, se não
+  houver, a descartada há mais tempo (busca a partir do início do descarte); depois de
+  `quantidade` cartas, continua só se ainda faltar algo e houver carta daquele tipo fora da
+  mão.
 - `por_na_expressao(indice_da_mao)`: move da mão para o fim da expressão (FR-008).
 - `desfazer()`: a última carta da expressão volta para o fim da mão (FR-009).
 - `limpar()`: todas as cartas da expressão voltam para o fim da mão, na ordem (FR-009).
@@ -193,6 +195,8 @@ Criada com as `RegrasBatalha`. Algoritmo, custo e testes em [research.md](resear
 - `alcancaveis(mao: Array[DadosCarta]) -> Dictionary`: chave = valor (`int`); valor = conta
   de exemplo (`Array[DadosCarta]`) feita com cartas da mão.
 - `sortear(mao: Array[DadosCarta], rng: RandomNumberGenerator) -> int`: o alvo da rodada.
+  Sem valor na faixa, o positivo mais próximo dela; empate entre um abaixo e um acima,
+  sorteado entre os dois com o `rng`.
 - `avaliacoes: int`: quantas contas a última busca avaliou (para os testes de custo).
 
 ### ResultadoRodada (`batalha/resultado_rodada.gd`)
