@@ -104,8 +104,7 @@ Fora da pasta da funcionalidade: `docs/assets-pendentes.md` (lista de assets, pr
 ### Source Code (repository root)
 
 ```text
-project.godot                 # 640×360, viewport, escala inteira, Nearest, Compatibility
-icon.svg                      # ícone padrão do Godot (placeholder)
+project.godot                 # 640×360, viewport, escala inteira, Nearest, Compatibility; sem ícone próprio
 .gutconfig.json               # pastas de teste e prefixo "teste_"
 
 addons/

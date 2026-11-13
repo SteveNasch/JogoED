@@ -386,8 +386,9 @@ teste de simulação abaixo confere que nenhuma rodada chega perto do teto.
 
 - **Decisão**: nenhum arquivo de arte ou som é criado. Sprites são `ColorRect` de cor chapada
   no tamanho final do asset, com um `Label` de nome por cima; cartas são `Panel` + `Label`;
-  o fundo é a cor de limpeza padrão do projeto; a fonte é a padrão do Godot; o ícone do
-  projeto é o `icon.svg` que o Godot gera. Sons: a cena `sons_batalha` tem um
+  o fundo é a cor de limpeza padrão do projeto; a fonte é a padrão do Godot; o projeto não
+  tem ícone próprio (sem `application/config/icon` e sem `icon.svg`), então a janela usa o
+  ícone padrão do Godot, listado como pendência como os demais. Sons: a cena `sons_batalha` tem um
   `AudioStreamPlayer` por evento, **sem áudio atribuído**, e só toca se houver áudio
   (`if tocador.stream != null`). Quando a equipe entregar um arquivo, ele é atribuído no
   editor, sem mexer no código. Tudo fica listado em `docs/assets-pendentes.md` (tipo,

@@ -35,6 +35,7 @@ horizontal, com todos os quadros do mesmo tamanho.
 | 11 | Ícones de efeito: chama, foco, guarda, vital | 16×16 cada | 1 | canto das cartas especiais | nome por extenso | pendente | |
 | 12 | Ícones de status: vida, escudo, ataque | 16×16 cada | 1 | painéis do Arthur e do inimigo | texto ("Vida", "Escudo", "Ataque") | pendente | |
 | 13 | Moldura de botão e de painel (opcional) | 16×16, para esticar pelas bordas | 1 | botões Desfazer, Limpar, Confirmar, Pular; telas de vitória e derrota | tema padrão do Godot | pendente | |
+| 23 | Ícone do jogo | 64×64 (SVG ou PNG) | 1 | janela do jogo e executável exportado | ícone padrão do Godot (sem arquivo no projeto) | pendente | |
 
 As frentes de carta (8 a 10) precisam de área livre para o jogo escrever por cima: o símbolo
 no canto superior esquerdo e o ataque num canto de baixo.
