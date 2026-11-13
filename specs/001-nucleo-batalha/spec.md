@@ -140,9 +140,9 @@ conferir a vida do Arthur e o tamanho da mão.
    `3 +` e o 4 volta para a mão; a rodada continua.
 2. **Given** uma expressão com cartas, **When** o jogador limpa, **Then** todas as cartas
    voltam para a mão, a expressão fica vazia e a rodada continua.
-3. **Given** a mão com 4 cartas e expressão vazia, **When** o jogador usa o Pular, **Then** o
-   inimigo ataca o Arthur, 1 carta extra entra na mão e a rodada seguinte começa com a sua
-   carta normal, deixando a mão com 6 cartas.
+3. **Given** a mão com 5 cartas, já cumprindo o mínimo (FR-006), e expressão vazia, **When**
+   o jogador usa o Pular, **Then** o inimigo ataca o Arthur, 1 carta extra entra na mão e a
+   rodada seguinte começa com a sua carta normal, deixando a mão com 7 cartas.
 4. **Given** a expressão vazia, **When** o jogador tenta confirmar, **Then** nada acontece
    (a confirmação fica indisponível) e a rodada continua.
 
