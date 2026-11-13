@@ -92,6 +92,8 @@ Interface pública em [batalha.md](batalha.md). Por dentro, junta as cenas acima
 botões, o `Label` do alvo e um `Timer` de disparo único.
 
 Comportamento:
+- A cada `carta_escolhida(i)` da mão: chama `batalha.escolher_carta(i)` e
+  `sons_batalha.tocar_carta()` (asset 15).
 - A cada `mudou` da lógica: atualiza os dois painéis, o alvo, a mão e a expressão;
   Confirmar fica desabilitado se `pode_confirmar()` for falso (FR-011).
 - A cada `rodada_resolvida`: mostra o aviso, toca o som, desabilita mão e botões e liga o
