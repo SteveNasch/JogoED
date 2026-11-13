@@ -36,6 +36,10 @@ cenas, luta avulsa). As fases 3 a 6 correspondem às histórias da spec e levam 
   `docs/assets-pendentes.md`.
 - Cartas movidas entre zonas sempre por **posição** no array, nunca procurando a carta,
   porque cartas iguais são o mesmo objeto (research, "Riscos").
+- Antes de dar a tarefa como concluída (constituição, "Fluxo de Desenvolvimento"): rodar a
+  suíte inteira, conferir que não sobrou código morto ou comentado (função, variável, sinal,
+  nó ou arquivo que ninguém usa, `print` de depuração) e listar, no relato da tarefa, os
+  assets pedidos que continuam pendentes.
 
 ## Format: `[ID] [P?] [Story] Description`
 
