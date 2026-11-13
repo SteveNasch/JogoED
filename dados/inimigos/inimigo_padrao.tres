@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DadosInimigo" format=3]
+
+[ext_resource type="Script" path="res://combatentes/dados_inimigo.gd" id="1_lh03b"]
+
+[resource]
+script = ExtResource("1_lh03b")
+nome = "Inimigo"
+vida = 12
+ataque = 3
