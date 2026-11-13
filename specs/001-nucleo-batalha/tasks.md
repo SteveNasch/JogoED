@@ -82,7 +82,7 @@ baralho e busca do alvo, todas sem cena.
 
 ### Área: contas (motor)
 
-- [ ] T008 [P] Criar `ResultadoConta` em `contas/resultado_conta.gd` (`valida: bool`, `valor: int`) e `MotorContas` em `contas/motor_contas.gd` com `static func avaliar(cartas: Array[DadosCarta]) -> ResultadoConta`, em três níveis (fator com unários; termo com × e ÷; soma com + e −), divisão e metade com `floori(a / float(b))`, divisão por zero inválida, regras da FR-012 a FR-015 (research D9); testes parametrizados em `contas/testes/teste_motor_contas.gd` com pelo menos 30 contas de referência (SC-004), incluindo `3 + 4 × 2 = 11`, `3 ^2 x2 = 18`, `2 − 5 + 9 = 6`, `7 ÷ 2 = 3`, `5 /2 = 2`, `1 /2 = 0`, `2 − 7 ÷ 2 = −1` (a divisão é feita antes da subtração), `5 = 5` (uma carta só) e as inválidas `3 4`, `+ 3`, `5 ×`, `6 ÷ 0`, `3 + x2`, `^2 3`, lista vazia (depende de T003; paralela a T007)
+- [ ] T008 [P] Criar `ResultadoConta` em `contas/resultado_conta.gd` (`valida: bool`, `valor: int`) e `MotorContas` em `contas/motor_contas.gd` com `static func avaliar(cartas: Array[DadosCarta]) -> ResultadoConta`, em três níveis (fator com unários; termo com × e ÷; soma com + e −), divisão e metade com `floori(a / float(b))`, divisão por zero inválida, regras da FR-012 a FR-015 (research D9); testes parametrizados em `contas/testes/teste_motor_contas.gd` com pelo menos 30 contas de referência (SC-004), incluindo `3 + 4 × 2 = 11`, `3 ^2 x2 = 18`, `2 − 5 + 9 = 6`, `7 ÷ 2 = 3`, `5 /2 = 2`, `1 /2 = 0`, `2 − 7 ÷ 2 = −1` (a divisão é feita antes da subtração), `5 = 5` (uma carta só) e as inválidas `3 4`, `+ 3`, `5 ×`, `4 ÷ 1 /2` (divisão por zero: o `1 /2` vale 0 e vem antes do ÷), `3 + x2`, `^2 3`, lista vazia (depende de T003; paralela a T007)
 
 ### Área: cartas (baralho em jogo)
 
@@ -141,7 +141,7 @@ gastas e Arthur apanhando; repetir até a derrota (quickstart, cenário 3).
 
 ### Área: batalha (lógica)
 
-- [ ] T024 [US2] Acrescentar em `batalha/batalha.gd` o `confirmar()` com **erro** e **conta inválida**: expressão para o descarte, sem dano, sem efeitos, inimigo ataca, `ResultadoRodada` com tipo `ERRO` (e `valor`) ou `INVALIDA` (FR-019); testes em `batalha/testes/teste_batalha.gd` (cenário 1 da história 2: alvo 9, `2 + 5` → valor 7, inimigo intacto, 3 cartas no descarte; cenário 2 com `3 4`, `+ 3`, `5 ×` e `6 ÷ 0`)
+- [ ] T024 [US2] Acrescentar em `batalha/batalha.gd` o `confirmar()` com **erro** e **conta inválida**: expressão para o descarte, sem dano, sem efeitos, inimigo ataca, `ResultadoRodada` com tipo `ERRO` (e `valor`) ou `INVALIDA` (FR-019); testes em `batalha/testes/teste_batalha.gd` (cenário 1 da história 2: alvo 9, `2 + 5` → valor 7, inimigo intacto, 3 cartas no descarte; cenário 2 com `3 4`, `+ 3`, `5 ×` e `4 ÷ 1 /2`)
 - [ ] T025 [US2] Acrescentar a derrota em `batalha/batalha.gd`: ataque que zera o Arthur marca `luta_acabou`; `avancar()` vai para `TERMINADA` e emite `luta_terminou` com `venceu = false`, `vida_arthur = 0` e a vida do inimigo; testes em `batalha/testes/teste_batalha.gd` (cenário 3 da história 2; vida nunca negativa; escudo absorve antes da vida) (depende de T024)
 
 ### Área: cenas e luta avulsa

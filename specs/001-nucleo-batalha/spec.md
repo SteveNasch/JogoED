@@ -102,8 +102,8 @@ as cartas foram gastas e que o Arthur apanha; repetir até a derrota.
    perde vida, as duas cartas numéricas e o + vão para o descarte, o jogo mostra "7, alvo era
    9" e o inimigo ataca o Arthur.
 2. **Given** qualquer alvo, **When** o jogador confirma uma expressão inválida (`3 4`, `+ 3`,
-   `5 ×` ou `6 ÷ 0`), **Then** o resultado é igual ao de um erro: cartas gastas, sem dano,
-   aviso de conta inválida e ataque do inimigo.
+   `5 ×` ou `4 ÷ 1 /2`, em que o `1 /2` vale 0), **Then** o resultado é igual ao de um erro:
+   cartas gastas, sem dano, aviso de conta inválida e ataque do inimigo.
 3. **Given** o Arthur com vida menor ou igual ao ataque do inimigo e sem escudo, **When** a
    rodada termina, **Then** a luta acaba com a tela de derrota.
 4. **Given** a tela de derrota, **When** o jogador escolhe tentar de novo, **Then** uma luta
