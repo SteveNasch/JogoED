@@ -426,8 +426,9 @@ teste de simulação abaixo confere que nenhuma rodada chega ao teto
 - **Decisão**: a tela é feita de nós `Control` dentro de contêineres (`HBoxContainer`,
   `VBoxContainer`, `MarginContainer`), sem posições calculadas à mão. A fila de cartas diminui
   a separação entre as cartas (até sobrepor) quando a mão não cabe em 600 px, deixando o canto
-  de cada carta, com o símbolo, visível e clicável. O texto completo do efeito de uma carta
-  especial aparece também em `tooltip_text`. Os textos ficam direto em português no código e
+  de cada carta, com o símbolo, visível e clicável. O efeito de uma carta especial aparece
+  também em `tooltip_text`, com o nome e a condição ("Chama: +3 de dano. Só vale quando a
+  conta acerta o alvo."). Os textos ficam direto em português no código e
   nas cenas, sem sistema de tradução (o jogo é só em português).
 - **Motivo**: contêineres organizam os filhos sozinhos e continuam certos quando a mão muda
   de tamanho; a mão não tem limite (pode chegar a 21 cartas), então a sobreposição é
