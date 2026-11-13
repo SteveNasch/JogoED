@@ -58,9 +58,9 @@ Efeitos curtos em WAV; música em Ogg Vorbis (recomendação da documentação d
 |---|---|---|---|---|---|---|
 | 15 | Carta escolhida | até 0,3 s | clicar numa carta da mão | silêncio | pendente | |
 | 16 | Acerto | até 1 s | conta deu o alvo; inimigo leva dano | silêncio | pendente | |
-| 17 | Erro | até 1 s | conta errada ou inválida | silêncio | pendente | |
+| 17 | Erro | até 1 s | conta errada ou inválida (o mesmo som para as duas) | silêncio | pendente | |
 | 18 | Pular | até 0,5 s | botão Pular | silêncio | pendente | |
-| 19 | Arthur leva dano | até 1 s | ataque do inimigo no fim da rodada | silêncio | pendente | |
+| 19 | Arthur leva dano | até 1 s | ataque do inimigo que tira vida do Arthur; toca junto com o som da rodada | silêncio | pendente | |
 | 20 | Vitória (opcional) | 2 a 4 s | tela de vitória da luta (tocador de vitória em `fim_de_luta`) | silêncio | pendente | |
 | 21 | Derrota (opcional) | 2 a 4 s | tela de derrota da luta (tocador de derrota em `fim_de_luta`) | silêncio | pendente | |
 | 22 | Música de batalha | 1 a 2 min, em loop | durante a luta (tocador de música em `sons_batalha`) | silêncio | pendente | |

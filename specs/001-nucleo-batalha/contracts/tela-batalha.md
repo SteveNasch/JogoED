@@ -81,7 +81,17 @@ func tocar_rodada(resultado: ResultadoRodada) -> void
 ```
 
 Um `AudioStreamPlayer` por evento, sem áudio atribuído (placeholder). Só toca se houver
-áudio. Eventos: carta escolhida, acerto, erro, pulo, dano recebido. Mais um tocador para a
+áudio. Eventos: carta escolhida, acerto, erro, pulo, dano recebido.
+
+O que `tocar_rodada(resultado)` toca:
+
+| `resultado` | Tocador |
+|---|---|
+| `ACERTO` | acerto |
+| `ERRO` ou `INVALIDA` | erro |
+| `PULO` | pulo |
+| e, em qualquer tipo, `dano_recebido > 0` | dano recebido, junto com o de cima |
+ Mais um tocador para a
 música da luta, com `autoplay = true` e sem script: começa quando a cena entra na árvore e
 para quando ela sai (o loop é configurado na importação do arquivo Ogg). Lista completa de
 sons pedidos em `docs/assets-pendentes.md`.
