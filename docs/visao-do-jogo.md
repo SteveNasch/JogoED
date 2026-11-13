@@ -97,8 +97,8 @@ tipo de inimigo.
 - Quantas questões a prova tem e qual a regra de cada uma.
 - Quanto o descanso cura (no jogo antigo, 8 de vida).
 - Quantas casas tem cada ato.
-- Se a divisão que arredonda para baixo continua ou se só vale divisão exata (por causa do
-  lado educativo).
+- ~~Se a divisão que arredonda para baixo continua ou se só vale divisão exata~~ Decidido em
+  13/11 (spec 001): continua arredondando para baixo.
 - Se existe algum registro entre runs, como o melhor resultado.
 
 ## Funcionalidades
