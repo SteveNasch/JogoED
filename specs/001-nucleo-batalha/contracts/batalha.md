@@ -17,6 +17,10 @@ extends Control
 ## Emitido uma vez, depois que o resultado da última rodada saiu da tela.
 signal luta_terminou(resultado: ResultadoLuta)
 
+## A lógica da luta em andamento (criada por iniciar()). Quem usa a cena só lê;
+## os testes de cena escrevem nela para montar um cenário (mão, alvo, vidas).
+var batalha: Batalha
+
 ## Começa a luta. Chamar depois de pôr a cena na árvore.
 func iniciar(
 		cartas: Array[DadosCarta],
@@ -41,6 +45,9 @@ Garantias:
 - `resultado.vida_arthur` é a vida a levar para a próxima luta.
 - A cena não mostra tela de vitória ou derrota, não reinicia a luta e não troca de cena.
 - Com a mesma semente, os mesmos dados e os mesmos cliques, a luta é idêntica.
+- `batalha` fica acessível para testes: um teste de cena pode pôr cartas na mão, definir o
+  alvo ou a vida do inimigo pela `batalha` e depois clicar na tela, sem depender do sorteio.
+  Depois de mexer nos campos, o teste emite `batalha.mudou` para a tela redesenhar.
 
 Exemplo de uso (é o que a `luta_avulsa` faz):
 

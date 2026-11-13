@@ -116,12 +116,19 @@ func mostrar(resultado: ResultadoLuta) -> void
 @export var baralho: DadosBaralho
 @export var inimigo: DadosInimigo
 @export var regras: RegrasBatalha
+
+## A tela da luta em andamento; null enquanto o fim de luta está na tela.
+var tela: TelaBatalha
 ```
 
 Os três campos são preenchidos no editor com os arquivos de `dados/`. Ao abrir, cria a
 `TelaBatalha` e chama `iniciar()`. No `luta_terminou`, remove a tela da luta e mostra o
 `fim_de_luta`. No `jogar_de_novo`, começa outra luta do zero, com semente nova (FR-026,
 FR-027). Na 002, o mapa substitui esta cena.
+
+Nos testes, os três campos podem ser trocados antes de pôr a cena na árvore (por exemplo,
+regras com `tempo_resultado` de centésimos de segundo), e o cenário de vitória ou derrota é
+montado por `tela.batalha` (ver [batalha.md](batalha.md)).
 
 ## Placeholders (princípio IV)
 
