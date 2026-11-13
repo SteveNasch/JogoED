@@ -90,7 +90,9 @@ ferramenta, como trocar `test_` quebraria o GUT. Todo o conteúdo abaixo desses 
 todas as frases livres ficam em português.
 
 **Reavaliação depois do desenho (Fase 1)**: sem mudanças. O modelo de dados e os contratos
-não acrescentaram abstração além da descrita acima, e nenhuma exceção precisou ser aberta.
+não acrescentaram abstração além da descrita acima. As únicas exceções são as duas de nomes
+em inglês do princípio V (ferramentas e títulos do Spec Kit), justificadas nas notas acima;
+nenhuma outra foi aberta.
 
 ## Project Structure
 
@@ -240,4 +242,5 @@ commit.
 
 ## Complexity Tracking
 
-Nenhuma violação da constituição a justificar.
+Nenhuma violação da constituição a justificar. As exceções de nomes do princípio V estão
+justificadas no Constitution Check e não acrescentam complexidade ao código.
