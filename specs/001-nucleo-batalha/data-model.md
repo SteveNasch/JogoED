@@ -101,7 +101,9 @@ Foco, Guarda e Vital).
 | `vida` | `int` | 12 | vida máxima e inicial |
 | `ataque` | `int` | 3 | dano por rodada |
 
-Arquivo: `dados/inimigos/inimigo_padrao.tres`. Validação: `vida >= 1`, `ataque >= 0`.
+Arquivo: `dados/inimigos/inimigo_padrao.tres`. Validação: `vida >= 1`, `ataque >= 1`
+(FR-001: todo inimigo ataca; é o que deixa o painel mostrar o ataque só quando ele é maior
+que 0 e o aviso tratar `dano_recebido` 0 como escudo).
 
 ### RegrasBatalha (`batalha/regras_batalha.gd`)
 
@@ -232,7 +234,7 @@ O que aconteceu numa rodada, para a tela mostrar (FR-025) e os testes conferirem
 | `dano_causado` | `int` | dano calculado: soma do ataque das cartas + Chama, mesmo que passe da vida que o inimigo ainda tinha (o aviso mostra esse número) |
 | `escudo_ganho` | `int` | escudo dado ao Arthur |
 | `cura` | `int` | vida que o Arthur recuperou de fato |
-| `cartas_compradas` | `int` | cartas extras que entraram na mão (Foco ou Pular) |
+| `cartas_compradas` | `int` | cartas extras que entraram na mão (Foco ou Pular); 0 se o Pular derrubou o Arthur ou as pilhas estavam vazias |
 | `inimigo_atacou` | `bool` | o inimigo atacou nesta rodada (falso só quando ele caiu nela) |
 | `dano_recebido` | `int` | vida que o Arthur perdeu no ataque do inimigo (0 se o escudo segurou tudo) |
 | `luta_acabou` | `bool` | alguém chegou a 0 de vida nesta rodada |

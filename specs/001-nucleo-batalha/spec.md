@@ -61,6 +61,7 @@ Referência do jogo inteiro: `docs/visao-do-jogo.md` (seção "Combate").
   ainda valem? → A: sim; a cura, o escudo e a compra valem, e a vitória vem depois deles.
   Na 001 isso quase não aparece; na 002 a cura conta, porque a vida passa para a luta
   seguinte.
+- Q (no analyze): Um inimigo pode ter ataque 0? → A: não; o ataque mínimo é 1 (FR-001).
 - Q (no analyze): O escudo do Arthur fica sempre na tela, mesmo zerado? → A: não; aparece só
   quando é maior que 0 (FR-023).
 
@@ -213,7 +214,7 @@ uma conta com carta especial e conferir que nada acontece.
 
 - **FR-001**: A luta MUST começar com o Arthur com 40 de vida (máxima 40) e 0 de escudo, e
   com um inimigo de vida e ataque definidos nos dados do jogo (padrão: 12 de vida, 3 de
-  ataque).
+  ataque; o ataque de um inimigo é sempre pelo menos 1).
 - **FR-002**: O baralho da luta MUST ter 21 cartas: o baralho inicial da visão (dois de cada
   número de 1 a 5, +, − e ×) mais uma de cada carta extra (Chama, Foco, Guarda, Vital, ÷, x2,
   /2 e ^2). Ele MUST ser embaralhado no início da luta.
