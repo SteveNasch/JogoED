@@ -77,7 +77,7 @@ diante) espera a fase inteira.
 
 ### Área: cartas (dados)
 
-- [ ] T003 [P] Criar `DadosCarta` em `cartas/dados_carta.gd` (`class_name DadosCarta extends Resource`) com `enum Tipo { NUMERO, SOMA, SUBTRACAO, MULTIPLICACAO, DIVISAO, DOBRO, METADE, QUADRADO }`, `enum Efeito { NENHUM, DANO_EXTRA, COMPRAR, ESCUDO, CURA }`, campos `@export` `nome`, `tipo`, `valor`, `ataque`, `efeito`, `intensidade` e as funções `eh_numero()`, `eh_binario()`, `eh_unario()`, `simbolo()` ("3", "+", "−", "×", "÷", "x2", "/2", "^2"), `texto_efeito()` ("+3 de dano", "compra 1", "+5 de escudo", "cura 2" ou "") e `chave_conta()` (mesmo inteiro para cartas intercambiáveis na conta, ex.: Foco e "4"), conforme [data-model.md](data-model.md); testes em `cartas/testes/teste_dados_carta.gd` cobrindo cada função para número, cada operador e cada especial
+- [X] T003 [P] Criar `DadosCarta` em `cartas/dados_carta.gd` (`class_name DadosCarta extends Resource`) com `enum Tipo { NUMERO, SOMA, SUBTRACAO, MULTIPLICACAO, DIVISAO, DOBRO, METADE, QUADRADO }`, `enum Efeito { NENHUM, DANO_EXTRA, COMPRAR, ESCUDO, CURA }`, campos `@export` `nome`, `tipo`, `valor`, `ataque`, `efeito`, `intensidade` e as funções `eh_numero()`, `eh_binario()`, `eh_unario()`, `simbolo()` ("3", "+", "−", "×", "÷", "x2", "/2", "^2"), `texto_efeito()` ("+3 de dano", "compra 1", "+5 de escudo", "cura 2" ou "") e `chave_conta()` (mesmo inteiro para cartas intercambiáveis na conta, ex.: Foco e "4"), conforme [data-model.md](data-model.md); testes em `cartas/testes/teste_dados_carta.gd` cobrindo cada função para número, cada operador e cada especial
 
 ### Área: combatentes
 
