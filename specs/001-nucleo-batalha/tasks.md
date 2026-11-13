@@ -10,7 +10,10 @@ description: "Lista de tarefas da funcionalidade 001, núcleo da batalha"
 [quickstart.md](quickstart.md))
 
 **Tests**: obrigatórios (constituição, princípio II). Cada tarefa escreve os testes **junto**
-com o código que eles testam, no mesmo commit.
+com o código que eles testam, no mesmo commit. A exceção são as tarefas só de testes (T024,
+T026 e T031), que conferem uma história sobre código já feito em outra tarefa; se um desses
+testes falhar, a correção entra no mesmo commit, e o teste que falhou fica como o teste do
+defeito (princípio II, "bug corrigido ganha teste").
 
 **Organization**: as fases seguem a "Ordem de construção sugerida" do plano. Dentro de cada
 fase as tarefas estão agrupadas por área do jogo (cartas, contas, combatentes, batalha,
