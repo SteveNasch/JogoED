@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://luta_avulsa/luta_avulsa.gd" id="1_luta"]
+[ext_resource type="Resource" path="res://dados/baralhos/baralho_luta_avulsa.tres" id="2_baralho"]
+[ext_resource type="Resource" path="res://dados/inimigos/inimigo_padrao.tres" id="3_inimigo"]
+[ext_resource type="Resource" path="res://dados/regras_batalha.tres" id="4_regras"]
+[ext_resource type="PackedScene" path="res://luta_avulsa/fim_de_luta.tscn" id="5_fim"]
+
+[node name="LutaAvulsa" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_luta")
+baralho = ExtResource("2_baralho")
+inimigo = ExtResource("3_inimigo")
+regras = ExtResource("4_regras")
+
+[node name="FimDeLuta" parent="." instance=ExtResource("5_fim")]
+visible = false
+layout_mode = 1
