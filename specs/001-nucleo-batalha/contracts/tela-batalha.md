@@ -60,7 +60,7 @@ func mostrar(resultado: ResultadoRodada) -> void
 func esconder() -> void
 ```
 
-Textos (FR-019, FR-025):
+Textos (FR-025):
 
 | Tipo | Texto |
 |---|---|

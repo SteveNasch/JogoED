@@ -273,8 +273,7 @@ uma conta com carta especial e conferir que nada acontece.
   seguinte (ele protege só do ataque da rodada em que foi ganho e não se acumula entre
   rodadas).
 - **FR-019**: Se a expressão for inválida ou der outro valor, as cartas usadas MUST ir para
-  o descarte, sem dano e sem efeitos especiais, e o jogo MUST mostrar o valor obtido (ou que
-  a conta é inválida) junto do alvo.
+  o descarte, sem dano e sem efeitos especiais. O que aparece na tela está na FR-025.
 - **FR-020**: O jogador MUST poder usar o Pular a qualquer momento da rodada: cartas na
   expressão voltam para a mão, o inimigo ataca, 1 carta extra entra na mão e a rodada
   seguinte começa normalmente (com a sua própria carta).
@@ -291,8 +290,8 @@ uma conta com carta especial e conferir que nada acontece.
 - **FR-024**: Cada carta MUST mostrar o seu número ou símbolo, o seu valor de ataque e, se
   for especial, o nome e o efeito.
 - **FR-025**: Depois de cada confirmação ou Pular, o jogo MUST mostrar o que aconteceu: dano
-  causado e efeitos (acerto), valor obtido ou conta inválida (erro) e dano recebido pelo
-  Arthur. O resultado MUST ficar na tela por cerca de 1,5 segundo (valor nos dados) e a
+  causado e efeitos (acerto), valor obtido ou conta inválida, sempre junto do alvo (erro), e
+  dano recebido pelo Arthur. O resultado MUST ficar na tela por cerca de 1,5 segundo (valor nos dados) e a
   rodada seguinte (ou a tela de vitória ou derrota) MUST começar sozinha, sem clique. Nesse
   intervalo as ações do jogador ficam indisponíveis.
 - **FR-026**: A tela de vitória MUST mostrar a vitória, a vida restante do Arthur e quantas
