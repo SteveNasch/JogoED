@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="DadosCarta" format=3]
+
+[ext_resource type="Script" path="res://cartas/dados_carta.gd" id="1_tmow7"]
+
+[resource]
+script = ExtResource("1_tmow7")
+tipo = 4
+ataque = 3

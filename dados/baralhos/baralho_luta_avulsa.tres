@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="DadosBaralho" format=3]
+
+[ext_resource type="Script" path="res://cartas/dados_carta.gd" id="1_lhqd3"]
+[ext_resource type="Resource" path="res://dados/cartas/numero_1.tres" id="2_fh2ct"]
+[ext_resource type="Resource" path="res://dados/cartas/numero_2.tres" id="3_w64r6"]
+[ext_resource type="Resource" path="res://dados/cartas/numero_3.tres" id="4_qbekl"]
+[ext_resource type="Resource" path="res://dados/cartas/numero_4.tres" id="5_2cbhd"]
+[ext_resource type="Resource" path="res://dados/cartas/numero_5.tres" id="6_8s8cf"]
+[ext_resource type="Resource" path="res://dados/cartas/soma.tres" id="7_eikbt"]
+[ext_resource type="Resource" path="res://dados/cartas/subtracao.tres" id="8_170g3"]
+[ext_resource type="Resource" path="res://dados/cartas/multiplicacao.tres" id="9_lo0pv"]
+[ext_resource type="Resource" path="res://dados/cartas/divisao.tres" id="10_i2ndx"]
+[ext_resource type="Resource" path="res://dados/cartas/dobro.tres" id="11_dpclo"]
+[ext_resource type="Resource" path="res://dados/cartas/metade.tres" id="12_mwol1"]
+[ext_resource type="Resource" path="res://dados/cartas/quadrado.tres" id="13_82btb"]
+[ext_resource type="Resource" path="res://dados/cartas/chama.tres" id="14_4cv0y"]
+[ext_resource type="Resource" path="res://dados/cartas/foco.tres" id="15_efej2"]
+[ext_resource type="Resource" path="res://dados/cartas/guarda.tres" id="16_4r1fp"]
+[ext_resource type="Resource" path="res://dados/cartas/vital.tres" id="17_dqlra"]
+[ext_resource type="Script" path="res://cartas/dados_baralho.gd" id="18_t8c5l"]
+
+[resource]
+script = ExtResource("18_t8c5l")
+cartas = Array[ExtResource("1_lhqd3")]([ExtResource("2_fh2ct"), ExtResource("2_fh2ct"), ExtResource("3_w64r6"), ExtResource("3_w64r6"), ExtResource("4_qbekl"), ExtResource("4_qbekl"), ExtResource("5_2cbhd"), ExtResource("5_2cbhd"), ExtResource("6_8s8cf"), ExtResource("6_8s8cf"), ExtResource("7_eikbt"), ExtResource("8_170g3"), ExtResource("9_lo0pv"), ExtResource("10_i2ndx"), ExtResource("11_dpclo"), ExtResource("12_mwol1"), ExtResource("13_82btb"), ExtResource("14_4cv0y"), ExtResource("15_efej2"), ExtResource("16_4r1fp"), ExtResource("17_dqlra")])

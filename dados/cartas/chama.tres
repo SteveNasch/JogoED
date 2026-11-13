@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DadosCarta" format=3]
+
+[ext_resource type="Script" path="res://cartas/dados_carta.gd" id="1_ms6y0"]
+
+[resource]
+script = ExtResource("1_ms6y0")
+nome = "Chama"
+valor = 5
+ataque = 5
+efeito = 1
+intensidade = 3

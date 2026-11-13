@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DadosCarta" format=3]
+
+[ext_resource type="Script" path="res://cartas/dados_carta.gd" id="1_eiims"]
+
+[resource]
+script = ExtResource("1_eiims")
+nome = "Foco"
+valor = 4
+ataque = 1
+efeito = 2
+intensidade = 1

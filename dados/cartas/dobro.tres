@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="DadosCarta" format=3]
+
+[ext_resource type="Script" path="res://cartas/dados_carta.gd" id="1_oqypr"]
+
+[resource]
+script = ExtResource("1_oqypr")
+tipo = 5
+ataque = 2
