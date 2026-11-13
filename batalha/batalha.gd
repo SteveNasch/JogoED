@@ -78,9 +78,14 @@ func confirmar() -> void:
 	_mostrar_resultado(resultado)
 
 
-## Depois que a tela mostrou o resultado: começa a rodada seguinte.
+## Depois que a tela mostrou o resultado: termina a luta, se o inimigo caiu (FR-022), ou
+## começa a rodada seguinte.
 func avancar() -> void:
 	if estado != Estado.MOSTRANDO_RESULTADO:
+		return
+	if not inimigo.esta_vivo():
+		estado = Estado.TERMINADA
+		luta_terminou.emit(ResultadoLuta.new(true, arthur.vida, inimigo.vida, rodada))
 		return
 	_comecar_rodada(regras.cartas_por_rodada)
 
@@ -112,6 +117,7 @@ func _inimigo_ataca(resultado: ResultadoRodada) -> void:
 
 
 func _mostrar_resultado(resultado: ResultadoRodada) -> void:
+	resultado.luta_acabou = not inimigo.esta_vivo()
 	estado = Estado.MOSTRANDO_RESULTADO
 	mudou.emit()
 	rodada_resolvida.emit(resultado)

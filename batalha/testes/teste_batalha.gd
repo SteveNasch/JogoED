@@ -256,3 +256,87 @@ func test_rodada_seguinte_compra_exatamente_uma_carta() -> void:
 	assert_signal_emit_count(batalha, "mudou", 1)
 	var busca := BuscaAlvo.new(REGRAS.alvo_minimo, REGRAS.alvo_maximo, REGRAS.max_numeros_no_alvo, REGRAS.limite_buscas_alvo)
 	assert_true(busca.alcancaveis(batalha.baralho.mao).has(batalha.alvo))
+
+
+## Inimigo com 7 de vida e um acerto de 13 de dano (3 + 4 × 2 = 11) já confirmado.
+func _golpe_final() -> Batalha:
+	var batalha := _com_mao([N3, SOMA, N4, MULTIPLICACAO, N2], 11)
+	batalha.inimigo.vida = 7
+	watch_signals(batalha)
+	_montar(batalha, [0, 1, 2, 3, 4])
+	batalha.confirmar()
+	return batalha
+
+
+func test_golpe_final_nao_tem_ataque_do_inimigo() -> void:
+	# Cenário 4 da história 1.
+	var batalha := _golpe_final()
+	var resultado := _resultado(batalha)
+	assert_eq(batalha.inimigo.vida, 0)
+	assert_eq(batalha.arthur.vida, 40)
+	assert_eq(resultado.tipo, ResultadoRodada.Tipo.ACERTO)
+	assert_false(resultado.inimigo_atacou)
+	assert_eq(resultado.dano_recebido, 0)
+	assert_true(resultado.luta_acabou)
+	assert_eq(batalha.estado, Batalha.Estado.MOSTRANDO_RESULTADO)
+	assert_signal_not_emitted(batalha, "luta_terminou")
+
+
+func test_dano_causado_e_o_calculado_mesmo_passando_da_vida() -> void:
+	assert_eq(_resultado(_golpe_final()).dano_causado, 13)
+
+
+func test_rodada_que_nao_derruba_ninguem_nao_acaba_a_luta() -> void:
+	var batalha := _com_mao([N1, N5, SOMA, N2, SUBTRACAO], 5)
+	watch_signals(batalha)
+	batalha.escolher_carta(1)
+	batalha.confirmar()
+	assert_false(_resultado(batalha).luta_acabou)
+
+
+func test_avancar_depois_do_golpe_final_termina_a_luta_com_vitoria() -> void:
+	var batalha := _golpe_final()
+	batalha.arthur.vida = 31
+	batalha.avancar()
+	assert_eq(batalha.estado, Batalha.Estado.TERMINADA)
+	assert_eq(batalha.rodada, 1)
+	assert_signal_emit_count(batalha, "luta_terminou", 1)
+	var resultado: ResultadoLuta = get_signal_parameters(batalha, "luta_terminou")[0]
+	assert_true(resultado.venceu)
+	assert_eq(resultado.vida_arthur, 31)
+	assert_eq(resultado.vida_inimigo, 0)
+	assert_eq(resultado.rodadas, 1)
+
+
+func test_rodadas_do_resultado_contam_a_luta_inteira() -> void:
+	var batalha := _com_mao([N1, N2, N3, SOMA, SUBTRACAO, N5], 5)
+	batalha.escolher_carta(5)
+	batalha.confirmar()
+	batalha.avancar()
+	batalha.baralho.mao = [N3, SOMA, N4, MULTIPLICACAO, N2]
+	batalha.alvo = 11
+	watch_signals(batalha)
+	_montar(batalha, [0, 1, 2, 3, 4])
+	batalha.confirmar()
+	batalha.avancar()
+	var resultado: ResultadoLuta = get_signal_parameters(batalha, "luta_terminou")[0]
+	assert_eq(resultado.rodadas, 2)
+	assert_eq(resultado.vida_arthur, 37)
+
+
+func test_nenhuma_acao_vale_depois_da_luta_terminada() -> void:
+	var batalha := _golpe_final()
+	batalha.baralho.mao = [N1, SOMA, N1]
+	batalha.avancar()
+	clear_signal_watcher()
+	watch_signals(batalha)
+	batalha.escolher_carta(0)
+	batalha.confirmar()
+	batalha.avancar()
+	assert_eq(batalha.estado, Batalha.Estado.TERMINADA)
+	assert_eq(batalha.baralho.mao, [N1, SOMA, N1])
+	assert_eq(batalha.baralho.expressao.size(), 0)
+	assert_eq(batalha.rodada, 1)
+	assert_signal_not_emitted(batalha, "mudou")
+	assert_signal_not_emitted(batalha, "rodada_resolvida")
+	assert_signal_not_emitted(batalha, "luta_terminou")
