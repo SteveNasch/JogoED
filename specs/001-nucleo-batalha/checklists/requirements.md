@@ -38,5 +38,5 @@
 - FR-029 (mesma semente, mesma luta) e FR-030 (placeholders do motor) citam o motor e o
   sorteio só como exigência verificável, sem escolher tecnologia; exigidos pela constituição
   (princípios II e IV).
-- Ponto ainda aberto para o `/speckit-clarify`: se o inimigo derrotado ainda ataca
-  (assumido que não; ver Assumptions).
+- Inimigo derrotado não ataca: era o ponto aberto para o `/speckit-clarify` e foi
+  confirmado lá (ver "Clarifications" da spec).

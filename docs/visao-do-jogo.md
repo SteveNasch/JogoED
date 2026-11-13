@@ -39,11 +39,13 @@ O chefe final, no topo da torre, é a própria prova. Ao vencê-la, Arthur acord
 - Se a expressão der exatamente o alvo, o inimigo recebe dano igual à soma do valor de ataque
   das cartas usadas, e os efeitos especiais das cartas são aplicados.
 - Se a expressão for inválida ou der outro valor, as cartas usadas são gastas e não há dano.
-- Toda rodada termina com o ataque do inimigo ao Arthur, acertando ou não.
+- Toda rodada termina com o ataque do inimigo ao Arthur, acertando ou não, enquanto o
+  inimigo está vivo: o acerto que o derrota encerra a luta sem ataque (decidido na spec 001).
 - Antes de confirmar, o jogador pode desfazer a última carta ou limpar a expressão.
 - "Pular": o jogador abre mão de tentar, recebe o ataque do inimigo e ganha uma carta extra.
-- Mão persistente: 5 cartas no início da batalha e exatamente 1 a cada rodada nova. Cartas
-  jogadas vão para o descarte.
+- Mão persistente: 5 cartas no início da batalha e 1 a cada rodada nova, mais as que a
+  garantia de mão mínima exigir (decidido na spec 001: o jogo nunca tira cartas da mão, só
+  completa o que falta). Cartas jogadas vão para o descarte.
 - Baralho inicial: dois de cada número de 1 a 5, além de +, − e ×.
 - Arthur começa com 40 de vida, que passa de uma batalha para a outra.
 - Cartas especiais são números com efeito extra: Chama (dano adicional), Foco (compra
