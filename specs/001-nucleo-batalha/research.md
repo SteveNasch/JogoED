@@ -397,7 +397,8 @@ teste de simulação abaixo confere que nenhuma rodada chega ao teto
   tem ícone próprio (sem `application/config/icon` e sem `icon.svg`), então a janela usa o
   ícone padrão do Godot, listado como pendência como os demais. Sons: a cena `sons_batalha` tem um
   `AudioStreamPlayer` por evento, **sem áudio atribuído**, e só toca se houver áudio
-  (`if tocador.stream != null`). Quando a equipe entregar um arquivo, ele é atribuído no
+  (`if tocador.stream != null`); a música da luta é mais um tocador ali, com `autoplay`; os
+  sons de vitória e derrota são dois tocadores da cena `fim_de_luta`. Quando a equipe entregar um arquivo, ele é atribuído no
   editor, sem mexer no código. Tudo fica listado em `docs/assets-pendentes.md` (tipo,
   tamanho, quadros, formato e onde é usado).
 - **Motivo**: princípio IV da constituição e FR-030. `ColorRect` é o nó da documentação para

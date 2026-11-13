@@ -61,9 +61,9 @@ Efeitos curtos em WAV; música em Ogg Vorbis (recomendação da documentação d
 | 17 | Erro | até 1 s | conta errada ou inválida | silêncio | pendente | |
 | 18 | Pular | até 0,5 s | botão Pular | silêncio | pendente | |
 | 19 | Arthur leva dano | até 1 s | ataque do inimigo no fim da rodada | silêncio | pendente | |
-| 20 | Vitória (opcional) | 2 a 4 s | tela de vitória da luta | silêncio | pendente | |
-| 21 | Derrota (opcional) | 2 a 4 s | tela de derrota da luta | silêncio | pendente | |
-| 22 | Música de batalha | 1 a 2 min, em loop | durante a luta | silêncio | pendente | |
+| 20 | Vitória (opcional) | 2 a 4 s | tela de vitória da luta (tocador de vitória em `fim_de_luta`) | silêncio | pendente | |
+| 21 | Derrota (opcional) | 2 a 4 s | tela de derrota da luta (tocador de derrota em `fim_de_luta`) | silêncio | pendente | |
+| 22 | Música de batalha | 1 a 2 min, em loop | durante a luta (tocador de música em `sons_batalha`) | silêncio | pendente | |
 
 Clima pedido na visão do jogo: aventura séria, no estilo de Slay the Spire.
 

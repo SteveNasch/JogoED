@@ -79,8 +79,10 @@ func tocar_rodada(resultado: ResultadoRodada) -> void
 ```
 
 Um `AudioStreamPlayer` por evento, sem áudio atribuído (placeholder). Só toca se houver
-áudio. Eventos: carta escolhida, acerto, erro, pulo, dano recebido. Lista completa de sons
-pedidos em `docs/assets-pendentes.md`.
+áudio. Eventos: carta escolhida, acerto, erro, pulo, dano recebido. Mais um tocador para a
+música da luta, com `autoplay = true` e sem script: começa quando a cena entra na árvore e
+para quando ela sai (o loop é configurado na importação do arquivo Ogg). Lista completa de
+sons pedidos em `docs/assets-pendentes.md`.
 
 ### `batalha/tela_batalha.tscn` (raiz: `Control`)
 
@@ -109,6 +111,10 @@ func mostrar(resultado: ResultadoLuta) -> void
 | Linha 1 | "Vida do Arthur: 31" | "Vida do inimigo: 5" |
 | Linha 2 | "Rodadas: 4" | "Rodadas: 9" |
 | Botão | "Lutar de novo" | "Tentar de novo" |
+| Som | tocador de vitória | tocador de derrota |
+
+Os dois tocadores são `AudioStreamPlayer` sem áudio (placeholder); `mostrar()` toca o certo
+só se ele tiver áudio, como em `sons_batalha`.
 
 ### `luta_avulsa/luta_avulsa.tscn` (raiz: `Control`, cena principal do projeto na 001)
 
