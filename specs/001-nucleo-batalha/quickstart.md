@@ -135,4 +135,6 @@ do Godot), e que o repositório não tem nenhum arquivo de imagem ou som criado 
 ## Pelo MCP do Godot (para o Claude)
 
 Durante a implementação, o Claude usa `run_project` e `get_debug_output` do MCP para abrir
-o jogo e ler erros, e os comandos de linha acima para a suíte de testes.
+o jogo e ler erros, e os comandos de linha acima para a suíte de testes. O MCP não clica no
+jogo: o Claude valida os cenários 1 e 8 (tarefa T034) e uma pessoa da equipe joga os
+cenários 2 a 7 e anota o resultado no fim deste arquivo (tarefa T035).

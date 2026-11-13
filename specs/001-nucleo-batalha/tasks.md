@@ -199,7 +199,8 @@ especial e conferir que nada acontece (quickstart, cenário 5).
 
 - [ ] T032 Criar `batalha/testes/teste_simulacao.gd` com 1.000 lutas de sementes diferentes jogadas só pela lógica (`Batalha` com o baralho de 21 cartas e os `.tres` padrão) por um jogador automático que alterna entre a conta de exemplo da `BuscaAlvo` para o alvo da rodada, uma conta errada e o Pular: em toda rodada o alvo tem conta de exemplo com cartas da mão (SC-002); toda mão de início de rodada cumpre o mínimo quando o baralho tem cartas para isso (SC-003); `baralho.total()` fica constante; toda luta termina; nenhuma busca chega ao teto (`avaliacoes < limite_buscas_alvo` em toda rodada, ou seja, o teto nunca cortou uma busca; "não passa do teto" seria verdade por construção e não provaria nada); repetir 20 sementes com as mesmas ações dá exatamente as mesmas lutas (SC-008)
 - [ ] T033 Atualizar `docs/assets-pendentes.md` com os placeholders que existem de fato nas cenas (cor de cada `ColorRect`, nós de texto, tocadores de áudio vazios), confirmando que cada placeholder visual e sonoro das cenas tem uma linha (SC-006) e que não há arquivo de imagem ou som criado para o jogo
-- [ ] T034 Validar o [quickstart.md](quickstart.md) do início ao fim: rodar a suíte inteira pela linha de comando (tudo passando), abrir o jogo pelo MCP do Godot (`run_project`, `get_debug_output`) sem erros na saída e percorrer os cenários 2 a 8; registrar no fim do `quickstart.md` a data e o resultado de cada cenário (passou ou o que falhou, com a tarefa de correção aberta) e conferir `docs/assets-pendentes.md` contra o que aparece na tela
+- [ ] T034 Validação automática do [quickstart.md](quickstart.md), feita pelo agente: rodar a suíte inteira pela linha de comando (cenário 1, tudo passando), abrir o jogo pelo MCP do Godot (`run_project`, `get_debug_output`) e conferir que não sai nenhum erro nem aviso ao carregar a luta, e fazer o cenário 8 lendo as cenas (`.tscn`) e o repositório: cada placeholder tem linha em `docs/assets-pendentes.md` e não há imagem ou som criado; registrar no fim do `quickstart.md` a data e o resultado dos cenários 1 e 8 (o MCP não clica no jogo, por isso os cenários jogados ficam no T035)
+- [ ] T035 Validação jogada do [quickstart.md](quickstart.md), feita por **uma pessoa da equipe** (não pelo agente): abrir o jogo e percorrer os cenários 2 a 7 com o mouse; registrar no fim do `quickstart.md` a data, quem jogou e o resultado de cada cenário (passou ou o que falhou); cada falha vira uma tarefa de correção nova neste arquivo, com teste que reproduz o defeito (princípio II)
 
 ---
 
@@ -242,7 +243,7 @@ flowchart LR
     T022 --> T029
     T024 --> T030
     T029 & T030 --> T031
-    T026 & T031 --> T032 --> T033 --> T034
+    T026 & T031 --> T032 --> T033 --> T034 --> T035
 ```
 
 ### Dentro de cada tarefa
@@ -292,7 +293,8 @@ ordem dos commits em `batalha/batalha.gd`.
 3. + US2 → erro e derrota.
 4. + US3 → desfazer, limpar e Pular.
 5. + US4 → cartas especiais.
-6. Polish → simulação, assets e validação do quickstart.
+6. Polish → simulação, assets e validação do quickstart (a parte jogada, T035, é de uma
+   pessoa da equipe).
 
 Cada passo acrescenta valor sem quebrar o anterior, porque a suíte inteira roda a cada
 commit.
