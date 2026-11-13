@@ -1,0 +1,8 @@
+# Cache e imports do Godot 4
+.godot/
+
+# Builds exportados
+/build/
+
+# Configurações locais do Claude Code (de cada máquina)
+.claude/settings.local.json
