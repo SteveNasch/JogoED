@@ -71,9 +71,9 @@ func pode_confirmar() -> bool:
 	return not baralho.expressao.is_empty()
 
 
-## Julga a conta: acerto tira do inimigo a soma do ataque das cartas (FR-016); erro e conta
-## inválida não causam dano (FR-019). Nos três casos as cartas vão para o descarte e o
-## inimigo vivo ataca (FR-021).
+## Julga a conta: acerto tira do inimigo a soma do ataque das cartas e aplica os efeitos das
+## especiais (FR-016); erro e conta inválida não causam dano nem efeito (FR-019). Nos três
+## casos as cartas vão para o descarte e o inimigo vivo ataca (FR-021).
 func confirmar() -> void:
 	if estado != Estado.MONTANDO or not pode_confirmar():
 		return
@@ -89,6 +89,8 @@ func confirmar() -> void:
 		resultado.valor = conta.valor
 		resultado.dano_causado = _ataque_da_expressao()
 		inimigo.receber_dano(resultado.dano_causado)
+		for carta in baralho.expressao:
+			_aplicar_efeito(carta, resultado)
 	baralho.descartar_expressao()
 	_inimigo_ataca(resultado)
 	_mostrar_resultado(resultado)
@@ -135,6 +137,23 @@ func _ataque_da_expressao() -> int:
 	for carta in baralho.expressao:
 		ataque += carta.ataque
 	return ataque
+
+
+## FR-017 e research D13: quem recebe cada efeito está escrito aqui, ao lado dele (o jogo
+## antigo passava sempre o inimigo, e a Guarda e a Vital ajudavam o inimigo). Vale mesmo com o
+## inimigo já caído, e roda antes do descarte, para o Foco não comprar cartas da própria conta.
+func _aplicar_efeito(carta: DadosCarta, resultado: ResultadoRodada) -> void:
+	match carta.efeito:
+		DadosCarta.Efeito.DANO_EXTRA:
+			inimigo.receber_dano(carta.intensidade)
+			resultado.dano_causado += carta.intensidade
+		DadosCarta.Efeito.COMPRAR:
+			resultado.cartas_compradas += baralho.comprar(carta.intensidade)
+		DadosCarta.Efeito.ESCUDO:
+			arthur.ganhar_escudo(carta.intensidade)
+			resultado.escudo_ganho += carta.intensidade
+		DadosCarta.Efeito.CURA:
+			resultado.cura += arthur.curar(carta.intensidade)
 
 
 ## FR-021: o inimigo ataca no fim de toda rodada, menos quando caiu nela.

@@ -605,3 +605,164 @@ func test_pular_nao_vale_enquanto_o_resultado_esta_na_tela() -> void:
 	assert_eq(batalha.baralho.mao, mao)
 	assert_signal_not_emitted(batalha, "mudou")
 	assert_signal_not_emitted(batalha, "rodada_resolvida")
+
+
+## Acerto com a carta especial sozinha (o valor dela é o alvo), já confirmado.
+func _acerto_com(especial: DadosCarta, outras: Array[DadosCarta] = []) -> Batalha:
+	var mao: Array[DadosCarta] = [especial]
+	mao.append_array(outras)
+	var batalha := _com_mao(mao, especial.valor)
+	watch_signals(batalha)
+	batalha.escolher_carta(0)
+	batalha.confirmar()
+	return batalha
+
+
+func test_chama_tira_3_a_mais_do_inimigo_e_nao_mexe_no_arthur() -> void:
+	# Cenário 1 da história 4: a Chama vale 5 e tira 5 + 3.
+	var batalha := _acerto_com(CHAMA)
+	var resultado := _resultado(batalha)
+	assert_eq(resultado.tipo, ResultadoRodada.Tipo.ACERTO)
+	assert_eq(resultado.dano_causado, 8)
+	assert_eq(batalha.inimigo.vida, 4)
+	assert_eq(batalha.arthur.vida, 37, "só o ataque do inimigo")
+	assert_eq(batalha.arthur.escudo, 0)
+	assert_eq(resultado.cura, 0)
+	assert_eq(resultado.escudo_ganho, 0)
+
+
+func test_foco_compra_uma_carta_antes_do_ataque() -> void:
+	# Cenário 2 da história 4: o Foco vale 4 e compra a carta do topo da pilha.
+	var batalha := _com_mao([FOCO, N1], 4)
+	var topo: DadosCarta = batalha.baralho.compra.back()
+	var tamanho_da_compra := batalha.baralho.compra.size()
+	watch_signals(batalha)
+	batalha.escolher_carta(0)
+	batalha.confirmar()
+	var resultado := _resultado(batalha)
+	assert_eq(resultado.cartas_compradas, 1)
+	assert_eq(batalha.baralho.mao, [N1, topo])
+	assert_eq(batalha.baralho.compra.size(), tamanho_da_compra - 1)
+	assert_eq(batalha.baralho.descarte.back(), FOCO)
+	assert_eq(batalha.inimigo.vida, 11)
+	assert_eq(batalha.arthur.vida, 37)
+	assert_true(resultado.inimigo_atacou)
+
+
+func test_guarda_da_escudo_ao_arthur_e_nao_ao_inimigo() -> void:
+	# Cenário 3 da história 4: o escudo de 5 segura o ataque 3 e zera na rodada seguinte.
+	var batalha := _acerto_com(GUARDA)
+	var resultado := _resultado(batalha)
+	assert_eq(resultado.escudo_ganho, 5)
+	assert_eq(batalha.arthur.vida, 40)
+	assert_eq(batalha.arthur.escudo, 2)
+	assert_eq(resultado.dano_recebido, 0)
+	assert_true(resultado.inimigo_atacou)
+	assert_eq(batalha.inimigo.escudo, 0)
+	assert_eq(batalha.inimigo.vida, 10, "só o ataque da carta, 2")
+	batalha.avancar()
+	assert_eq(batalha.arthur.escudo, 0)
+	assert_eq(batalha.inimigo.escudo, 0)
+
+
+func test_vital_cura_o_arthur_sem_passar_da_maxima_e_nao_cura_o_inimigo() -> void:
+	# Cenário 4 da história 4: com 39 de 40, a Vital cura só 1; depois o inimigo tira 3.
+	var batalha := _com_mao([VITAL, N1], 7)
+	batalha.arthur.vida = 39
+	batalha.inimigo.vida = 10
+	watch_signals(batalha)
+	batalha.escolher_carta(0)
+	batalha.confirmar()
+	var resultado := _resultado(batalha)
+	assert_eq(resultado.cura, 1)
+	assert_eq(batalha.arthur.vida, 37)
+	assert_eq(batalha.inimigo.vida, 7, "só o ataque da carta, 3")
+	assert_eq(batalha.inimigo.vida_maxima, 12)
+
+
+func test_efeitos_de_todas_as_especiais_da_conta_valem() -> void:
+	# Guarda + Vital = 13: dano 2 + 1 + 3, escudo 5 e cura 2.
+	var batalha := _com_mao([GUARDA, SOMA, VITAL], 13)
+	batalha.arthur.vida = 35
+	watch_signals(batalha)
+	_montar(batalha, [0, 1, 2])
+	batalha.confirmar()
+	var resultado := _resultado(batalha)
+	assert_eq(resultado.dano_causado, 6)
+	assert_eq(resultado.escudo_ganho, 5)
+	assert_eq(resultado.cura, 2)
+	assert_eq(resultado.dano_recebido, 0)
+	assert_eq(batalha.arthur.vida, 37)
+	assert_eq(batalha.arthur.escudo, 2)
+	assert_eq(batalha.inimigo.vida, 6)
+
+
+func test_golpe_final_com_a_vital_cura_e_nao_tem_ataque() -> void:
+	var batalha := _com_mao([VITAL, N1], 7)
+	batalha.arthur.vida = 30
+	batalha.inimigo.vida = 3
+	watch_signals(batalha)
+	batalha.escolher_carta(0)
+	batalha.confirmar()
+	var resultado := _resultado(batalha)
+	assert_eq(batalha.inimigo.vida, 0)
+	assert_eq(resultado.cura, 2)
+	assert_eq(batalha.arthur.vida, 32)
+	assert_false(resultado.inimigo_atacou)
+	assert_true(resultado.luta_acabou)
+	batalha.avancar()
+	var fim: ResultadoLuta = get_signal_parameters(batalha, "luta_terminou")[0]
+	assert_true(fim.venceu)
+	assert_eq(fim.vida_arthur, 32)
+
+
+func test_chama_que_da_o_golpe_final_leva_a_vitoria_sem_ataque() -> void:
+	# A Chama sozinha tira 5; o inimigo com 7 só cai com os +3.
+	var batalha := _com_mao([CHAMA, N1], 5)
+	batalha.inimigo.vida = 7
+	watch_signals(batalha)
+	batalha.escolher_carta(0)
+	batalha.confirmar()
+	var resultado := _resultado(batalha)
+	assert_eq(resultado.dano_causado, 8)
+	assert_eq(batalha.inimigo.vida, 0)
+	assert_false(resultado.inimigo_atacou)
+	assert_eq(batalha.arthur.vida, 40)
+	assert_true(resultado.luta_acabou)
+	batalha.avancar()
+	assert_eq(batalha.estado, Batalha.Estado.TERMINADA)
+	assert_true((get_signal_parameters(batalha, "luta_terminou")[0] as ResultadoLuta).venceu)
+
+
+func test_foco_com_a_compra_vazia_nao_compra_carta_da_propria_conta() -> void:
+	# A pilha vazia é refeita só com o descarte, que ainda não tem as cartas da conta.
+	var batalha := _com_mao([FOCO, SOMA, N1, N3], 5)
+	batalha.baralho.compra.clear()
+	batalha.baralho.descarte = [N2] as Array[DadosCarta]
+	watch_signals(batalha)
+	_montar(batalha, [0, 1, 2])
+	batalha.confirmar()
+	var resultado := _resultado(batalha)
+	assert_eq(resultado.tipo, ResultadoRodada.Tipo.ACERTO)
+	assert_eq(resultado.cartas_compradas, 1)
+	assert_eq(batalha.baralho.mao, [N3, N2])
+	assert_eq(batalha.baralho.compra.size(), 0)
+	assert_eq(batalha.baralho.descarte, [FOCO, SOMA, N1])
+
+
+func test_foco_com_as_duas_pilhas_vazias_nao_faz_nada_e_a_luta_segue() -> void:
+	# Edge case da spec.
+	var batalha := _com_mao([FOCO, N1], 4)
+	batalha.baralho.compra.clear()
+	batalha.baralho.descarte.clear()
+	watch_signals(batalha)
+	batalha.escolher_carta(0)
+	batalha.confirmar()
+	var resultado := _resultado(batalha)
+	assert_eq(resultado.tipo, ResultadoRodada.Tipo.ACERTO)
+	assert_eq(resultado.cartas_compradas, 0)
+	assert_eq(batalha.baralho.mao, [N1])
+	assert_false(resultado.luta_acabou)
+	batalha.avancar()
+	assert_eq(batalha.estado, Batalha.Estado.MONTANDO)
+	assert_eq(batalha.rodada, 2)
