@@ -291,7 +291,8 @@ teste de simulação abaixo confere que nenhuma rodada chega perto do teto.
 - **Sorteio**: o alvo sempre pertence aos valores achados; fica na faixa quando há algum
   valor da faixa; cai no mais próximo quando não há (mão 1, 1, 2, +, − → alvo 3: os valores
   possíveis são −1, 0, 1, 2 e 3, porque só há um `+`).
-- **Freios**: com o baralho inteiro na mão e uma faixa impossível, a busca termina e o número
+- **Freios**: com o baralho inteiro na mão e uma faixa impossível (5.000 a 6.000; o maior
+  valor possível com o baralho da 001 é `7 x2 ^2 × 6 + 5` = 1.181), a busca termina e o número
   de avaliações não passa de `limite_buscas_alvo`; nenhuma conta de exemplo tem mais números
   que `max_numeros_no_alvo`.
 - **Simulação** (SC-002): 1.000 lutas com sementes diferentes, jogadas por um "jogador
