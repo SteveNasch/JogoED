@@ -10,6 +10,8 @@ Como usar esta lista:
   autorização explícita para aquele item.
 - Situações: **pendente** (falta o arquivo), **entregue** (arquivo no repositório, ainda
   com placeholder na cena) e **aplicado** (já aparece no jogo).
+- Os números identificam cada item e não mudam (o código e as specs citam "asset 15", por
+  exemplo); item novo recebe o próximo número livre, mesmo que fique numa tabela do meio.
 
 Medidas pensadas para a resolução base de 640×360 (ver
 `specs/001-nucleo-batalha/research.md`, D3). Imagens em PNG com fundo transparente, sem

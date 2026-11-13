@@ -235,10 +235,11 @@ uma conta com carta especial e conferir que nada acontece.
   cartas daquele tipo fora da mão, a rodada começa com a melhor mão possível.
 - **FR-007**: Cada rodada MUST sortear um alvo inteiro positivo dentro da faixa dos dados do
   jogo (padrão: 5 a 12) que seja alcançável com as cartas da mão naquele momento, usando cada
-  carta no máximo uma vez e as regras de FR-012 a FR-015. A busca considera contas com até
-  3 cartas de número (valor nos dados). Valores alcançáveis com uma carta só também valem. Se nenhum valor da faixa for alcançável, o alvo MUST ser o valor positivo
-  alcançável mais próximo da faixa; havendo empate (um abaixo e um acima à mesma distância),
-  o alvo MUST ser sorteado entre os dois.
+  carta no máximo uma vez e as regras de FR-012 a FR-015. A busca considera contas com até 3
+  cartas de número (valor nos dados). Valores alcançáveis com uma carta só também valem. Se
+  nenhum valor da faixa for alcançável, o alvo MUST ser o valor positivo alcançável mais
+  próximo da faixa; havendo empate (um abaixo e um acima à mesma distância), o alvo MUST ser
+  sorteado entre os dois.
 
 **Montagem da expressão**
 
@@ -298,9 +299,9 @@ uma conta com carta especial e conferir que nada acontece.
   for especial, o nome e o efeito.
 - **FR-025**: Depois de cada confirmação ou Pular, o jogo MUST mostrar o que aconteceu: dano
   causado e efeitos (acerto), valor obtido ou conta inválida, sempre junto do alvo (erro), e
-  dano recebido pelo Arthur. O resultado MUST ficar na tela por cerca de 1,5 segundo (valor nos dados) e a
-  rodada seguinte (ou a tela de vitória ou derrota) MUST começar sozinha, sem clique. Nesse
-  intervalo as ações do jogador ficam indisponíveis.
+  dano recebido pelo Arthur. O resultado MUST ficar na tela por cerca de 1,5 segundo (valor
+  nos dados) e a rodada seguinte (ou a tela de vitória ou derrota) MUST começar sozinha, sem
+  clique. Nesse intervalo as ações do jogador ficam indisponíveis.
 - **FR-026**: A tela de vitória MUST mostrar a vitória, a vida restante do Arthur e quantas
   rodadas a luta durou, com a opção de lutar de novo.
 - **FR-027**: A tela de derrota MUST mostrar a derrota, a vida restante do inimigo e quantas
@@ -308,9 +309,9 @@ uma conta com carta especial e conferir que nada acontece.
 
 **Dados e assets**
 
-- **FR-028**: Vida do Arthur, vida e ataque do inimigo, faixa do alvo, mínimo da mão, composição
-  do baralho e valor, ataque e efeito de cada carta MUST ficar em dados editáveis sem mexer
-  no código.
+- **FR-028**: Vida do Arthur, vida e ataque do inimigo, faixa do alvo, mínimo da mão,
+  composição do baralho e valor, ataque e efeito de cada carta MUST ficar em dados editáveis
+  sem mexer no código.
 - **FR-029**: A mesma semente de sorteio MUST reproduzir a mesma luta (embaralhamento, mãos
   e alvos), para que os testes sejam repetíveis.
 - **FR-030**: Arthur, inimigo, cartas, fundo e sons MUST usar placeholders neutros do motor,

@@ -321,15 +321,14 @@ teste de simulação abaixo confere que nenhuma rodada chega ao teto
 ## D11. Garantia de mão mínima: compra dirigida
 
 - **Decisão** (resposta do Estêvão em 13/11): o jogo **nunca tira** cartas da mão. No início
-  da rodada, enquanto faltar número, soma ou subtração na mão (atendidos nessa ordem), a
-  carta comprada é a daquele tipo mais perto do topo da pilha de compra ou, se a pilha não
-  tiver, a descartada há mais tempo (decisão do Estêvão no analyze). Com a pilha vazia, vale
-  a FR-005 antes de tudo: o descarte é embaralhado e vira a pilha, e a busca é feita nela
-  (segunda decisão do Estêvão no analyze). A ordem entre os tipos
-  não muda a mão final, porque cada tipo pega a própria carta; ela só deixa o código
-  determinístico. Primeiro saem as
-  cartas normais da rodada (5 na primeira, 1 nas outras); se ainda faltar algo, o jogo compra
-  cartas extras do tipo que falta. Sem falta nenhuma, compra o topo da pilha.
+  da rodada, enquanto faltar número, soma ou subtração na mão (atendidos nessa ordem), a carta
+  comprada é a daquele tipo mais perto do topo da pilha de compra ou, se a pilha não tiver, a
+  descartada há mais tempo (decisão do Estêvão no analyze). Com a pilha vazia, vale a FR-005
+  antes de tudo: o descarte é embaralhado e vira a pilha, e a busca é feita nela (segunda
+  decisão do Estêvão no analyze). A ordem entre os tipos não muda a mão final, porque cada
+  tipo pega a própria carta; ela só deixa o código determinístico. Primeiro saem as cartas
+  normais da rodada (5 na primeira, 1 nas outras); se ainda faltar algo, o jogo compra cartas
+  extras do tipo que falta. Sem falta nenhuma, compra o topo da pilha.
 - **Consequência**: a mão inicial é sempre 3 números, + e −. As compras do Pular e do Foco
   são comuns (topo da pilha), porque a garantia vale no início da rodada (FR-006).
 - **Motivo**: trocar cartas "que sobram" tiraria da mão cartas que o jogador guarda de
@@ -361,9 +360,9 @@ teste de simulação abaixo confere que nenhuma rodada chega ao teto
 
 - **Decisão**: `DadosCarta` tem `efeito` (enum `NENHUM`, `DANO_EXTRA`, `COMPRAR`, `ESCUDO`,
   `CURA`) e `intensidade`. A `Batalha` aplica com um `match` numa função só: `DANO_EXTRA` →
-  `inimigo.receber_dano(intensidade)`; `COMPRAR` → `baralho.comprar(intensidade)`;
-  `ESCUDO` → `arthur.ganhar_escudo(intensidade)`; `CURA` → `arthur.curar(intensidade)`. Quem recebe está escrito ao lado do
-  efeito, não é passado por parâmetro.
+  `inimigo.receber_dano(intensidade)`; `COMPRAR` → `baralho.comprar(intensidade)`; `ESCUDO` →
+  `arthur.ganhar_escudo(intensidade)`; `CURA` → `arthur.curar(intensidade)`. Quem recebe está
+  escrito ao lado do efeito, não é passado por parâmetro.
 - **Motivo**: no jogo antigo, um registro genérico recebia um "alvo" e a batalha passava
   sempre o inimigo, então Guarda e Vital protegiam e curavam o inimigo. Com o destinatário
   fixo por efeito, o erro não tem onde acontecer, e são 4 casos, que não justificam registro
@@ -401,15 +400,15 @@ teste de simulação abaixo confere que nenhuma rodada chega ao teto
 ## D15. Placeholders e lista de pendências
 
 - **Decisão**: nenhum arquivo de arte ou som é criado. Sprites são `ColorRect` de cor chapada
-  no tamanho final do asset, com um `Label` de nome por cima; cartas são `Panel` + `Label`;
-  o fundo é a cor de limpeza padrão do projeto; a fonte é a padrão do Godot; o projeto não
-  tem ícone próprio (sem `application/config/icon` e sem `icon.svg`), então a janela usa o
-  ícone padrão do Godot, listado como pendência como os demais. Sons: a cena `sons_batalha` tem um
-  `AudioStreamPlayer` por evento, **sem áudio atribuído**, e só toca se houver áudio
-  (`if tocador.stream != null`); a música da luta é mais um tocador ali, com `autoplay`; os
-  sons de vitória e derrota são dois tocadores da cena `fim_de_luta`. Quando a equipe entregar um arquivo, ele é atribuído no
-  editor, sem mexer no código. Tudo fica listado em `docs/assets-pendentes.md` (tipo,
-  tamanho, quadros, formato e onde é usado).
+  no tamanho final do asset, com um `Label` de nome por cima; cartas são `Panel` + `Label`; o
+  fundo é a cor de limpeza padrão do projeto; a fonte é a padrão do Godot; o projeto não tem
+  ícone próprio (sem `application/config/icon` e sem `icon.svg`), então a janela usa o ícone
+  padrão do Godot, listado como pendência como os demais. Sons: a cena `sons_batalha` tem um
+  `AudioStreamPlayer` por evento, **sem áudio atribuído**, e só toca se houver áudio (`if
+  tocador.stream != null`); a música da luta é mais um tocador ali, com `autoplay`; os sons de
+  vitória e derrota são dois tocadores da cena `fim_de_luta`. Quando a equipe entregar um
+  arquivo, ele é atribuído no editor, sem mexer no código. Tudo fica listado em
+  `docs/assets-pendentes.md` (tipo, tamanho, quadros, formato e onde é usado).
 - **Motivo**: princípio IV da constituição e FR-030. `ColorRect` é o nó da documentação para
   "um retângulo de cor única". `PlaceholderTexture2D`, apesar do nome, foi descartado: a
   documentação diz que ele "não foi feito para ser usado como textura de verdade".
@@ -430,8 +429,8 @@ teste de simulação abaixo confere que nenhuma rodada chega ao teto
   a separação entre as cartas (até sobrepor) quando a mão não cabe em 600 px, deixando o canto
   de cada carta, com o símbolo, visível e clicável. O efeito de uma carta especial aparece
   também em `tooltip_text`, com o nome e a condição ("Chama: +3 de dano. Só vale quando a
-  conta acerta o alvo."). Os textos ficam direto em português no código e
-  nas cenas, sem sistema de tradução (o jogo é só em português).
+  conta acerta o alvo."). Os textos ficam direto em português no código e nas cenas, sem
+  sistema de tradução (o jogo é só em português).
 - **Motivo**: contêineres organizam os filhos sozinhos e continuam certos quando a mão muda
   de tamanho; a mão não tem limite (pode chegar a 21 cartas), então a sobreposição é
   necessária em 640 px de largura.

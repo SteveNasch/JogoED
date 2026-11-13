@@ -24,11 +24,11 @@ signal clicada
 func mostrar(dados: DadosCarta) -> void
 ```
 
-Mostra o símbolo em destaque (`dados.simbolo()`), o ataque num canto e, nas especiais, o
-nome (`dados.nome`) e o efeito (`dados.texto_efeito()`, por exemplo "+3 de dano"). O
-`tooltip_text` junta os dois com a condição do efeito: "Chama: +3 de dano. Só vale quando a
-conta acerta o alvo." (FR-024). Não há um segundo texto de efeito nos dados. O
-símbolo fica no canto superior esquerdo, para continuar visível com as cartas sobrepostas.
+Mostra o símbolo em destaque (`dados.simbolo()`), o ataque num canto e, nas especiais, o nome
+(`dados.nome`) e o efeito (`dados.texto_efeito()`, por exemplo "+3 de dano"). O `tooltip_text`
+junta os dois com a condição do efeito: "Chama: +3 de dano. Só vale quando a conta acerta o
+alvo." (FR-024). Não há um segundo texto de efeito nos dados. O símbolo fica no canto superior
+esquerdo, para continuar visível com as cartas sobrepostas.
 
 ### `cartas/fila_cartas.tscn` (raiz: `HBoxContainer`)
 
@@ -71,8 +71,9 @@ Textos (FR-025):
 | em todos, se `inimigo_atacou` | segunda linha: "O inimigo tirou 3 de vida." (com o `dano_recebido`) ou, se `dano_recebido` for 0, "O escudo segurou o ataque." |
 
 Como todo inimigo tem ataque de pelo menos 1 (FR-001), `dano_recebido` 0 depois de um ataque
-só acontece quando o escudo segurou tudo. No `ACERTO`, o número de dano é o `dano_causado`, que é o dano calculado e pode passar da
-vida que o inimigo ainda tinha (golpe final de 13 num inimigo com 7 mostra "13 de dano").
+só acontece quando o escudo segurou tudo. No `ACERTO`, o número de dano é o `dano_causado`,
+que é o dano calculado e pode passar da vida que o inimigo ainda tinha (golpe final de 13 num
+inimigo com 7 mostra "13 de dano").
 
 ### `batalha/sons_batalha.tscn` (raiz: `Node`)
 
