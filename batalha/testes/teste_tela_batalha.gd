@@ -143,3 +143,45 @@ func test_repassa_luta_terminou_ao_vencer() -> void:
 	var resultado: ResultadoLuta = get_signal_parameters(_tela, "luta_terminou")[0]
 	assert_true(resultado.venceu)
 	assert_eq(resultado.vida_arthur, 40)
+
+
+func test_aviso_do_erro_mostra_o_valor_e_o_alvo() -> void:
+	# Cenário 1 da história 2: 2 + 5 vale 7, e o alvo é 9.
+	_preparar([N2, SOMA, N5, N1, SUBTRACAO], 9)
+	_clicar_carta_da_mao(0)
+	_clicar_carta_da_mao(0)
+	_clicar_carta_da_mao(0)
+	_confirmar()
+	var aviso: Label = _no("Aviso")
+	assert_true(aviso.visible)
+	assert_eq(aviso.text, "Errou: a conta deu 7, o alvo era 9.\nO inimigo tirou 3 de vida.")
+	assert_has(_textos_visiveis(), "Vida: 12 / 12")
+	assert_has(_textos_visiveis(), "Vida: 37 / 40")
+	assert_eq(_no("Expressao").get_child_count(), 0)
+	assert_eq(_no("Mao").get_child_count(), 2)
+
+
+func test_aviso_da_conta_invalida_mostra_o_alvo() -> void:
+	# Cenário 2 da história 2: 2 5 não é conta.
+	_preparar([N2, SOMA, N5, N1, SUBTRACAO], 9)
+	_clicar_carta_da_mao(0)
+	_clicar_carta_da_mao(1)
+	_confirmar()
+	assert_eq((_no("Aviso") as Label).text, "Conta inválida. O alvo era 9.\nO inimigo tirou 3 de vida.")
+	assert_has(_textos_visiveis(), "Vida: 12 / 12")
+
+
+func test_repassa_luta_terminou_ao_perder() -> void:
+	_tela.batalha.arthur.vida = 3
+	_preparar([N2, SOMA, N5, N1, SUBTRACAO], 9)
+	watch_signals(_tela)
+	_clicar_carta_da_mao(0)
+	_confirmar()
+	assert_has(_textos_visiveis(), "Vida: 0 / 40")
+	assert_signal_not_emitted(_tela, "luta_terminou")
+	await wait_for_signal(_tela.luta_terminou, 1.0)
+	assert_signal_emit_count(_tela, "luta_terminou", 1)
+	var resultado: ResultadoLuta = get_signal_parameters(_tela, "luta_terminou")[0]
+	assert_false(resultado.venceu)
+	assert_eq(resultado.vida_arthur, 0)
+	assert_eq(resultado.vida_inimigo, 12)

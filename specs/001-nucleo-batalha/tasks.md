@@ -160,7 +160,7 @@ gastas e Arthur apanhando; repetir até a derrota (quickstart, cenário 3).
 
 ### Área: cenas e luta avulsa
 
-- [ ] T026 [US2] Testes de integração da derrota e do erro em `batalha/testes/teste_tela_batalha.gd` (aviso "Errou: a conta deu 7, o alvo era 9." e "Conta inválida. O alvo era 9." aparecem na tela) e em `luta_avulsa/testes/teste_luta_avulsa.gd` (derrota mostra "Derrota", "Vida do inimigo: N" e "Tentar de novo", que recomeça a luta); corrigir `batalha/tela_batalha.gd` ou `luta_avulsa/luta_avulsa.gd` se algum falhar (depende de T023, T025)
+- [X] T026 [US2] Testes de integração da derrota e do erro em `batalha/testes/teste_tela_batalha.gd` (aviso "Errou: a conta deu 7, o alvo era 9." e "Conta inválida. O alvo era 9." aparecem na tela) e em `luta_avulsa/testes/teste_luta_avulsa.gd` (derrota mostra "Derrota", "Vida do inimigo: N" e "Tentar de novo", que recomeça a luta); corrigir `batalha/tela_batalha.gd` ou `luta_avulsa/luta_avulsa.gd` se algum falhar (depende de T023, T025)
 
 **Checkpoint**: histórias 1 e 2 funcionando juntas.
 
