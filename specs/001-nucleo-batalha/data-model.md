@@ -211,9 +211,13 @@ depender de `batalha`). Algoritmo, custo e testes em [research.md](research.md),
 
 - `alcancaveis(mao: Array[DadosCarta]) -> Dictionary`: chave = valor (`int`); valor = conta
   de exemplo (`Array[DadosCarta]`) feita com cartas da mão.
-- `sortear(mao: Array[DadosCarta], rng: RandomNumberGenerator) -> int`: o alvo da rodada.
-  Sem valor na faixa, o positivo mais próximo dela; empate entre um abaixo e um acima,
-  sorteado entre os dois com o `rng`.
+- `sortear(mao: Array[DadosCarta], rng: RandomNumberGenerator) -> int`: o alvo da rodada;
+  é `escolher_alvo(alcancaveis(mao), rng)`.
+- `escolher_alvo(valores: Dictionary, rng: RandomNumberGenerator) -> int`: escolhe o alvo
+  entre os valores achados. Algum na faixa: sorteia entre eles, em ordem crescente. Nenhum:
+  o positivo mais próximo da faixa; empate entre um abaixo e um acima, sorteado entre os
+  dois. Sem nenhum valor positivo: `alvo_minimo`. Separada de `sortear` para ser testada
+  com um dicionário montado à mão.
 - `avaliacoes: int`: quantas contas a última busca avaliou (para os testes de custo).
 
 ### ResultadoRodada (`batalha/resultado_rodada.gd`)
