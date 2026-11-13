@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="RegrasBatalha" format=3]
+
+[ext_resource type="Script" path="res://batalha/regras_batalha.gd" id="1_fddqi"]
+
+[resource]
+script = ExtResource("1_fddqi")
+vida_maxima_arthur = 40
+cartas_iniciais = 5
+cartas_por_rodada = 1
+cartas_por_pulo = 1
+minimo_numeros = 3
+minimo_somas = 1
+minimo_subtracoes = 1
+alvo_minimo = 5
+alvo_maximo = 12
+max_numeros_no_alvo = 3
+limite_buscas_alvo = 10000
+tempo_resultado = 1.5

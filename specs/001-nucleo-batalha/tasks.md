@@ -86,7 +86,7 @@ diante) espera a fase inteira.
 
 ### Área: batalha (dados)
 
-- [ ] T006 [P] Criar `RegrasBatalha` em `batalha/regras_batalha.gd` (`extends Resource`) com os 12 campos `@export` da tabela do [data-model.md](data-model.md) e `dados/regras_batalha.tres` com os valores padrão (40, 5, 1, 1, 3, 1, 1, 5, 12, 3, 10000, 1.5); testes em `batalha/testes/teste_regras_batalha.gd` carregando o `.tres` e conferindo cada valor e as regras de validação do [data-model.md](data-model.md) (`alvo_minimo >= 1`, `alvo_minimo <= alvo_maximo`, `max_numeros_no_alvo >= 1`, demais `>= 0`)
+- [X] T006 [P] Criar `RegrasBatalha` em `batalha/regras_batalha.gd` (`extends Resource`) com os 12 campos `@export` da tabela do [data-model.md](data-model.md) e `dados/regras_batalha.tres` com os valores padrão (40, 5, 1, 1, 3, 1, 1, 5, 12, 3, 10000, 1.5); testes em `batalha/testes/teste_regras_batalha.gd` carregando o `.tres` e conferindo cada valor e as regras de validação do [data-model.md](data-model.md) (`alvo_minimo >= 1`, `alvo_minimo <= alvo_maximo`, `max_numeros_no_alvo >= 1`, demais `>= 0`)
 
 ### Área: cartas (arquivos de dados e baralho)
 
