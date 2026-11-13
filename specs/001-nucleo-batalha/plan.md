@@ -135,7 +135,8 @@ cartas/                       # área: cartas e baralho
 ├── carta.tscn / carta.gd     # uma carta na tela
 ├── fila_cartas.tscn / fila_cartas.gd   # mão e expressão
 └── testes/
-    ├── teste_dados_cartas.gd # os .tres batem com a tabela da spec; baralho tem as 21
+    ├── teste_dados_carta.gd      # funções do DadosCarta (símbolo, tipo, efeito, chave)
+    ├── teste_arquivos_cartas.gd  # os .tres batem com a tabela da spec; baralho tem as 21
     ├── teste_baralho.gd
     ├── teste_carta.gd
     └── teste_fila_cartas.gd
@@ -154,6 +155,7 @@ combatentes/                  # área: Arthur e inimigo
 ├── painel_combatente.tscn / painel_combatente.gd
 └── testes/
     ├── teste_combatente.gd
+    ├── teste_dados_inimigo.gd
     └── teste_painel_combatente.gd
 
 batalha/                      # área: a luta
@@ -165,9 +167,11 @@ batalha/                      # área: a luta
 ├── sons_batalha.tscn / sons_batalha.gd
 ├── tela_batalha.tscn / tela_batalha.gd
 └── testes/
+    ├── teste_regras_batalha.gd
     ├── teste_batalha.gd      # rodadas, erro, Pular, efeitos e quem os recebe
     ├── teste_simulacao.gd    # 1.000 lutas com semente (SC-002, SC-003, SC-008)
     ├── teste_aviso_rodada.gd
+    ├── teste_sons_batalha.gd
     └── teste_tela_batalha.gd
 
 luta_avulsa/                  # área: a luta solta da 001 (o mapa da 002 entra no lugar)

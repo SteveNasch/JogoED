@@ -82,7 +82,7 @@ baralho e busca do alvo, todas sem cena.
 
 ### Área: cartas (arquivos de dados e baralho)
 
-- [ ] T007 Criar os 16 arquivos de `dados/cartas/` da tabela do [data-model.md](data-model.md) (`numero_1.tres` a `numero_5.tres`, `soma`, `subtracao`, `multiplicacao`, `divisao`, `dobro`, `metade`, `quadrado`, `chama`, `foco`, `guarda`, `vital`), `DadosBaralho` em `cartas/dados_baralho.gd` (`@export var cartas: Array[DadosCarta]`) e `dados/baralhos/baralho_luta_avulsa.tres` com as 21 cartas da FR-002; testes em `cartas/testes/teste_dados_cartas.gd` conferindo valor, ataque, efeito e intensidade de cada arquivo contra a tabela da spec e as regras de validação do [data-model.md](data-model.md) (valor de 1 a 10 só nos números e 0 nos operadores, `ataque >= 0`, `intensidade >= 1` com efeito, efeito só em número) e a composição exata do baralho (2 de cada número de 1 a 5 e 1 de cada uma das outras 11) (depende de T003)
+- [ ] T007 Criar os 16 arquivos de `dados/cartas/` da tabela do [data-model.md](data-model.md) (`numero_1.tres` a `numero_5.tres`, `soma`, `subtracao`, `multiplicacao`, `divisao`, `dobro`, `metade`, `quadrado`, `chama`, `foco`, `guarda`, `vital`), `DadosBaralho` em `cartas/dados_baralho.gd` (`@export var cartas: Array[DadosCarta]`) e `dados/baralhos/baralho_luta_avulsa.tres` com as 21 cartas da FR-002; testes em `cartas/testes/teste_arquivos_cartas.gd` conferindo valor, ataque, efeito e intensidade de cada arquivo contra a tabela da spec e as regras de validação do [data-model.md](data-model.md) (valor de 1 a 10 só nos números e 0 nos operadores, `ataque >= 0`, `intensidade >= 1` com efeito, efeito só em número) e a composição exata do baralho (2 de cada número de 1 a 5 e 1 de cada uma das outras 11) (depende de T003)
 
 ### Área: contas (motor)
 
