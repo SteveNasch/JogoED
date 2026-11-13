@@ -1,6 +1,6 @@
 # Implementation Plan: Núcleo da batalha
 
-**Branch**: `001-nucleo-batalha` | **Date**: 2026-11-13 | **Spec**: [spec.md](spec.md)
+**Branch**: `main` (sem ramo próprio) | **Date**: 2026-11-13 | **Spec**: [spec.md](spec.md)
 
 **Input**: Feature specification from `/specs/001-nucleo-batalha/spec.md`
 

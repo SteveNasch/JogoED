@@ -1,6 +1,7 @@
 # Feature Specification: Núcleo da batalha
 
-**Feature Branch**: `001-nucleo-batalha`
+**Feature Branch**: nenhum; o trabalho é feito direto em `main`, e a funcionalidade é
+identificada pela pasta `specs/001-nucleo-batalha` (`.specify/feature.json`)
 
 **Created**: 2026-11-13
 
