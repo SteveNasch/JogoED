@@ -39,6 +39,10 @@ func _confirmar() -> void:
 	(_no("Confirmar") as Button).pressed.emit()
 
 
+func _apertar(botao: String) -> void:
+	(_no(botao) as Button).pressed.emit()
+
+
 ## Textos de todos os Label e Button visíveis na tela.
 func _textos_visiveis(no: Node = _tela) -> Array[String]:
 	var textos: Array[String] = []
@@ -185,3 +189,81 @@ func test_repassa_luta_terminou_ao_perder() -> void:
 	assert_false(resultado.venceu)
 	assert_eq(resultado.vida_arthur, 0)
 	assert_eq(resultado.vida_inimigo, 12)
+
+
+func test_botoes_ficam_na_ordem_do_contrato() -> void:
+	var nomes: Array[String] = []
+	for botao in _no("Confirmar").get_parent().get_children():
+		nomes.append((botao as Button).text)
+	assert_eq(nomes, ["Desfazer", "Limpar", "Confirmar", "Pular"])
+
+
+func test_desfazer_devolve_a_ultima_carta_para_a_mao() -> void:
+	_preparar([N2, SOMA, N5, N1, SUBTRACAO], 9)
+	_clicar_carta_da_mao(0)
+	_clicar_carta_da_mao(0)
+	_clicar_carta_da_mao(0)
+	_apertar("Desfazer")
+	assert_eq(_tela.batalha.baralho.expressao, [N2, SOMA])
+	assert_eq(_tela.batalha.baralho.mao, [N1, SUBTRACAO, N5])
+	assert_eq(_no("Expressao").get_child_count(), 2)
+	assert_eq(_no("Mao").get_child_count(), 3)
+	assert_false((_no("Aviso") as Label).visible)
+
+
+func test_limpar_devolve_tudo_e_desabilita_confirmar() -> void:
+	_preparar([N2, SOMA, N5, N1, SUBTRACAO], 9)
+	_clicar_carta_da_mao(0)
+	_clicar_carta_da_mao(0)
+	_apertar("Limpar")
+	assert_eq(_tela.batalha.baralho.expressao.size(), 0)
+	assert_eq(_tela.batalha.baralho.mao, [N5, N1, SUBTRACAO, N2, SOMA])
+	assert_eq(_no("Expressao").get_child_count(), 0)
+	assert_eq(_no("Mao").get_child_count(), 5)
+	assert_true((_no("Confirmar") as Button).disabled)
+
+
+func test_pular_mostra_o_aviso_e_compra_uma_carta() -> void:
+	_preparar([N2, SOMA, N5, N1, SUBTRACAO], 9)
+	_clicar_carta_da_mao(0)
+	_apertar("Pular")
+	var aviso: Label = _no("Aviso")
+	assert_true(aviso.visible)
+	assert_eq(aviso.text, "Pulou a rodada. Comprou 1 carta.\nO inimigo tirou 3 de vida.")
+	assert_eq(_tela.batalha.baralho.expressao.size(), 0)
+	assert_eq(_no("Expressao").get_child_count(), 0)
+	assert_eq(_no("Mao").get_child_count(), 6)
+	assert_has(_textos_visiveis(), "Vida: 37 / 40")
+
+
+func test_pular_toca_o_som_do_pulo() -> void:
+	var tocador: AudioStreamPlayer = _no("Sons").get_node("Pulo")
+	tocador.stream = AudioStreamWAV.new()
+	_apertar("Pular")
+	assert_true(tocador.playing)
+
+
+func test_botoes_nao_fazem_nada_durante_o_aviso() -> void:
+	_preparar([N2, SOMA, N5, N1, SUBTRACAO], 9)
+	_clicar_carta_da_mao(0)
+	_confirmar()
+	for botao in ["Desfazer", "Limpar", "Confirmar", "Pular"]:
+		assert_true((_no(botao) as Button).disabled, botao)
+	_tela.batalha.baralho.expressao = [N1] as Array[DadosCarta]
+	var mao := _tela.batalha.baralho.mao.duplicate()
+	_apertar("Desfazer")
+	_apertar("Limpar")
+	_apertar("Pular")
+	assert_eq(_tela.batalha.baralho.expressao, [N1])
+	assert_eq(_tela.batalha.baralho.mao, mao)
+	assert_eq(_tela.batalha.arthur.vida, 37)
+	assert_eq(_tela.batalha.estado, Batalha.Estado.MOSTRANDO_RESULTADO)
+
+
+func test_botoes_voltam_depois_do_aviso() -> void:
+	_apertar("Pular")
+	await wait_for_signal(_tela.batalha.mudou, 1.0)
+	for botao in ["Desfazer", "Limpar", "Pular"]:
+		assert_false((_no(botao) as Button).disabled, botao)
+	assert_true((_no("Confirmar") as Button).disabled)
+	assert_eq(_no("Mao").get_child_count(), 7)

@@ -180,7 +180,7 @@ o tamanho da mão (quickstart, cenário 4).
 
 ### Área: cenas
 
-- [ ] T029 [US3] Acrescentar os botões Desfazer, Limpar e Pular em `batalha/tela_batalha.tscn` e `batalha/tela_batalha.gd`, ligados a `desfazer()`, `limpar()` e `pular()`, desabilitados durante o aviso; testes em `batalha/testes/teste_tela_batalha.gd` (cada botão muda a mão e a expressão como na lógica; Pular mostra "Pulou a rodada. Comprou 1 carta."; botões não fazem nada durante o aviso) (depende de T022, que cria a tela, e de T028)
+- [X] T029 [US3] Acrescentar os botões Desfazer, Limpar e Pular em `batalha/tela_batalha.tscn` e `batalha/tela_batalha.gd`, ligados a `desfazer()`, `limpar()` e `pular()`, desabilitados durante o aviso; testes em `batalha/testes/teste_tela_batalha.gd` (cada botão muda a mão e a expressão como na lógica; Pular mostra "Pulou a rodada. Comprou 1 carta."; botões não fazem nada durante o aviso) (depende de T022, que cria a tela, e de T028)
 
 **Checkpoint**: histórias 1, 2 e 3 funcionando juntas.
 

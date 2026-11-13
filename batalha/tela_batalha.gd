@@ -16,7 +16,10 @@ var batalha: Batalha
 @onready var _alvo: Label = %Alvo
 @onready var _expressao: HBoxContainer = %Expressao
 @onready var _aviso: Label = %Aviso
+@onready var _desfazer: Button = %Desfazer
+@onready var _limpar: Button = %Limpar
 @onready var _confirmar: Button = %Confirmar
+@onready var _pular: Button = %Pular
 @onready var _mao: HBoxContainer = %Mao
 @onready var _sons: Node = %Sons
 @onready var _timer: Timer = %Timer
@@ -24,7 +27,10 @@ var batalha: Batalha
 
 func _ready() -> void:
 	_mao.carta_escolhida.connect(_ao_escolher_carta)
+	_desfazer.pressed.connect(_ao_desfazer)
+	_limpar.pressed.connect(_ao_limpar)
 	_confirmar.pressed.connect(_ao_confirmar)
+	_pular.pressed.connect(_ao_pular)
 	_timer.timeout.connect(_ao_acabar_o_aviso)
 
 
@@ -46,7 +52,10 @@ func _redesenhar() -> void:
 	_mao.mostrar(batalha.baralho.mao)
 	var montando := batalha.estado == Batalha.Estado.MONTANDO
 	_mao.clicavel = montando
+	_desfazer.disabled = not montando
+	_limpar.disabled = not montando
 	_confirmar.disabled = not (montando and batalha.pode_confirmar())
+	_pular.disabled = not montando
 
 
 func _ao_escolher_carta(indice: int) -> void:
@@ -54,8 +63,20 @@ func _ao_escolher_carta(indice: int) -> void:
 	_sons.tocar_carta()
 
 
+func _ao_desfazer() -> void:
+	batalha.desfazer()
+
+
+func _ao_limpar() -> void:
+	batalha.limpar()
+
+
 func _ao_confirmar() -> void:
 	batalha.confirmar()
+
+
+func _ao_pular() -> void:
+	batalha.pular()
 
 
 func _ao_resolver_rodada(resultado: ResultadoRodada) -> void:

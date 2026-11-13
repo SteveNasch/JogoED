@@ -101,11 +101,29 @@ layout_mode = 2
 theme_override_constants/separation = 8
 alignment = 1
 
+[node name="Desfazer" type="Button" parent="Margem/Coluna/Botoes"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 24)
+layout_mode = 2
+text = "Desfazer"
+
+[node name="Limpar" type="Button" parent="Margem/Coluna/Botoes"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 24)
+layout_mode = 2
+text = "Limpar"
+
 [node name="Confirmar" type="Button" parent="Margem/Coluna/Botoes"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 24)
 layout_mode = 2
 text = "Confirmar"
+
+[node name="Pular" type="Button" parent="Margem/Coluna/Botoes"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 24)
+layout_mode = 2
+text = "Pular"
 
 [node name="Espaco" type="Control" parent="Margem/Coluna"]
 layout_mode = 2
