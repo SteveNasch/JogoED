@@ -278,7 +278,8 @@ freios, ambos nos dados:
 
 Quando o teto corta a busca, o alvo continua alcançável (só sai do que foi achado). O que se
 perde é a certeza de ter visto **todos** os valores possíveis. Na 001 isso não acontece: o
-teste de simulação abaixo confere que nenhuma rodada chega perto do teto.
+teste de simulação abaixo confere que nenhuma rodada chega ao teto
+(`avaliacoes < limite_buscas_alvo` em toda rodada).
 
 ### Como é testado
 
@@ -296,8 +297,9 @@ teste de simulação abaixo confere que nenhuma rodada chega perto do teto.
   de avaliações não passa de `limite_buscas_alvo`; nenhuma conta de exemplo tem mais números
   que `max_numeros_no_alvo`.
 - **Simulação** (SC-002): 1.000 lutas com sementes diferentes, jogadas por um "jogador
-  automático" simples; em toda rodada o alvo tem conta de exemplo válida, e o maior número de
-  avaliações visto fica abaixo do teto.
+  automático" simples; em toda rodada o alvo tem conta de exemplo válida, e toda busca
+  termina antes do teto (`avaliacoes < limite_buscas_alvo`). Conferir só que não passou do
+  teto não provaria nada, porque o teto já impede isso.
 - Os testes conferem **contagem de avaliações**, não tempo de relógio, para não falharem
   por causa da velocidade do computador de quem roda.
 
