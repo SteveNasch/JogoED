@@ -260,11 +260,12 @@ Ordem dos acontecimentos:
 - **Começo de rodada** (`iniciar()` e `avancar()`): soma 1 em `rodada`; zera o escudo do
   Arthur (FR-018); compra com mínimo (`cartas_iniciais` na rodada 1, `cartas_por_rodada`
   nas outras); sorteia o alvo com a mão já completa; estado `MONTANDO`.
-- **Confirmar com acerto**: inimigo perde a soma do `ataque` das cartas da expressão
-  (FR-016); depois os efeitos de **todas** as cartas especiais usadas são aplicados, na ordem
-  da conta, mesmo que o dano já tenha derrubado o inimigo (a cura e o escudo de um golpe
-  final valem); a expressão vai para o descarte; se o inimigo está vivo, ele ataca o Arthur
-  (FR-021).
+- **Confirmar com acerto** (FR-016), nesta ordem: (1) o inimigo perde a soma do `ataque`
+  das cartas da expressão; (2) os efeitos de **todas** as cartas especiais usadas são
+  aplicados, na ordem da conta, mesmo que o dano já tenha derrubado o inimigo (a cura e o
+  escudo de um golpe final valem; decisão do Estêvão no analyze); (3) só então a expressão
+  vai para o descarte, de modo que a compra do Foco nunca devolve à mão uma carta da própria
+  conta; (4) se o inimigo está vivo, ele ataca o Arthur (FR-021).
 - **Confirmar com erro ou conta inválida**: a expressão vai para o descarte, sem dano e sem
   efeitos (FR-019); o inimigo ataca.
 - **Pular**: a expressão volta para a mão; o inimigo ataca; se o Arthur continua vivo, entram

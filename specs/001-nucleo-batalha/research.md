@@ -359,6 +359,9 @@ teste de simulação abaixo confere que nenhuma rodada chega ao teto
   sempre o inimigo, então Guarda e Vital protegiam e curavam o inimigo. Com o destinatário
   fixo por efeito, o erro não tem onde acontecer, e são 4 casos, que não justificam registro
   nem classes de efeito (princípio I).
+- **Ordem**: dano das cartas, efeitos na ordem da conta (valem mesmo no golpe final),
+  expressão para o descarte e, por último, o ataque do inimigo se ele ainda está vivo
+  (FR-016). Os efeitos vêm antes do descarte para o Foco não comprar cartas da própria conta.
 - **Testes obrigatórios**: para cada efeito, conferir **os dois lados**: Guarda dá 5 de
   escudo ao Arthur e o escudo do inimigo continua 0; Vital aumenta a vida do Arthur e a do
   inimigo só cai pelo dano das cartas; Chama tira vida do inimigo e não mexe no Arthur; Foco

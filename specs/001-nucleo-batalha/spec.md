@@ -46,6 +46,10 @@ Referência do jogo inteiro: `docs/visao-do-jogo.md` (seção "Combate").
   faltar, o jogo dá cartas extras.
 - Decisão do plano: o alvo sorteado é sempre alcançável com no máximo 3 cartas de número
   (valor nos dados), para a busca do alvo ter custo limitado com mãos grandes.
+- Q (no analyze): Quando o acerto derruba o inimigo, os efeitos das especiais da mesma conta
+  ainda valem? → A: sim; a cura, o escudo e a compra valem, e a vitória vem depois deles.
+  Na 001 isso quase não aparece; na 002 a cura conta, porque a vida passa para a luta
+  seguinte.
 - Q (no analyze): O escudo do Arthur fica sempre na tela, mesmo zerado? → A: não; aparece só
   quando é maior que 0 (FR-023).
 
@@ -248,7 +252,10 @@ uma conta com carta especial e conferir que nada acontece.
 
 - **FR-016**: Se o resultado for exatamente o alvo, o inimigo MUST perder vida igual à soma
   do ataque de todas as cartas usadas (números e operadores, conforme a tabela de cartas) e,
-  em seguida, os efeitos das cartas especiais usadas MUST ser aplicados.
+  em seguida, os efeitos das cartas especiais usadas MUST ser aplicados, na ordem da conta,
+  mesmo que o dano já tenha derrubado o inimigo. Só depois dos efeitos as cartas usadas vão
+  para o descarte (a compra do Foco não pode tirar do descarte as cartas da própria conta) e,
+  se o inimigo continua vivo, ele ataca (FR-021).
 - **FR-017**: Efeitos especiais: Chama MUST causar 3 de dano adicional ao inimigo; Foco MUST
   colocar 1 carta na mão na hora; Guarda MUST dar 5 de escudo ao Arthur; Vital MUST curar 2
   de vida do Arthur sem passar da vida máxima.
