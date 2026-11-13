@@ -474,3 +474,54 @@ func test_nenhuma_acao_vale_depois_da_derrota() -> void:
 	assert_signal_not_emitted(batalha, "mudou")
 	assert_signal_not_emitted(batalha, "rodada_resolvida")
 	assert_signal_not_emitted(batalha, "luta_terminou")
+
+
+func test_desfazer_devolve_a_ultima_carta_para_a_mao() -> void:
+	# Cenário 1 da história 3: 3 + 4 → desfazer → 3 +, e o 4 volta para a mão.
+	var batalha := _com_mao([N3, SOMA, N4, N1, SUBTRACAO], 7)
+	_montar(batalha, [0, 1, 2])
+	watch_signals(batalha)
+	batalha.desfazer()
+	assert_eq(batalha.baralho.expressao, [N3, SOMA])
+	assert_eq(batalha.baralho.mao, [N1, SUBTRACAO, N4])
+	assert_eq(batalha.estado, Batalha.Estado.MONTANDO)
+	assert_eq(batalha.arthur.vida, 40)
+	assert_signal_emit_count(batalha, "mudou", 1)
+	assert_signal_not_emitted(batalha, "rodada_resolvida")
+
+
+func test_limpar_devolve_todas_as_cartas_na_ordem() -> void:
+	# Cenário 2 da história 3.
+	var batalha := _com_mao([N3, SOMA, N4, N1, SUBTRACAO], 7)
+	_montar(batalha, [0, 1, 2])
+	watch_signals(batalha)
+	batalha.limpar()
+	assert_eq(batalha.baralho.expressao.size(), 0)
+	assert_eq(batalha.baralho.mao, [N1, SUBTRACAO, N3, SOMA, N4])
+	assert_false(batalha.pode_confirmar())
+	assert_eq(batalha.estado, Batalha.Estado.MONTANDO)
+	assert_eq(batalha.arthur.vida, 40)
+	assert_signal_emit_count(batalha, "mudou", 1)
+	assert_signal_not_emitted(batalha, "rodada_resolvida")
+
+
+func test_desfazer_e_limpar_com_a_expressao_vazia_nao_fazem_nada() -> void:
+	var batalha := _com_mao([N3, SOMA, N4], 7)
+	watch_signals(batalha)
+	batalha.desfazer()
+	batalha.limpar()
+	assert_eq(batalha.baralho.mao, [N3, SOMA, N4])
+	assert_signal_not_emitted(batalha, "mudou")
+
+
+func test_desfazer_e_limpar_nao_valem_enquanto_o_resultado_esta_na_tela() -> void:
+	var batalha := _com_mao([N1, N5, SOMA, N2, SUBTRACAO], 5)
+	batalha.escolher_carta(1)
+	batalha.confirmar()
+	batalha.baralho.expressao = [N1] as Array[DadosCarta]
+	watch_signals(batalha)
+	batalha.desfazer()
+	batalha.limpar()
+	assert_eq(batalha.baralho.expressao, [N1])
+	assert_eq(batalha.baralho.mao, [N1, SOMA, N2, SUBTRACAO])
+	assert_signal_not_emitted(batalha, "mudou")

@@ -50,6 +50,22 @@ func escolher_carta(indice_da_mao: int) -> void:
 	mudou.emit()
 
 
+## FR-009: a última carta da expressão volta para a mão; a rodada continua.
+func desfazer() -> void:
+	if estado != Estado.MONTANDO or baralho.expressao.is_empty():
+		return
+	baralho.desfazer()
+	mudou.emit()
+
+
+## FR-009: todas as cartas da expressão voltam para a mão, na ordem; a rodada continua.
+func limpar() -> void:
+	if estado != Estado.MONTANDO or baralho.expressao.is_empty():
+		return
+	baralho.limpar()
+	mudou.emit()
+
+
 ## FR-011: não dá para confirmar uma expressão vazia.
 func pode_confirmar() -> bool:
 	return not baralho.expressao.is_empty()
