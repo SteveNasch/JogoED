@@ -11,6 +11,12 @@ const N5: DadosCarta = preload("res://dados/cartas/numero_5.tres")
 const SOMA: DadosCarta = preload("res://dados/cartas/soma.tres")
 const SUBTRACAO: DadosCarta = preload("res://dados/cartas/subtracao.tres")
 const MULTIPLICACAO: DadosCarta = preload("res://dados/cartas/multiplicacao.tres")
+const DIVISAO: DadosCarta = preload("res://dados/cartas/divisao.tres")
+const METADE: DadosCarta = preload("res://dados/cartas/metade.tres")
+const CHAMA: DadosCarta = preload("res://dados/cartas/chama.tres")
+const FOCO: DadosCarta = preload("res://dados/cartas/foco.tres")
+const GUARDA: DadosCarta = preload("res://dados/cartas/guarda.tres")
+const VITAL: DadosCarta = preload("res://dados/cartas/vital.tres")
 
 
 func _batalha(semente: int = 1, vida_arthur: int = 40) -> Batalha:
@@ -175,34 +181,93 @@ func test_acerto_tira_do_inimigo_a_soma_do_ataque_das_cartas() -> void:
 
 
 func test_conta_errada_nao_causa_dano_e_gasta_as_cartas() -> void:
+	# Cenário 1 da história 2: alvo 9, 2 + 5 vale 7.
 	var batalha := _com_mao([N2, SOMA, N5, N1, SUBTRACAO], 9)
 	watch_signals(batalha)
 	_montar(batalha, [0, 1, 2])
 	batalha.confirmar()
 	assert_eq(batalha.inimigo.vida, 12)
 	assert_eq(batalha.arthur.vida, 37)
+	assert_eq(batalha.baralho.expressao.size(), 0)
 	assert_eq(batalha.baralho.descarte, [N2, SOMA, N5])
 	assert_eq(batalha.baralho.mao, [N1, SUBTRACAO])
+	assert_eq(batalha.estado, Batalha.Estado.MOSTRANDO_RESULTADO)
+	assert_signal_emit_count(batalha, "rodada_resolvida", 1)
 	var resultado := _resultado(batalha)
 	assert_eq(resultado.tipo, ResultadoRodada.Tipo.ERRO)
 	assert_eq(resultado.valor, 7)
 	assert_eq(resultado.alvo, 9)
 	assert_eq(resultado.dano_causado, 0)
 	assert_true(resultado.inimigo_atacou)
+	assert_eq(resultado.dano_recebido, 3)
+	assert_false(resultado.luta_acabou)
 
 
-func test_conta_invalida_nao_causa_dano_e_gasta_as_cartas() -> void:
-	var batalha := _com_mao([N3, N4, SOMA], 9)
+## Cenário 2 da história 2: cada conta inválida, com alvo 9. Em 4 ÷ 1 /2 o 1 /2 vale 0 e a
+## divisão por zero torna a conta inválida.
+const CONTAS_INVALIDAS := [
+	["3 4", [N3, N4]],
+	["+ 3", [SOMA, N3]],
+	["5 ×", [N5, MULTIPLICACAO]],
+	["4 ÷ 1 /2", [N4, DIVISAO, N1, METADE]],
+]
+
+
+func test_conta_invalida_nao_causa_dano_e_gasta_as_cartas(p = use_parameters(CONTAS_INVALIDAS)) -> void:
+	var cartas: Array[DadosCarta] = []
+	cartas.assign(p[1])
+	var batalha := _com_mao(cartas.duplicate(), 9)
+	watch_signals(batalha)
+	var indices: Array[int] = []
+	indices.assign(range(cartas.size()))
+	_montar(batalha, indices)
+	batalha.confirmar()
+	assert_eq(batalha.inimigo.vida, 12, p[0])
+	assert_eq(batalha.arthur.vida, 37, p[0])
+	assert_eq(batalha.baralho.mao.size(), 0, p[0])
+	assert_eq(batalha.baralho.expressao.size(), 0, p[0])
+	assert_eq(batalha.baralho.descarte, cartas, p[0])
+	assert_eq(batalha.estado, Batalha.Estado.MOSTRANDO_RESULTADO, p[0])
+	var resultado := _resultado(batalha)
+	assert_eq(resultado.tipo, ResultadoRodada.Tipo.INVALIDA, p[0])
+	assert_eq(resultado.alvo, 9, p[0])
+	assert_eq(resultado.dano_causado, 0, p[0])
+	assert_true(resultado.inimigo_atacou, p[0])
+	assert_eq(resultado.dano_recebido, 3, p[0])
+
+
+func test_conta_errada_com_especiais_nao_aplica_efeito() -> void:
+	# FR-019: 6 + 7 − 5 (Guarda, Vital e Chama) vale 8, e o alvo é 9.
+	var batalha := _com_mao([GUARDA, SOMA, VITAL, SUBTRACAO, CHAMA, FOCO], 9)
+	batalha.arthur.vida = 30
+	watch_signals(batalha)
+	_montar(batalha, [0, 1, 2, 3, 4])
+	batalha.confirmar()
+	assert_eq(batalha.inimigo.vida, 12)
+	assert_eq(batalha.arthur.vida, 27)
+	assert_eq(batalha.arthur.escudo, 0)
+	assert_eq(batalha.baralho.mao, [FOCO])
+	var resultado := _resultado(batalha)
+	assert_eq(resultado.tipo, ResultadoRodada.Tipo.ERRO)
+	assert_eq(resultado.valor, 8)
+	assert_eq(resultado.dano_causado, 0)
+	assert_eq(resultado.escudo_ganho, 0)
+	assert_eq(resultado.cura, 0)
+	assert_eq(resultado.cartas_compradas, 0)
+	assert_eq(resultado.dano_recebido, 3)
+
+
+func test_conta_invalida_com_especiais_nao_aplica_efeito() -> void:
+	# Foco e Chama juntos (4 5) não são conta: nada de compra nem de dano extra.
+	var batalha := _com_mao([FOCO, CHAMA, N1], 9)
 	watch_signals(batalha)
 	_montar(batalha, [0, 1])
 	batalha.confirmar()
 	assert_eq(batalha.inimigo.vida, 12)
-	assert_eq(batalha.arthur.vida, 37)
-	assert_eq(batalha.baralho.descarte, [N3, N4])
+	assert_eq(batalha.baralho.mao, [N1])
 	var resultado := _resultado(batalha)
 	assert_eq(resultado.tipo, ResultadoRodada.Tipo.INVALIDA)
-	assert_eq(resultado.dano_causado, 0)
-	assert_true(resultado.inimigo_atacou)
+	assert_eq(resultado.cartas_compradas, 0)
 
 
 func test_acerto_com_uma_carta_so() -> void:
