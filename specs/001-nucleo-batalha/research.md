@@ -224,8 +224,11 @@ e anota o valor de cada uma:
 7. **Sorteio**: se algum valor da faixa foi achado, o alvo é sorteado entre eles, em ordem
    crescente, com o gerador da luta. Se nenhum foi achado, o alvo é o valor positivo achado
    mais próximo da faixa (FR-007); se um valor abaixo e um acima estão à mesma distância, o
-   gerador sorteia entre os dois (decisão do Estêvão no analyze). Se a mão não tem nenhum número (baralho inválido), o alvo
-   é o mínimo da faixa e resta ao jogador o Pular.
+   gerador sorteia entre os dois (decisão do Estêvão no analyze). Se a mão não tem nenhum
+   número, o alvo é o mínimo da faixa e resta ao jogador o Pular. Isso só acontece com um
+   baralho sem cartas de número, que o contrato da luta proíbe
+   ([contracts/batalha.md](contracts/batalha.md), pré-condição); o caso fica tratado para a
+   busca não quebrar se a pré-condição for violada.
 
 ### Por que o alvo é sempre alcançável
 

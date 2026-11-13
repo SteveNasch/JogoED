@@ -38,6 +38,10 @@ func iniciar(
 | `regras` | `regras_batalha.tres` | as regras da profundidade atual |
 | `semente` | `randi()` (uma luta diferente a cada vez) | a critério da run |
 
+Pré-condição: `cartas` tem pelo menos uma carta de número. Com isso, toda mão de início de
+rodada tem um número (a compra dirigida da FR-006 o traz, e no começo da rodada a expressão
+está vazia), e um número sozinho já é uma conta válida, então o alvo é sempre alcançável.
+
 Garantias:
 - `cartas` não é alterado: a luta trabalha numa cópia.
 - `vida_arthur` pode ser menor que `regras.vida_maxima_arthur`; a cura respeita a máxima.

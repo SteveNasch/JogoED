@@ -369,6 +369,8 @@ uma conta com carta especial e conferir que nada acontece.
 - Inimigo derrotado não ataca (confirmado no clarify): a frase da visão "toda rodada
   termina com o ataque do inimigo" vale enquanto ele está vivo; o jogo antigo fazia diferente.
 - A mão não tem limite de tamanho; o limite natural é o próprio baralho.
+- O baralho da luta sempre tem pelo menos uma carta de número; é isso que garante um alvo
+  alcançável mesmo quando a mão mínima não pode ser cumprida.
 - Nesta funcionalidade cada luta é independente e começa com o Arthur com 40 de vida; a vida
   passando de uma luta para a outra é da funcionalidade 002.
 - Existe um único inimigo padrão, com nome provisório definido nos dados; nomes, visual e
