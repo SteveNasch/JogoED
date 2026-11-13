@@ -43,6 +43,42 @@ func alcancaveis(mao: Array[DadosCarta]) -> Dictionary:
 	return _achados
 
 
+## O alvo da rodada: sempre um valor que a mão alcança.
+func sortear(mao: Array[DadosCarta], rng: RandomNumberGenerator) -> int:
+	return escolher_alvo(alcancaveis(mao), rng)
+
+
+## Sorteia entre os valores achados dentro da faixa, em ordem crescente. Sem nenhum na faixa,
+## fica com o positivo mais próximo dela (empate entre um abaixo e um acima: sorteia entre os
+## dois). Sem nenhum valor positivo (mão sem números), devolve o mínimo da faixa.
+func escolher_alvo(valores: Dictionary, rng: RandomNumberGenerator) -> int:
+	var candidatos: Array[int] = []
+	for valor: int in valores:
+		if valor >= _alvo_minimo and valor <= _alvo_maximo:
+			candidatos.append(valor)
+	if candidatos.is_empty():
+		candidatos = _mais_perto_da_faixa(valores)
+	if candidatos.is_empty():
+		return _alvo_minimo
+	candidatos.sort()
+	return candidatos[rng.randi_range(0, candidatos.size() - 1)]
+
+
+func _mais_perto_da_faixa(valores: Dictionary) -> Array[int]:
+	var mais_perto: Array[int] = []
+	var menor_distancia := -1
+	for valor: int in valores:
+		if valor <= 0:
+			continue
+		var distancia := _alvo_minimo - valor if valor < _alvo_minimo else valor - _alvo_maximo
+		if menor_distancia == -1 or distancia < menor_distancia:
+			mais_perto = [valor]
+			menor_distancia = distancia
+		elif distancia == menor_distancia:
+			mais_perto.append(valor)
+	return mais_perto
+
+
 ## Cartas com a mesma chave dão as mesmas contas: a busca escolhe o grupo, não a carta, e assim
 ## não repete contas iguais. O grupo guarda as cartas reais para a conta de exemplo usá-las.
 func _agrupar(mao: Array[DadosCarta]) -> void:

@@ -133,3 +133,73 @@ func test_mao_sem_numeros_nao_acha_nada() -> void:
 	var busca := BuscaAlvo.new(5, 12, 3, 10000)
 	assert_eq(busca.alcancaveis(mao), {})
 	assert_eq(busca.avaliacoes, 0)
+
+
+# --- sortear e escolher_alvo ---
+
+
+func _rng(semente: int) -> RandomNumberGenerator:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = semente
+	return rng
+
+
+## Os alvos que saem de escolher_alvo em 200 sementes, sem repetição.
+func _alvos_em_varias_sementes(busca: BuscaAlvo, valores: Dictionary) -> Array:
+	var alvos := []
+	for semente in 200:
+		var alvo := busca.escolher_alvo(valores, _rng(semente))
+		if not alvo in alvos:
+			alvos.append(alvo)
+	alvos.sort()
+	return alvos
+
+
+func test_alvo_sempre_tem_conta_de_exemplo_e_fica_na_faixa_quando_possivel() -> void:
+	var rng := _rng(31)
+	var busca := BuscaAlvo.new(5, 12, 3, 10000)
+	for i in 100:
+		var mao := _mao_sorteada(rng, rng.randi_range(3, 8))
+		var achados := busca.alcancaveis(mao)
+		var alvo := busca.sortear(mao, rng)
+		assert_true(achados.has(alvo), "mão %d: alvo %d sem conta de exemplo" % [i, alvo])
+		var alguma_na_faixa := achados.keys().any(func(valor: int) -> bool: return valor >= 5 and valor <= 12)
+		if alguma_na_faixa:
+			assert_between(alvo, 5, 12, "mão %d" % i)
+
+
+func test_sorteia_entre_todos_os_valores_da_faixa() -> void:
+	var busca := BuscaAlvo.new(5, 12, 3, 10000)
+	var valores := {2: [], 5: [], 9: [], 12: [], 13: []}
+	assert_eq(_alvos_em_varias_sementes(busca, valores), [5, 9, 12])
+
+
+func test_mao_que_nao_alcanca_a_faixa_fica_com_o_valor_mais_perto() -> void:
+	var mao: Array[DadosCarta] = [_carta("numero_1"), _carta("numero_1"), _carta("numero_2"), _carta("soma"), _carta("subtracao")]
+	var busca := BuscaAlvo.new(5, 12, 3, 10000)
+	assert_eq(busca.sortear(mao, _rng(1)), 3, "com um só +, o maior valor possível é 2 + 1")
+
+
+func test_empate_abaixo_e_acima_da_faixa_sorteia_entre_os_dois() -> void:
+	var busca := BuscaAlvo.new(5, 12, 3, 10000)
+	var valores := {3: [], 14: [], 1: [], 20: []}
+	assert_eq(_alvos_em_varias_sementes(busca, valores), [3, 14])
+
+
+func test_valores_zero_e_negativos_nunca_viram_alvo() -> void:
+	var busca := BuscaAlvo.new(5, 12, 3, 10000)
+	assert_eq(_alvos_em_varias_sementes(busca, {-4: [], 0: [], 2: []}), [2])
+
+
+func test_sem_valor_positivo_o_alvo_e_o_minimo_da_faixa() -> void:
+	var busca := BuscaAlvo.new(5, 12, 3, 10000)
+	var mao: Array[DadosCarta] = [_carta("soma"), _carta("subtracao")]
+	assert_eq(busca.sortear(mao, _rng(1)), 5)
+	assert_eq(busca.escolher_alvo({0: [], -3: []}, _rng(1)), 5)
+
+
+func test_mesma_semente_da_o_mesmo_alvo() -> void:
+	var busca := BuscaAlvo.new(5, 12, 3, 10000)
+	var mao := _mao_sorteada(_rng(8), 8)
+	for semente in 20:
+		assert_eq(busca.sortear(mao, _rng(semente)), busca.sortear(mao, _rng(semente)), "semente %d" % semente)
