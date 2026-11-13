@@ -66,7 +66,10 @@ Textos (FR-019, FR-025):
 | `ERRO` | "Errou: a conta deu 7, o alvo era 9." |
 | `INVALIDA` | "Conta inválida. O alvo era 9." |
 | `PULO` | "Pulou a rodada. Comprou 1 carta." |
-| em todos, se o inimigo atacou | segunda linha: "O inimigo tirou 3 de vida." ou "O escudo segurou o ataque." |
+| em todos, se `inimigo_atacou` | segunda linha: "O inimigo tirou 3 de vida." (com o `dano_recebido`) ou, se `dano_recebido` for 0, "O escudo segurou o ataque." |
+
+No `ACERTO`, o número de dano é o `dano_causado`, que é o dano calculado e pode passar da
+vida que o inimigo ainda tinha (golpe final de 13 num inimigo com 7 mostra "13 de dano").
 
 ### `batalha/sons_batalha.tscn` (raiz: `Node`)
 

@@ -204,11 +204,12 @@ O que aconteceu numa rodada, para a tela mostrar (FR-025) e os testes conferirem
 | `tipo` | `Tipo` (enum) | `ACERTO`, `ERRO`, `INVALIDA`, `PULO` |
 | `alvo` | `int` | alvo da rodada |
 | `valor` | `int` | valor da conta (em `ACERTO` e `ERRO`) |
-| `dano_causado` | `int` | vida que o inimigo perdeu (ataque das cartas + Chama) |
+| `dano_causado` | `int` | dano calculado: soma do ataque das cartas + Chama, mesmo que passe da vida que o inimigo ainda tinha (o aviso mostra esse número) |
 | `escudo_ganho` | `int` | escudo dado ao Arthur |
 | `cura` | `int` | vida que o Arthur recuperou de fato |
 | `cartas_compradas` | `int` | cartas extras que entraram na mão (Foco ou Pular) |
-| `dano_recebido` | `int` | vida que o Arthur perdeu no ataque do inimigo |
+| `inimigo_atacou` | `bool` | o inimigo atacou nesta rodada (falso só quando ele caiu nela) |
+| `dano_recebido` | `int` | vida que o Arthur perdeu no ataque do inimigo (0 se o escudo segurou tudo) |
 | `luta_acabou` | `bool` | alguém chegou a 0 de vida nesta rodada |
 
 ### ResultadoLuta (`batalha/resultado_luta.gd`)
