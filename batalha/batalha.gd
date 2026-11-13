@@ -42,6 +42,49 @@ func iniciar() -> void:
 	_comecar_rodada(regras.cartas_iniciais)
 
 
+## FR-008: a carta da mão vai para o fim da expressão.
+func escolher_carta(indice_da_mao: int) -> void:
+	if estado != Estado.MONTANDO or indice_da_mao < 0 or indice_da_mao >= baralho.mao.size():
+		return
+	baralho.por_na_expressao(indice_da_mao)
+	mudou.emit()
+
+
+## FR-011: não dá para confirmar uma expressão vazia.
+func pode_confirmar() -> bool:
+	return not baralho.expressao.is_empty()
+
+
+## Julga a conta: acerto tira do inimigo a soma do ataque das cartas (FR-016); erro e conta
+## inválida não causam dano (FR-019). Nos três casos as cartas vão para o descarte e o
+## inimigo vivo ataca (FR-021).
+func confirmar() -> void:
+	if estado != Estado.MONTANDO or not pode_confirmar():
+		return
+	var conta := MotorContas.avaliar(baralho.expressao)
+	var resultado: ResultadoRodada
+	if not conta.valida:
+		resultado = ResultadoRodada.new(ResultadoRodada.Tipo.INVALIDA, alvo)
+	elif conta.valor != alvo:
+		resultado = ResultadoRodada.new(ResultadoRodada.Tipo.ERRO, alvo)
+		resultado.valor = conta.valor
+	else:
+		resultado = ResultadoRodada.new(ResultadoRodada.Tipo.ACERTO, alvo)
+		resultado.valor = conta.valor
+		resultado.dano_causado = _ataque_da_expressao()
+		inimigo.receber_dano(resultado.dano_causado)
+	baralho.descartar_expressao()
+	_inimigo_ataca(resultado)
+	_mostrar_resultado(resultado)
+
+
+## Depois que a tela mostrou o resultado: começa a rodada seguinte.
+func avancar() -> void:
+	if estado != Estado.MOSTRANDO_RESULTADO:
+		return
+	_comecar_rodada(regras.cartas_por_rodada)
+
+
 ## Escudo zerado (FR-018), compra com o mínimo da mão (FR-006) e alvo sorteado com a mão já
 ## completa (FR-007).
 func _comecar_rodada(cartas_a_comprar: int) -> void:
@@ -51,3 +94,24 @@ func _comecar_rodada(cartas_a_comprar: int) -> void:
 	alvo = _busca.sortear(baralho.mao, _rng)
 	estado = Estado.MONTANDO
 	mudou.emit()
+
+
+func _ataque_da_expressao() -> int:
+	var ataque := 0
+	for carta in baralho.expressao:
+		ataque += carta.ataque
+	return ataque
+
+
+## FR-021: o inimigo ataca no fim de toda rodada, menos quando caiu nela.
+func _inimigo_ataca(resultado: ResultadoRodada) -> void:
+	if not inimigo.esta_vivo():
+		return
+	resultado.inimigo_atacou = true
+	resultado.dano_recebido = arthur.receber_dano(inimigo.ataque)
+
+
+func _mostrar_resultado(resultado: ResultadoRodada) -> void:
+	estado = Estado.MOSTRANDO_RESULTADO
+	mudou.emit()
+	rodada_resolvida.emit(resultado)
