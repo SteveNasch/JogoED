@@ -61,7 +61,8 @@ lógica e dados; 16 arquivos de carta, 1 de baralho (21 cartas), 1 de inimigo e 
 *Portão: precisa passar antes da pesquisa (fase 0) e ser conferido de novo depois do desenho
 (fase 1).*
 
-Constituição v1.0.0 (`.specify/memory/constitution.md`).
+Constituição v1.0.1 (`.specify/memory/constitution.md`; a 1.0.1 só atualizou a equipe para
+6 estudantes e não muda nenhuma linha desta tabela).
 
 | Princípio | Como o plano atende | Situação |
 |---|---|---|

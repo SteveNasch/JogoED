@@ -16,7 +16,7 @@ Não ficou nenhum "NEEDS CLARIFICATION" do contexto técnico.
   `func curar(quantidade: int) -> int`).
 - **Motivo**: exigência da constituição (princípio I e Restrições Técnicas). A documentação
   aponta que os tipos permitem achar erros sem rodar o código e melhoram o autocompletar,
-  o que ajuda uma equipe de cinco pessoas a usar o código uns dos outros.
+  o que ajuda uma equipe de seis pessoas a usar o código uns dos outros.
 - **Alternativas**: tipagem dinâmica (menos texto, mas erros só aparecem ao rodar).
 - **Documentação**:
   [Static typing in GDScript](https://docs.godotengine.org/en/4.7/tutorials/scripting/gdscript/static_typing.html).
@@ -129,7 +129,7 @@ Não ficou nenhum "NEEDS CLARIFICATION" do contexto técnico.
   por convenção os sinais têm nome de verbo no passado. Atende ao princípio III da
   constituição (cena abre e é testada sozinha).
 - **Alternativas**: uma cena única de batalha com tudo dentro (menos arquivos, mas contraria
-  o princípio III e gera conflito de merge entre os cinco); barramento global de eventos
+  o princípio III e gera conflito de merge entre os seis); barramento global de eventos
   (desnecessário para uma tela só).
 - **Documentação**:
   [Scene organization](https://docs.godotengine.org/en/4.7/tutorials/best_practices/scene_organization.html)
