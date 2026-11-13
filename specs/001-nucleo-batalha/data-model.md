@@ -26,6 +26,11 @@ flowchart TD
 
 ## Dados (`Resource`)
 
+As "regras de validação" de cada dado abaixo são convenções dos arquivos `.tres`: o jogo não
+as confere enquanto roda (seria código para um erro que os testes já pegam). Quem as garante
+são os testes de dados das tarefas T005, T006 e T007, que carregam cada `.tres` do projeto e
+conferem as regras. Arquivo de dados novo (por exemplo na 002) entra com teste igual.
+
 ### DadosCarta (`cartas/dados_carta.gd`)
 
 Um arquivo `.tres` por **tipo** de carta. Duas cartas iguais no baralho apontam para o mesmo

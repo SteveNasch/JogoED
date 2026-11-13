@@ -74,15 +74,15 @@ baralho e busca do alvo, todas sem cena.
 ### Área: combatentes
 
 - [ ] T004 [P] Criar `Combatente` em `combatentes/combatente.gd` (`extends RefCounted`) com `nome`, `vida`, `vida_maxima`, `escudo`, `ataque` e `receber_dano(quantidade) -> int` (escudo primeiro, vida nunca negativa, devolve a vida perdida), `curar(quantidade) -> int` (teto em `vida_maxima`, devolve o curado de fato), `ganhar_escudo()`, `zerar_escudo()`, `esta_vivo()`; testes em `combatentes/testes/teste_combatente.gd` (escudo maior e menor que o dano, dano maior que a vida, cura acima do máximo, vida inicial menor que a máxima)
-- [ ] T005 [P] Criar `DadosInimigo` em `combatentes/dados_inimigo.gd` (`extends Resource`, `@export` `nome`, `vida`, `ataque`) e `dados/inimigos/inimigo_padrao.tres` com "Inimigo", 12, 3; testes em `combatentes/testes/teste_dados_inimigo.gd` carregando o `.tres` e conferindo os valores da FR-001
+- [ ] T005 [P] Criar `DadosInimigo` em `combatentes/dados_inimigo.gd` (`extends Resource`, `@export` `nome`, `vida`, `ataque`) e `dados/inimigos/inimigo_padrao.tres` com "Inimigo", 12, 3; testes em `combatentes/testes/teste_dados_inimigo.gd` carregando o `.tres` e conferindo os valores da FR-001 e as regras de validação do [data-model.md](data-model.md) (`vida >= 1`, `ataque >= 0`)
 
 ### Área: batalha (dados)
 
-- [ ] T006 [P] Criar `RegrasBatalha` em `batalha/regras_batalha.gd` (`extends Resource`) com os 12 campos `@export` da tabela do [data-model.md](data-model.md) e `dados/regras_batalha.tres` com os valores padrão (40, 5, 1, 1, 3, 1, 1, 5, 12, 3, 10000, 1.5); testes em `batalha/testes/teste_regras_batalha.gd` carregando o `.tres` e conferindo cada valor
+- [ ] T006 [P] Criar `RegrasBatalha` em `batalha/regras_batalha.gd` (`extends Resource`) com os 12 campos `@export` da tabela do [data-model.md](data-model.md) e `dados/regras_batalha.tres` com os valores padrão (40, 5, 1, 1, 3, 1, 1, 5, 12, 3, 10000, 1.5); testes em `batalha/testes/teste_regras_batalha.gd` carregando o `.tres` e conferindo cada valor e as regras de validação do [data-model.md](data-model.md) (`alvo_minimo >= 1`, `alvo_minimo <= alvo_maximo`, `max_numeros_no_alvo >= 1`, demais `>= 0`)
 
 ### Área: cartas (arquivos de dados e baralho)
 
-- [ ] T007 Criar os 16 arquivos de `dados/cartas/` da tabela do [data-model.md](data-model.md) (`numero_1.tres` a `numero_5.tres`, `soma`, `subtracao`, `multiplicacao`, `divisao`, `dobro`, `metade`, `quadrado`, `chama`, `foco`, `guarda`, `vital`), `DadosBaralho` em `cartas/dados_baralho.gd` (`@export var cartas: Array[DadosCarta]`) e `dados/baralhos/baralho_luta_avulsa.tres` com as 21 cartas da FR-002; testes em `cartas/testes/teste_dados_cartas.gd` conferindo valor, ataque, efeito e intensidade de cada arquivo contra a tabela da spec e a composição exata do baralho (2 de cada número de 1 a 5 e 1 de cada uma das outras 11) (depende de T003)
+- [ ] T007 Criar os 16 arquivos de `dados/cartas/` da tabela do [data-model.md](data-model.md) (`numero_1.tres` a `numero_5.tres`, `soma`, `subtracao`, `multiplicacao`, `divisao`, `dobro`, `metade`, `quadrado`, `chama`, `foco`, `guarda`, `vital`), `DadosBaralho` em `cartas/dados_baralho.gd` (`@export var cartas: Array[DadosCarta]`) e `dados/baralhos/baralho_luta_avulsa.tres` com as 21 cartas da FR-002; testes em `cartas/testes/teste_dados_cartas.gd` conferindo valor, ataque, efeito e intensidade de cada arquivo contra a tabela da spec e as regras de validação do [data-model.md](data-model.md) (valor de 1 a 10 só nos números e 0 nos operadores, `ataque >= 0`, `intensidade >= 1` com efeito, efeito só em número) e a composição exata do baralho (2 de cada número de 1 a 5 e 1 de cada uma das outras 11) (depende de T003)
 
 ### Área: contas (motor)
 
