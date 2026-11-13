@@ -32,6 +32,16 @@ Referência do jogo inteiro: `docs/visao-do-jogo.md` (seção "Combate").
   se ainda faltar, dá as cartas que faltam. "1 carta por rodada" passa a ser "pelo menos 1".
 - Q: A divisão arredonda para baixo ou só vale a divisão exata? → A: arredonda para baixo,
   como no jogo antigo (7 ÷ 2 = 3; 5 /2 = 2).
+- Q: Quando o acerto do Arthur derruba o inimigo, o inimigo ainda ataca antes de a luta
+  acabar? → A: não; inimigo derrotado não age e a vitória vem na hora.
+- Q: Enquanto o jogador monta a conta, o jogo mostra quanto ela está valendo? → A: não; nem
+  o valor nem se ela é válida aparecem antes de confirmar.
+- Q: O alvo pode ser resolvido com uma carta só? → A: sim; qualquer valor alcançável na
+  faixa vale, inclusive igual a uma carta da mão.
+- Q: O escudo da Guarda dura só até o ataque daquela rodada ou se acumula? → A: só aquela
+  rodada; o que sobrar zera no início da rodada seguinte.
+- Q: Depois de cada confirmação ou Pular, o jogo espera um clique ou avança sozinho? → A:
+  avança sozinho; o resultado fica na tela por cerca de 1,5 s e a rodada seguinte começa.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -152,6 +162,8 @@ uma conta com carta especial e conferir que nada acontece.
 
 ### Edge Cases
 
+- O alvo sorteado é igual a uma carta da mão (por exemplo, alvo 7 com um 7): confirmar só
+  essa carta é um acerto, com o dano do ataque dela.
 - A conta tem resultado intermediário negativo (`2 − 5 + 9`): é válida e vale 6.
 - Unários encadeados (`3 ^2 x2` = 18) são aplicados na ordem, ao número que os antecede.
 - Unário depois de operador binário ou no início (`3 + x2`, `^2 3`): conta inválida.
@@ -164,6 +176,8 @@ uma conta com carta especial e conferir que nada acontece.
 - O Pular é usado com cartas na expressão: elas voltam para a mão antes do ataque.
 - O ataque do inimigo é menor que o escudo: o escudo absorve tudo e o resto zera na rodada
   seguinte.
+- O jogador clica em cartas ou ações enquanto o resultado da rodada está na tela: nada
+  acontece até a rodada seguinte começar.
 - O Foco compra com as duas pilhas vazias: o efeito não faz nada e a luta segue.
 - A garantia de mão mínima não consegue ser cumprida porque o baralho não tem cartas
   suficientes daquele tipo: a rodada começa com a melhor mão possível e o alvo continua
@@ -195,8 +209,9 @@ uma conta com carta especial e conferir que nada acontece.
   possível.
 - **FR-007**: Cada rodada MUST sortear um alvo inteiro positivo dentro da faixa dos dados do
   jogo (padrão: 5 a 12) que seja alcançável com as cartas da mão naquele momento, usando cada
-  carta no máximo uma vez e as regras de FR-012 a FR-015. Se nenhum valor da faixa for
-  alcançável, o alvo MUST ser o valor positivo alcançável mais próximo da faixa.
+  carta no máximo uma vez e as regras de FR-012 a FR-015. Valores alcançáveis com uma carta
+  só também valem. Se nenhum valor da faixa for alcançável, o alvo MUST ser o valor positivo
+  alcançável mais próximo da faixa.
 
 **Montagem da expressão**
 
@@ -204,8 +219,9 @@ uma conta com carta especial e conferir que nada acontece.
   sai da mão e entra no fim da expressão, que fica visível na ordem montada.
 - **FR-009**: O jogador MUST poder desfazer (a última carta da expressão volta para a mão) e
   limpar (todas voltam para a mão). Nenhum dos dois encerra a rodada nem tem custo.
-- **FR-010**: Qualquer sequência de cartas MUST poder ser montada; a validade só é julgada
-  ao confirmar.
+- **FR-010**: Qualquer sequência de cartas MUST poder ser montada. Antes de confirmar, o
+  jogo MUST NOT mostrar o valor da expressão nem se ela é válida; os dois só aparecem depois
+  da confirmação.
 - **FR-011**: Confirmar MUST ficar indisponível enquanto a expressão estiver vazia.
 
 **Avaliação da conta**
@@ -230,7 +246,8 @@ uma conta com carta especial e conferir que nada acontece.
   colocar 1 carta na mão na hora; Guarda MUST dar 5 de escudo ao Arthur; Vital MUST curar 2
   de vida do Arthur sem passar da vida máxima.
 - **FR-018**: O escudo MUST absorver dano antes da vida e MUST zerar no início da rodada
-  seguinte (ele protege só do ataque da rodada em que foi ganho).
+  seguinte (ele protege só do ataque da rodada em que foi ganho e não se acumula entre
+  rodadas).
 - **FR-019**: Se a expressão for inválida ou der outro valor, as cartas usadas MUST ir para
   o descarte, sem dano e sem efeitos especiais, e o jogo MUST mostrar o valor obtido (ou que
   a conta é inválida) junto do alvo.
@@ -250,7 +267,9 @@ uma conta com carta especial e conferir que nada acontece.
   for especial, o nome e o efeito.
 - **FR-025**: Depois de cada confirmação ou Pular, o jogo MUST mostrar o que aconteceu: dano
   causado e efeitos (acerto), valor obtido ou conta inválida (erro) e dano recebido pelo
-  Arthur.
+  Arthur. O resultado MUST ficar na tela por cerca de 1,5 segundo (valor nos dados) e a
+  rodada seguinte (ou a tela de vitória ou derrota) MUST começar sozinha, sem clique. Nesse
+  intervalo as ações do jogador ficam indisponíveis.
 - **FR-026**: A tela de vitória MUST mostrar a vitória, a vida restante do Arthur e quantas
   rodadas a luta durou, com a opção de lutar de novo.
 - **FR-027**: A tela de derrota MUST mostrar a derrota, a vida restante do inimigo e quantas
@@ -323,10 +342,8 @@ uma conta com carta especial e conferir que nada acontece.
 - Os números padrão (vida 40 do Arthur, inimigo com 12 de vida e 3 de ataque, faixa de alvo
   5 a 12, ataque das cartas e intensidade dos efeitos) vêm do Answer Quest antigo e podem
   ser ajustados nos dados sem mudar esta especificação.
-- Inimigo derrotado não ataca: a frase da visão "toda rodada termina com o ataque do
-  inimigo" vale enquanto ele está vivo (no jogo antigo ele atacava mesmo depois de cair, mas
-  a vitória vinha antes da derrota). Ponto a confirmar no `/speckit-clarify`.
-- O jogo não mostra o valor da expressão antes de confirmar: calcular é o desafio.
+- Inimigo derrotado não ataca (confirmado no clarify): a frase da visão "toda rodada
+  termina com o ataque do inimigo" vale enquanto ele está vivo; o jogo antigo fazia diferente.
 - A mão não tem limite de tamanho; o limite natural é o próprio baralho.
 - Nesta funcionalidade cada luta é independente e começa com o Arthur com 40 de vida; a vida
   passando de uma luta para a outra é da funcionalidade 002.
