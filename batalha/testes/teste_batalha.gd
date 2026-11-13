@@ -405,3 +405,72 @@ func test_nenhuma_acao_vale_depois_da_luta_terminada() -> void:
 	assert_signal_not_emitted(batalha, "mudou")
 	assert_signal_not_emitted(batalha, "rodada_resolvida")
 	assert_signal_not_emitted(batalha, "luta_terminou")
+
+
+## Arthur com `vida` e uma conta errada (2 + 5 vale 7, alvo 9) já confirmada.
+func _erro_com_arthur_em(vida: int) -> Batalha:
+	var batalha := _com_mao([N2, SOMA, N5, N1, SUBTRACAO], 9)
+	batalha.arthur.vida = vida
+	watch_signals(batalha)
+	_montar(batalha, [0, 1, 2])
+	batalha.confirmar()
+	return batalha
+
+
+func test_ataque_que_zera_o_arthur_acaba_a_luta_com_derrota() -> void:
+	# Cenário 3 da história 2: Arthur com vida igual ao ataque do inimigo e sem escudo.
+	var batalha := _erro_com_arthur_em(3)
+	batalha.inimigo.vida = 5
+	assert_eq(batalha.arthur.vida, 0)
+	assert_true(_resultado(batalha).luta_acabou)
+	assert_eq(batalha.estado, Batalha.Estado.MOSTRANDO_RESULTADO)
+	assert_signal_not_emitted(batalha, "luta_terminou")
+	batalha.avancar()
+	assert_eq(batalha.estado, Batalha.Estado.TERMINADA)
+	assert_eq(batalha.rodada, 1)
+	assert_signal_emit_count(batalha, "luta_terminou", 1)
+	var resultado: ResultadoLuta = get_signal_parameters(batalha, "luta_terminou")[0]
+	assert_false(resultado.venceu)
+	assert_eq(resultado.vida_arthur, 0)
+	assert_eq(resultado.vida_inimigo, 5)
+	assert_eq(resultado.rodadas, 1)
+
+
+func test_vida_do_arthur_nunca_fica_negativa() -> void:
+	var batalha := _erro_com_arthur_em(1)
+	assert_eq(batalha.arthur.vida, 0)
+	assert_eq(_resultado(batalha).dano_recebido, 1)
+	assert_true(_resultado(batalha).luta_acabou)
+
+
+func test_escudo_absorve_antes_da_vida() -> void:
+	var batalha := _com_mao([N2, SOMA, N5, N1, SUBTRACAO], 9)
+	batalha.arthur.vida = 3
+	batalha.arthur.escudo = 2
+	watch_signals(batalha)
+	_montar(batalha, [0, 1, 2])
+	batalha.confirmar()
+	assert_eq(batalha.arthur.escudo, 0)
+	assert_eq(batalha.arthur.vida, 2)
+	assert_eq(_resultado(batalha).dano_recebido, 1)
+	assert_false(_resultado(batalha).luta_acabou)
+	batalha.avancar()
+	assert_eq(batalha.estado, Batalha.Estado.MONTANDO)
+	assert_signal_not_emitted(batalha, "luta_terminou")
+
+
+func test_nenhuma_acao_vale_depois_da_derrota() -> void:
+	var batalha := _erro_com_arthur_em(3)
+	batalha.avancar()
+	clear_signal_watcher()
+	watch_signals(batalha)
+	var mao := batalha.baralho.mao.duplicate()
+	batalha.escolher_carta(0)
+	batalha.confirmar()
+	batalha.avancar()
+	assert_eq(batalha.estado, Batalha.Estado.TERMINADA)
+	assert_eq(batalha.baralho.mao, mao)
+	assert_eq(batalha.rodada, 1)
+	assert_signal_not_emitted(batalha, "mudou")
+	assert_signal_not_emitted(batalha, "rodada_resolvida")
+	assert_signal_not_emitted(batalha, "luta_terminou")

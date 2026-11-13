@@ -156,7 +156,7 @@ gastas e Arthur apanhando; repetir até a derrota (quickstart, cenário 3).
 ### Área: batalha (lógica)
 
 - [X] T024 [US2] Testes da história 2 na lógica, sobre o `confirmar()` que o T014 já resolve: erro e conta inválida mandam a expressão para o descarte, sem dano, sem efeitos, com ataque do inimigo e `ResultadoRodada` tipo `ERRO` (com `valor`) ou `INVALIDA` (FR-019); testes em `batalha/testes/teste_batalha.gd` (cenário 1 da história 2: alvo 9, `2 + 5` → valor 7, inimigo intacto, 3 cartas no descarte; cenário 2 com `3 4`, `+ 3`, `5 ×` e `4 ÷ 1 /2`); corrigir `batalha/batalha.gd` se algum falhar
-- [ ] T025 [US2] Acrescentar a derrota em `batalha/batalha.gd`: ataque que zera o Arthur marca `luta_acabou`; `avancar()` vai para `TERMINADA` e emite `luta_terminou` com `venceu = false`, `vida_arthur = 0` e a vida do inimigo; testes em `batalha/testes/teste_batalha.gd` (cenário 3 da história 2; vida nunca negativa; escudo absorve antes da vida) (depende de T024)
+- [X] T025 [US2] Acrescentar a derrota em `batalha/batalha.gd`: ataque que zera o Arthur marca `luta_acabou`; `avancar()` vai para `TERMINADA` e emite `luta_terminou` com `venceu = false`, `vida_arthur = 0` e a vida do inimigo; testes em `batalha/testes/teste_batalha.gd` (cenário 3 da história 2; vida nunca negativa; escudo absorve antes da vida) (depende de T024)
 
 ### Área: cenas e luta avulsa
 
