@@ -65,7 +65,10 @@ cenas, luta avulsa). As fases 3 a 6 correspondem às histórias da spec e levam 
 **Purpose**: as peças de que todas as histórias dependem: cartas, contas, combatentes,
 baralho e busca do alvo, todas sem cena.
 
-**⚠️ CRITICAL**: nenhuma tarefa de história começa antes desta fase terminar.
+**⚠️ CRITICAL**: nenhuma tarefa de história começa antes das tarefas desta fase de que ela
+depende (ver o grafo em "Dependências entre tarefas"). As cenas que só usam dados (T016 e
+T018) podem começar assim que T003 e T004 estiverem prontos; a lógica da luta (T013 em
+diante) espera a fase inteira.
 
 ### Área: cartas (dados)
 
@@ -213,7 +216,8 @@ especial e conferir que nada acontece (quickstart, cenário 5).
 ### Ordem das fases
 
 1. **Setup (fase 1)**: começa já.
-2. **Foundational (fase 2)**: depende da fase 1 e bloqueia todas as histórias.
+2. **Foundational (fase 2)**: depende da fase 1. Bloqueia a lógica da luta (T013 em diante);
+   as cenas T016 a T018 só esperam as tarefas de dados de que dependem (T003, T004).
 3. **US1 (fase 3)**: depende da fase 2. É o MVP.
 4. **US2 (fase 4)** e **US3 (fase 5)**: dependem da US1 (precisam da `Batalha` e da tela).
    A US3 depende da US2 num ponto só: o T028 testa o Pular que leva à derrota, que vem do
