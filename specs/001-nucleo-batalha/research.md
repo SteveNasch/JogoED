@@ -289,7 +289,8 @@ teste de simulação abaixo confere que nenhuma rodada chega perto do teto.
 - **Conta de exemplo**: para cada valor achado, a conta guardada usa só cartas da mão (cada
   uma no máximo uma vez) e o motor confirma que ela dá aquele valor.
 - **Sorteio**: o alvo sempre pertence aos valores achados; fica na faixa quando há algum
-  valor da faixa; cai no mais próximo quando não há (mão 1, 1, 2, +, − → alvo 4).
+  valor da faixa; cai no mais próximo quando não há (mão 1, 1, 2, +, − → alvo 3: os valores
+  possíveis são −1, 0, 1, 2 e 3, porque só há um `+`).
 - **Freios**: com o baralho inteiro na mão e uma faixa impossível, a busca termina e o número
   de avaliações não passa de `limite_buscas_alvo`; nenhuma conta de exemplo tem mais números
   que `max_numeros_no_alvo`.
