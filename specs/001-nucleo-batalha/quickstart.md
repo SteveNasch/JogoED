@@ -133,7 +133,8 @@ Jogue até ter cada especial na mão e acerte uma conta com ela:
 
 Confira que cada retângulo, texto provisório e som ausente que aparece (ou deveria tocar) no
 jogo tem uma linha em `docs/assets-pendentes.md` (inclusive o ícone da janela, que é o padrão
-do Godot), e que o repositório não tem nenhum arquivo de imagem ou som criado para o jogo.
+do Godot), e que o repositório não tem nenhum arquivo de imagem ou som criado para o jogo
+(fora de `addons/gut/`, que é de terceiros e traz imagens e fontes do próprio GUT).
 
 ## Pelo MCP do Godot (para o Claude)
 
