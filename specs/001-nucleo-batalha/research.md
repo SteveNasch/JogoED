@@ -361,8 +361,8 @@ teste de simulação abaixo confere que nenhuma rodada chega ao teto
 
 - **Decisão**: `DadosCarta` tem `efeito` (enum `NENHUM`, `DANO_EXTRA`, `COMPRAR`, `ESCUDO`,
   `CURA`) e `intensidade`. A `Batalha` aplica com um `match` numa função só: `DANO_EXTRA` →
-  `inimigo.receber_dano()`; `COMPRAR` → `baralho.comprar()`; `ESCUDO` →
-  `arthur.ganhar_escudo()`; `CURA` → `arthur.curar()`. Quem recebe está escrito ao lado do
+  `inimigo.receber_dano(intensidade)`; `COMPRAR` → `baralho.comprar(intensidade)`;
+  `ESCUDO` → `arthur.ganhar_escudo(intensidade)`; `CURA` → `arthur.curar(intensidade)`. Quem recebe está escrito ao lado do
   efeito, não é passado por parâmetro.
 - **Motivo**: no jogo antigo, um registro genérico recebia um "alvo" e a batalha passava
   sempre o inimigo, então Guarda e Vital protegiam e curavam o inimigo. Com o destinatário
