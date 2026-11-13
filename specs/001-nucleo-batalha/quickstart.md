@@ -79,7 +79,10 @@ Rode a suíte inteira. Ela precisa conter e passar, no mínimo:
    cerca de 1,5 s, aparecem uma carta nova e um alvo novo sem você clicar.
 3. Repita até a vida do inimigo zerar. **Esperado**: no golpe final o Arthur não perde vida;
    aparece "Vitória!" com a vida restante e o número de rodadas.
-4. Clique em "Lutar de novo". **Esperado**: luta nova, tudo de volta ao começo.
+4. Cronometre a luta, do primeiro clique até a tela de vitória. **Esperado**: até 5 minutos
+   (SC-001). Em toda confirmação, o aviso apareceu logo depois do clique, em menos de 1 s
+   (SC-005). Anote o tempo da luta no registro.
+5. Clique em "Lutar de novo". **Esperado**: luta nova, tudo de volta ao começo.
 
 ### 3. Errar e perder (história 2)
 
