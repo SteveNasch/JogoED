@@ -4,7 +4,7 @@
 
 **Input**: Feature specification from `/specs/001-nucleo-batalha/spec.md`
 
-**Note**: This template is filled in by the `/speckit-plan` command; its definition describes the execution workflow.
+**Nota**: plano preenchido pelo comando `/speckit-plan`, que descreve o fluxo de trabalho.
 
 ## Summary
 
@@ -58,7 +58,8 @@ lógica e dados; 16 arquivos de carta, 1 de baralho (21 cartas), 1 de inimigo e 
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+*Portão: precisa passar antes da pesquisa (fase 0) e ser conferido de novo depois do desenho
+(fase 1).*
 
 Constituição v1.0.0 (`.specify/memory/constitution.md`).
 
@@ -68,7 +69,7 @@ Constituição v1.0.0 (`.specify/memory/constitution.md`).
 | **II. Testes Reais (inegociável)** | Cada área tem a sua pasta `testes/`. A lógica é testada pelo comportamento (contas de referência, força bruta como oráculo, simulação de 1.000 lutas). Cada cena é instanciada e exercitada pelos seus sinais. Sem mocks: os objetos reais são leves. Suíte roda por linha de comando. | passa |
 | **III. Cenas Pequenas e Separadas** | Oito cenas, cada uma com um papel, recebendo dados por método e avisando por sinal; nenhuma usa caminho para nós de outra cena. Pastas por área, com cena, script e testes juntos. | passa |
 | **IV. Assets Vêm da Equipe (inegociável)** | Só `ColorRect`, `Panel`, `Label`, fonte padrão e tocadores de áudio vazios. Lista com tipo, tamanho, quadros, formato e uso em `docs/assets-pendentes.md`, com coluna de origem e licença. | passa |
-| **V. Tudo em Português** | Classes, arquivos, sinais, variáveis, comentários e textos em português; identificadores sem acento em `snake_case`, classes em `PascalCase`. Ficam em inglês só os nomes do Godot e do GUT (ver nota abaixo). | passa |
+| **V. Tudo em Português** | Classes, arquivos, sinais, variáveis, comentários, textos e frases da documentação em português; identificadores sem acento em `snake_case`, classes em `PascalCase`. Ficam em inglês só os nomes do Godot e do GUT e os títulos e campos fixos do modelo do Spec Kit (ver notas abaixo). | passa, com as exceções justificadas abaixo |
 | **Restrições Técnicas** | Godot 4.7.2-stable (última estável; a 4.8 ainda é beta), GDScript tipado, GUT 9.7.1 (a versão do README do GUT para o 4.7.x), com execução por linha de comando testada. | passa |
 | **Fluxo de Desenvolvimento** | specify e clarify feitos; este plano confere os cinco princípios; tasks, analyze e implement vêm a seguir. | passa |
 
@@ -77,6 +78,15 @@ começam com `test_` e scripts que estendem `GutTest`, e a pasta `addons/gut/` �
 terceiros. São nomes de ferramenta, no mesmo caso dos nomes da API do Godot que o princípio V
 já mantém em inglês. Os arquivos de teste (`teste_*.gd`) e o restante do nome das funções
 ficam em português. Não é uma violação; fica registrado para o `/speckit-analyze`.
+
+**Nota sobre os títulos do Spec Kit (princípio V)**: os títulos de seção e os campos fixos
+que vêm dos modelos do Spec Kit (por exemplo "Functional Requirements", "Clarifications",
+"Success Criteria", "Constitution Check", "Phase 1: Setup", "Feature Branch", "Status",
+"Input") ficam em inglês, porque os comandos `/speckit-*` procuram essas seções pelo nome ao
+ler e escrever os arquivos (`/speckit-clarify` grava em "Clarifications", `/speckit-tasks` e
+`/speckit-analyze` leem "Functional Requirements" e as fases). Traduzi-los quebraria a
+ferramenta, como trocar `test_` quebraria o GUT. Todo o conteúdo abaixo desses títulos e
+todas as frases livres ficam em português.
 
 **Reavaliação depois do desenho (Fase 1)**: sem mudanças. O modelo de dados e os contratos
 não acrescentaram abstração além da descrita acima, e nenhuma exceção precisou ser aberta.
