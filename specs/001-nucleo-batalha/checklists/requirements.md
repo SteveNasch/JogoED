@@ -1,33 +1,33 @@
 # Specification Quality Checklist: Núcleo da batalha
 
-**Purpose**: Validate specification completeness and quality before proceeding to planning
+**Purpose**: conferir se a especificação está completa e com qualidade antes de planejar
 **Created**: 2026-11-13
 **Feature**: [spec.md](../spec.md)
 
 ## Content Quality
 
-- [x] No implementation details (languages, frameworks, APIs)
-- [x] Focused on user value and business needs
-- [x] Written for non-technical stakeholders
-- [x] All mandatory sections completed
+- [x] Sem detalhes de implementação (linguagens, frameworks, APIs)
+- [x] Focada no valor para o jogador e no objetivo do projeto
+- [x] Escrita para quem não é da área técnica
+- [x] Todas as seções obrigatórias preenchidas
 
 ## Requirement Completeness
 
-- [x] No [NEEDS CLARIFICATION] markers remain
-- [x] Requirements are testable and unambiguous
-- [x] Success criteria are measurable
-- [x] Success criteria are technology-agnostic (no implementation details)
-- [x] All acceptance scenarios are defined
-- [x] Edge cases are identified
-- [x] Scope is clearly bounded
-- [x] Dependencies and assumptions identified
+- [x] Nenhum marcador [NEEDS CLARIFICATION] sobrou
+- [x] Requisitos testáveis e sem ambiguidade
+- [x] Critérios de sucesso mensuráveis
+- [x] Critérios de sucesso independentes de tecnologia (sem detalhes de implementação)
+- [x] Todos os cenários de aceitação definidos
+- [x] Casos-limite identificados
+- [x] Escopo bem delimitado
+- [x] Dependências e premissas identificadas
 
 ## Feature Readiness
 
-- [x] All functional requirements have clear acceptance criteria
-- [x] User scenarios cover primary flows
-- [x] Feature meets measurable outcomes defined in Success Criteria
-- [x] No implementation details leak into specification
+- [x] Todo requisito funcional tem critério de aceitação claro
+- [x] Os cenários do jogador cobrem os fluxos principais
+- [x] A funcionalidade atende aos resultados mensuráveis dos critérios de sucesso
+- [x] Nenhum detalhe de implementação vazou para a especificação
 
 ## Notes
 
