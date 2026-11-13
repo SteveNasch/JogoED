@@ -182,9 +182,11 @@ Não ficou nenhum "NEEDS CLARIFICATION" do contexto técnico.
   `floori(a / float(b))`.
 - **Motivo**: os três níveis são a própria regra de precedência da FR-013, sem montar árvore
   nem classe de parser. Sobre a divisão: no GDScript, `int / int` **trunca** (descarta a
-  parte decimal, arredondando para zero), então `-7 / 2` daria `-3`; a FR-014 pede `-4`.
-  `floori()` arredonda "para baixo (em direção ao infinito negativo)" e a documentação avisa
-  que isso é diferente de `int(x)`.
+  parte decimal, arredondando para zero), enquanto `floori()` arredonda "para baixo (em
+  direção ao infinito negativo)", e a documentação avisa que os dois são diferentes. No jogo
+  eles dão o mesmo resultado, porque não há sinal de negativo isolado e × e ÷ vêm antes de
+  + e −: a divisão só recebe números positivos ou zero. O motor usa `floori()` mesmo assim,
+  para seguir a FR-014 ao pé da letra sem depender desse detalhe.
 - **Alternativas**: classe `Expression` do Godot (não conhece x2, /2 e ^2 como sufixos, usa
   divisão própria e aceitaria textos que a regra do jogo proíbe); parser recursivo com
   classes (o do jogo antigo: funciona, mas é mais código que o necessário).

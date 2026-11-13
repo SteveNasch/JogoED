@@ -238,7 +238,8 @@ uma conta com carta especial e conferir que nada acontece.
   logo antes deles e na ordem em que aparecem; depois × e ÷, da esquerda para a direita;
   depois + e −, da esquerda para a direita.
 - **FR-014**: A divisão (÷) e a metade (/2) MUST dar um número inteiro arredondado para
-  baixo (7 ÷ 2 = 3; 5 /2 = 2; −7 ÷ 2 = −4).
+  baixo (7 ÷ 2 = 3; 5 /2 = 2; 1 /2 = 0; 2 − 7 ÷ 2 = −1, porque a divisão vem
+  antes da subtração).
 - **FR-015**: Resultados negativos, intermediários ou finais, MUST ser permitidos.
 
 **Resultado da rodada**

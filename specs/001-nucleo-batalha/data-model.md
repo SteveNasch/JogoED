@@ -132,7 +132,7 @@ Regras (FR-012 a FR-015):
   depois de binário vem número. Qualquer outra ordem é inválida.
 - Unários valem para o número logo antes, na ordem em que aparecem (`3 ^2 x2` = 18).
 - × e ÷ antes de + e −; mesmo nível, da esquerda para a direita.
-- ÷ e /2 arredondam para baixo (`7 ÷ 2` = 3; `−7 ÷ 2` = −4). Dividir por zero é inválido.
+- ÷ e /2 arredondam para baixo (`7 ÷ 2` = 3; `1 /2` = 0; `2 − 7 ÷ 2` = −1). Dividir por zero é inválido.
 - Resultado negativo é permitido.
 
 ### Combatente (`combatentes/combatente.gd`)
