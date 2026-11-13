@@ -104,8 +104,8 @@ Rode a suíte inteira. Ela precisa conter e passar, no mínimo:
 Jogue até ter cada especial na mão e acerte uma conta com ela:
 - **Chama**: o dano mostrado é a soma do ataque das cartas mais 3.
 - **Foco**: uma carta entra na mão na hora.
-- **Guarda**: o escudo do Arthur vai a 5, o ataque do inimigo não tira vida e, na rodada
-  seguinte, o escudo volta a 0. O inimigo nunca mostra escudo.
+- **Guarda**: o painel do Arthur passa a mostrar escudo 5, o ataque do inimigo não tira vida
+  e, na rodada seguinte, o escudo some do painel (voltou a 0). O inimigo nunca mostra escudo.
 - **Vital**: a vida do Arthur sobe 2, sem passar de 40. A vida do inimigo não sobe.
 - Erre uma conta com uma especial: nenhum efeito acontece.
 

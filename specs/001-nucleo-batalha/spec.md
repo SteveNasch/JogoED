@@ -46,6 +46,8 @@ Referência do jogo inteiro: `docs/visao-do-jogo.md` (seção "Combate").
   faltar, o jogo dá cartas extras.
 - Decisão do plano: o alvo sorteado é sempre alcançável com no máximo 3 cartas de número
   (valor nos dados), para a busca do alvo ter custo limitado com mãos grandes.
+- Q (no analyze): O escudo do Arthur fica sempre na tela, mesmo zerado? → A: não; aparece só
+  quando é maior que 0 (FR-023).
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -266,8 +268,9 @@ uma conta com carta especial e conferir que nada acontece.
 
 **Telas**
 
-- **FR-023**: Durante a luta MUST ficar visíveis: vida e escudo do Arthur, vida e ataque do
-  inimigo, alvo, mão, expressão em montagem e as ações Desfazer, Limpar, Confirmar e Pular.
+- **FR-023**: Durante a luta MUST ficar visíveis: vida do Arthur (e o escudo dele sempre que
+  for maior que 0), vida e ataque do inimigo, alvo, mão, expressão em montagem e as ações
+  Desfazer, Limpar, Confirmar e Pular.
 - **FR-024**: Cada carta MUST mostrar o seu número ou símbolo, o seu valor de ataque e, se
   for especial, o nome e o efeito.
 - **FR-025**: Depois de cada confirmação ou Pular, o jogo MUST mostrar o que aconteceu: dano
