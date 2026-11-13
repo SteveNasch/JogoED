@@ -1,0 +1,31 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://combatentes/painel_combatente.gd" id="1_painel"]
+
+[node name="PainelCombatente" type="VBoxContainer"]
+theme_override_constants/separation = 0
+script = ExtResource("1_painel")
+
+[node name="Sprite" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(0.5, 0.5, 0.5, 1)
+
+[node name="Nome" type="Label" parent="."]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Vida" type="Label" parent="."]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Escudo" type="Label" parent="."]
+visible = false
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Ataque" type="Label" parent="."]
+visible = false
+layout_mode = 2
+horizontal_alignment = 1
