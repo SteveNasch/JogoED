@@ -94,6 +94,19 @@ func confirmar() -> void:
 	_mostrar_resultado(resultado)
 
 
+## FR-020: a expressão volta para a mão, o inimigo ataca e, se o Arthur continua vivo, entram
+## as cartas do Pular.
+func pular() -> void:
+	if estado != Estado.MONTANDO:
+		return
+	baralho.limpar()
+	var resultado := ResultadoRodada.new(ResultadoRodada.Tipo.PULO, alvo)
+	_inimigo_ataca(resultado)
+	if arthur.esta_vivo():
+		resultado.cartas_compradas = baralho.comprar(regras.cartas_por_pulo)
+	_mostrar_resultado(resultado)
+
+
 ## Depois que a tela mostrou o resultado: termina a luta, se alguém caiu (FR-022), ou começa
 ## a rodada seguinte.
 func avancar() -> void:

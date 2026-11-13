@@ -525,3 +525,83 @@ func test_desfazer_e_limpar_nao_valem_enquanto_o_resultado_esta_na_tela() -> voi
 	assert_eq(batalha.baralho.expressao, [N1])
 	assert_eq(batalha.baralho.mao, [N1, SOMA, N2, SUBTRACAO])
 	assert_signal_not_emitted(batalha, "mudou")
+
+
+func test_pular_com_a_mao_minima_deixa_7_cartas_na_rodada_seguinte() -> void:
+	# Cenário 3 da história 3: mão de 5 com o mínimo, expressão vazia.
+	var batalha := _iniciada()
+	var mao := batalha.baralho.mao.duplicate()
+	watch_signals(batalha)
+	batalha.pular()
+	assert_eq(batalha.arthur.vida, 37)
+	assert_eq(batalha.inimigo.vida, 12)
+	assert_eq(batalha.baralho.mao.size(), 6)
+	assert_eq(batalha.baralho.mao.slice(0, 5), mao)
+	assert_eq(batalha.estado, Batalha.Estado.MOSTRANDO_RESULTADO)
+	assert_signal_emit_count(batalha, "rodada_resolvida", 1)
+	var resultado := _resultado(batalha)
+	assert_eq(resultado.tipo, ResultadoRodada.Tipo.PULO)
+	assert_eq(resultado.alvo, batalha.alvo)
+	assert_eq(resultado.cartas_compradas, 1)
+	assert_eq(resultado.dano_causado, 0)
+	assert_true(resultado.inimigo_atacou)
+	assert_eq(resultado.dano_recebido, 3)
+	assert_false(resultado.luta_acabou)
+	batalha.avancar()
+	assert_eq(batalha.rodada, 2)
+	assert_eq(batalha.baralho.mao.size(), 7)
+	assert_eq(batalha.baralho.total(), 21)
+
+
+func test_pular_devolve_as_cartas_da_expressao_para_a_mao() -> void:
+	var batalha := _com_mao([N3, SOMA, N4, N1, SUBTRACAO], 7)
+	_montar(batalha, [0, 1])
+	watch_signals(batalha)
+	batalha.pular()
+	assert_eq(batalha.baralho.expressao.size(), 0)
+	assert_eq(batalha.baralho.mao.slice(0, 5), [N4, N1, SUBTRACAO, N3, SOMA])
+	assert_eq(batalha.baralho.mao.size(), 6)
+	assert_eq(batalha.baralho.descarte.size(), 0)
+	assert_eq(_resultado(batalha).cartas_compradas, 1)
+
+
+func test_pular_que_zera_o_arthur_leva_a_derrota_sem_comprar() -> void:
+	var batalha := _com_mao([N3, SOMA, N4, N1, SUBTRACAO], 7)
+	batalha.arthur.vida = 3
+	var compra := batalha.baralho.compra.duplicate()
+	watch_signals(batalha)
+	batalha.pular()
+	assert_eq(batalha.arthur.vida, 0)
+	assert_eq(batalha.baralho.mao, [N3, SOMA, N4, N1, SUBTRACAO])
+	assert_eq(batalha.baralho.compra, compra)
+	var resultado := _resultado(batalha)
+	assert_eq(resultado.cartas_compradas, 0)
+	assert_true(resultado.luta_acabou)
+	batalha.avancar()
+	assert_eq(batalha.estado, Batalha.Estado.TERMINADA)
+	var fim: ResultadoLuta = get_signal_parameters(batalha, "luta_terminou")[0]
+	assert_false(fim.venceu)
+	assert_eq(fim.vida_arthur, 0)
+
+
+func test_pular_com_as_pilhas_vazias_nao_compra_e_a_luta_segue() -> void:
+	var batalha := _com_mao([N3, SOMA, N4, N1, SUBTRACAO], 7)
+	batalha.baralho.compra.clear()
+	batalha.baralho.descarte.clear()
+	watch_signals(batalha)
+	batalha.pular()
+	assert_eq(batalha.baralho.mao.size(), 5)
+	assert_eq(_resultado(batalha).cartas_compradas, 0)
+	assert_false(_resultado(batalha).luta_acabou)
+
+
+func test_pular_nao_vale_enquanto_o_resultado_esta_na_tela() -> void:
+	var batalha := _iniciada()
+	batalha.pular()
+	var mao := batalha.baralho.mao.duplicate()
+	watch_signals(batalha)
+	batalha.pular()
+	assert_eq(batalha.arthur.vida, 37)
+	assert_eq(batalha.baralho.mao, mao)
+	assert_signal_not_emitted(batalha, "mudou")
+	assert_signal_not_emitted(batalha, "rodada_resolvida")

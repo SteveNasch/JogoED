@@ -176,7 +176,7 @@ o tamanho da mão (quickstart, cenário 4).
 ### Área: batalha (lógica)
 
 - [X] T027 [US3] Acrescentar `desfazer()` e `limpar()` em `batalha/batalha.gd` (repassam ao `Baralho`, emitem `mudou`, não encerram a rodada, só valem em `MONTANDO`); testes em `batalha/testes/teste_batalha.gd` (cenários 1 e 2 da história 3: `3 + 4` → desfazer → `3 +` e o 4 de volta na mão; limpar devolve tudo e `pode_confirmar()` fica falso)
-- [ ] T028 [US3] Acrescentar `pular()` em `batalha/batalha.gd` (FR-020): expressão volta para a mão, inimigo ataca, se o Arthur continua vivo entram `regras.cartas_por_pulo` cartas, `ResultadoRodada` tipo `PULO` com `cartas_compradas`; testes em `batalha/testes/teste_batalha.gd` (cenário 3 da história 3: mão de 5 com o mínimo → 7 cartas depois de `avancar()`; pular com cartas na expressão as devolve; pular que zera o Arthur leva à derrota sem comprar) (depende de T025, que traz a derrota, e de T027)
+- [X] T028 [US3] Acrescentar `pular()` em `batalha/batalha.gd` (FR-020): expressão volta para a mão, inimigo ataca, se o Arthur continua vivo entram `regras.cartas_por_pulo` cartas, `ResultadoRodada` tipo `PULO` com `cartas_compradas`; testes em `batalha/testes/teste_batalha.gd` (cenário 3 da história 3: mão de 5 com o mínimo → 7 cartas depois de `avancar()`; pular com cartas na expressão as devolve; pular que zera o Arthur leva à derrota sem comprar) (depende de T025, que traz a derrota, e de T027)
 
 ### Área: cenas
 
