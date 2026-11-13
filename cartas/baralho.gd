@@ -36,6 +36,24 @@ func comprar(quantidade: int) -> int:
 	return compradas
 
 
+## Compra do início de rodada (FR-006, research D11). Cada uma das `quantidade` cartas é do
+## tipo que falta na mão (número, depois soma, depois subtração), se houver; senão, é a do
+## topo. Depois, compra cartas extras só enquanto faltar algum tipo que exista fora da mão.
+## Nunca tira carta da mão. Recebe os mínimos, e não a RegrasBatalha, para a área cartas não
+## depender da área batalha.
+func comprar_com_minimo(quantidade: int, minimo_numeros: int, minimo_somas: int, minimo_subtracoes: int) -> void:
+	var minimos := {
+		DadosCarta.Tipo.NUMERO: minimo_numeros,
+		DadosCarta.Tipo.SOMA: minimo_somas,
+		DadosCarta.Tipo.SUBTRACAO: minimo_subtracoes,
+	}
+	for i in quantidade:
+		if not _comprar_tipo_que_falta(minimos) and comprar(1) == 0:
+			break
+	while _comprar_tipo_que_falta(minimos):
+		pass
+
+
 ## FR-008: a carta sai da mão e entra no fim da expressão.
 func por_na_expressao(indice: int) -> void:
 	if indice < 0 or indice >= mao.size():
@@ -63,6 +81,39 @@ func descartar_expressao() -> void:
 
 func total() -> int:
 	return compra.size() + mao.size() + expressao.size() + descarte.size()
+
+
+## Compra uma carta do primeiro tipo (na ordem do dicionário) que está abaixo do mínimo na mão
+## e existe fora dela. Devolve false se nenhum tipo que falta pôde ser comprado.
+func _comprar_tipo_que_falta(minimos: Dictionary) -> bool:
+	for tipo: DadosCarta.Tipo in minimos:
+		if _quantos_do_tipo(mao, tipo) < minimos[tipo] and _comprar_do_tipo(tipo):
+			return true
+	return false
+
+
+## A carta do tipo mais perto do topo da pilha (com a pilha vazia, ela é refeita antes, FR-005)
+## ou, se a pilha não tem nenhuma, a descartada há mais tempo.
+func _comprar_do_tipo(tipo: DadosCarta.Tipo) -> bool:
+	if compra.is_empty():
+		_refazer_compra()
+	for i in range(compra.size() - 1, -1, -1):
+		if compra[i].tipo == tipo:
+			mao.append(compra.pop_at(i))
+			return true
+	for i in descarte.size():
+		if descarte[i].tipo == tipo:
+			mao.append(descarte.pop_at(i))
+			return true
+	return false
+
+
+func _quantos_do_tipo(cartas: Array[DadosCarta], tipo: DadosCarta.Tipo) -> int:
+	var quantidade := 0
+	for carta in cartas:
+		if carta.tipo == tipo:
+			quantidade += 1
+	return quantidade
 
 
 ## FR-005: o descarte é embaralhado e vira a nova pilha de compra.
