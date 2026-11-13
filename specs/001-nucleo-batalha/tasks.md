@@ -81,7 +81,7 @@ diante) espera a fase inteira.
 
 ### Área: combatentes
 
-- [ ] T004 [P] Criar `Combatente` em `combatentes/combatente.gd` (`extends RefCounted`) com `nome`, `vida`, `vida_maxima`, `escudo`, `ataque` e `receber_dano(quantidade) -> int` (escudo primeiro, vida nunca negativa, devolve a vida perdida), `curar(quantidade) -> int` (teto em `vida_maxima`, devolve o curado de fato), `ganhar_escudo(quantidade)`, `zerar_escudo()`, `esta_vivo()`; testes em `combatentes/testes/teste_combatente.gd` (escudo maior e menor que o dano, dano maior que a vida, cura acima do máximo, vida inicial menor que a máxima)
+- [X] T004 [P] Criar `Combatente` em `combatentes/combatente.gd` (`extends RefCounted`) com `nome`, `vida`, `vida_maxima`, `escudo`, `ataque` e `receber_dano(quantidade) -> int` (escudo primeiro, vida nunca negativa, devolve a vida perdida), `curar(quantidade) -> int` (teto em `vida_maxima`, devolve o curado de fato), `ganhar_escudo(quantidade)`, `zerar_escudo()`, `esta_vivo()`; testes em `combatentes/testes/teste_combatente.gd` (escudo maior e menor que o dano, dano maior que a vida, cura acima do máximo, vida inicial menor que a máxima)
 - [ ] T005 [P] Criar `DadosInimigo` em `combatentes/dados_inimigo.gd` (`extends Resource`, `@export` `nome`, `vida`, `ataque`) e `dados/inimigos/inimigo_padrao.tres` com "Inimigo", 12, 3; testes em `combatentes/testes/teste_dados_inimigo.gd` carregando o `.tres` e conferindo os valores da FR-001 e as regras de validação do [data-model.md](data-model.md) (`vida >= 1`, `ataque >= 1`, FR-001)
 
 ### Área: batalha (dados)
