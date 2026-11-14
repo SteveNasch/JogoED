@@ -97,8 +97,10 @@ tipo de inimigo.
 ## Pontos em aberto (para os `/speckit-clarify`)
 
 - Quantas questões a prova tem e qual a regra de cada uma.
-- Quanto o descanso cura (no jogo antigo, 8 de vida).
-- Quantas casas tem cada ato.
+- ~~Quanto o descanso cura (no jogo antigo, 8 de vida)~~ Decidido em 13/11 (spec 002): 30%
+  da vida máxima (12).
+- ~~Quantas casas tem cada ato~~ Decidido em 13/11 (spec 002): 5 andares (4 comuns, de 2 a 3
+  casas, e o chefe). Elite e chefe também dão recompensa de carta.
 - ~~Se a divisão que arredonda para baixo continua ou se só vale divisão exata~~ Decidido em
   13/11 (spec 001): continua arredondando para baixo.
 - Se existe algum registro entre runs, como o melhor resultado.
