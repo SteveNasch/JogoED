@@ -13,7 +13,7 @@
 
 ## Requirement Completeness
 
-- [ ] Nenhum marcador [NEEDS CLARIFICATION] sobrou
+- [x] Nenhum marcador [NEEDS CLARIFICATION] sobrou
 - [x] Requisitos testáveis e sem ambiguidade
 - [x] Critérios de sucesso mensuráveis
 - [x] Critérios de sucesso independentes de tecnologia (sem detalhes de implementação)
@@ -32,7 +32,10 @@
 ## Notes
 
 - 1ª passada: três marcadores [NEEDS CLARIFICATION] (cura do descanso, quais vitórias dão
-  recompensa e tamanho do mapa), aguardando o Estêvão.
+  recompensa e tamanho do mapa), resolvidos pelo Estêvão em 2026-11-13 e registrados em
+  "Clarifications".
+- 2ª passada: todos os itens passam. Registro entre runs ficou como premissa (nada é
+  guardado) e está marcado para confirmar no `/speckit-clarify`.
 - FR-006 (semente) e FR-030 (placeholders do motor) citam o sorteio e o motor só como
   exigência verificável, sem escolher tecnologia; exigidos pela constituição (princípios II
   e IV), como na 001.

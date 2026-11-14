@@ -21,6 +21,18 @@ funcionalidade: chefes especiais, prova, história, menus e tutorial."
 Referência do jogo inteiro: `docs/visao-do-jogo.md` (seção "Run, mapa e progressão"). A luta
 em si é a da 001 (`specs/001-nucleo-batalha/spec.md`) e não muda aqui.
 
+## Clarifications
+
+### Session 2026-11-13
+
+- Q: Quantos andares cada ato tem e quantas casas por andar? → A: 5 andares contando o do
+  chefe (4 comuns e o chefe), com 2 ou 3 casas em cada andar comum (valores nos dados).
+- Q: Além da casa de recompensa, quais vitórias em luta dão a escolha de 1 entre 3 cartas?
+  → A: a elite e o chefe; a batalha comum não dá carta. O chefe do ato 3 encerra a run, então
+  não dá recompensa.
+- Q: Quanto a casa de descanso cura? → A: 30% da vida máxima, arredondado para baixo (12 com
+  a máxima de 40); a porcentagem fica nos dados.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Atravessar o calabouço pelo mapa (Priority: P1)
@@ -86,8 +98,9 @@ vida 40 e as 13 cartas do baralho inicial.
 ### User Story 3 - Descansar e ganhar cartas (Priority: P2)
 
 No caminho o jogador encontra casas de descanso, que curam parte da vida do Arthur, e casas
-de recompensa, em que escolhe 1 entre 3 cartas para pôr no baralho (ou não pega nenhuma). As
-cartas ganhas aparecem nas lutas seguintes da mesma run.
+de recompensa, em que escolhe 1 entre 3 cartas para pôr no baralho (ou não pega nenhuma). A
+mesma escolha aparece depois de vencer uma elite ou o chefe dos atos 1 e 2. As cartas ganhas
+aparecem nas lutas seguintes da mesma run.
 
 **Why this priority**: são as escolhas que dão estratégia ao mapa (que caminho seguir), mas
 o laço de lutar e subir funciona sem elas.
@@ -99,8 +112,8 @@ luta seguinte.
 **Acceptance Scenarios**:
 
 1. **Given** o Arthur com 20 de 40 de vida, **When** entra numa casa de descanso, **Then** a
-   vida sobe na quantidade de cura dos dados [NEEDS CLARIFICATION: quanto o descanso cura],
-   sem passar de 40, o jogo mostra quanto curou e, ao continuar, volta ao mapa.
+   vida sobe 12 (30% da máxima), ficando com 32, o jogo mostra quanto curou e, ao continuar,
+   volta ao mapa.
 2. **Given** uma casa de recompensa, **When** ela abre, **Then** aparecem 3 cartas
    diferentes entre si, cada uma com o símbolo, o ataque e, se for especial, o efeito, mais a
    opção de não pegar nenhuma.
@@ -109,8 +122,13 @@ luta seguinte.
    daquela luta.
 4. **Given** a recompensa aberta, **When** o jogador escolhe não pegar nenhuma, **Then** o
    baralho continua igual e o jogo volta ao mapa.
-5. **Given** a vitória numa luta de elite, **When** a luta termina, **Then** acontece o que
-   a regra de recompensa por luta definir [NEEDS CLARIFICATION: quais vitórias dão recompensa].
+5. **Given** a vitória numa luta de elite ou de chefe dos atos 1 e 2, **When** o jogador
+   continua depois do aviso de vitória, **Then** abre uma recompensa igual à da casa de
+   recompensa e, depois dela, o jogo volta ao mapa (ou vai ao ato seguinte, no chefe).
+6. **Given** a vitória numa batalha comum, **When** o jogador continua, **Then** o jogo
+   volta direto ao mapa, sem recompensa.
+7. **Given** o Arthur com 35 de 40 de vida, **When** entra numa casa de descanso, **Then**
+   ele fica com 40 (a cura não passa da máxima) e o jogo mostra que curou 5.
 
 ---
 
@@ -132,7 +150,7 @@ vencer o chefe do ato 3 e conferir o fim da run com vitória.
 **Acceptance Scenarios**:
 
 1. **Given** o chefe do calabouço vencido com o Arthur com 18 de vida e 15 cartas no baralho,
-   **When** o ato 2 começa, **Then** aparece o mapa dos salões, com o Arthur com 18 de vida,
+   depois da recompensa do chefe, **When** o ato 2 começa, **Then** aparece o mapa dos salões, com o Arthur com 18 de vida,
    as mesmas 15 cartas e só as casas do primeiro andar disponíveis.
 2. **Given** os dados padrão, **When** se compara uma batalha do primeiro andar do ato 1 com
    uma do primeiro andar do ato 3, **Then** a da torre tem faixa de alvo, vida e ataque do
@@ -194,9 +212,10 @@ vencer o chefe do ato 3 e conferir o fim da run com vitória.
 **Mapa**
 
 - **FR-007**: Cada ato MUST ter o próprio mapa, gerado de novo a cada run.
-- **FR-008**: O mapa de um ato MUST ser formado por andares em sequência: os andares comuns,
-  cada um com o número de casas definido nos dados, e no topo um andar com uma casa só, a do
-  chefe do ato [NEEDS CLARIFICATION: quantos andares cada ato tem e quantas casas por andar].
+- **FR-008**: O mapa de um ato MUST ser formado por andares em sequência: os andares comuns e,
+  no topo, um andar com uma casa só, a do chefe do ato. O número de andares comuns e o mínimo e
+  o máximo de casas por andar comum ficam nos dados (padrão: 4 andares comuns, de 2 a 3 casas
+  cada, mais o chefe; 5 andares no total).
 - **FR-009**: Cada casa de um andar comum MUST ligar a pelo menos uma casa do andar
   seguinte, e toda casa de um andar acima do primeiro MUST receber ligação de pelo menos uma
   casa do andar anterior. Com isso toda casa é alcançável a partir do primeiro andar e de
@@ -205,8 +224,9 @@ vencer o chefe do ato 3 e conferir o fim da run com vitória.
   chefe, e as ligações MUST NOT se cruzar na tela.
 - **FR-011**: As casas MUST ser de um destes tipos: batalha, elite, descanso, recompensa e
   chefe. Os dados definem quantas casas de cada tipo (batalha, elite, descanso e recompensa)
-  cada ato tem. O primeiro andar de cada ato MUST ter só casas de batalha, e o andar do topo,
-  só o chefe.
+  cada ato tem (padrão por ato: 3 batalhas no primeiro andar e, nos andares 2 a 4, 8 casas: 3
+  batalhas, 1 elite, 2 descansos e 2 recompensas). O primeiro andar de cada ato MUST ter só
+  casas de batalha, e o andar do topo, só o chefe.
 - **FR-012**: O mapa MUST mostrar o ato inteiro de uma vez: todas as casas com o seu tipo,
   as ligações, a casa em que o Arthur está e o caminho já percorrido. As casas que o jogador
   pode escolher naquele momento MUST ficar destacadas.
@@ -232,19 +252,21 @@ vencer o chefe do ato 3 e conferir o fim da run com vitória.
 - **FR-019**: Depois de uma luta vencida, o jogo MUST mostrar que a luta foi vencida e a vida
   restante do Arthur, e seguir para o próximo passo (recompensa, se houver, ou mapa) com uma
   ação do jogador.
-- **FR-020**: Casa de descanso MUST curar o Arthur na quantidade dos dados, sem passar da
-  vida máxima, e mostrar quanto curou antes de voltar ao mapa com uma ação do jogador.
+- **FR-020**: Casa de descanso MUST curar o Arthur numa porcentagem da vida máxima definida
+  nos dados (padrão: 30%, arredondado para baixo, ou seja 12), sem passar da vida máxima, e mostrar quanto curou antes de voltar ao mapa com uma ação do jogador.
 - **FR-021**: Casa de recompensa MUST mostrar 3 cartas diferentes entre si, sorteadas do
   conjunto de recompensas dos dados, cada uma como na luta (símbolo, ataque e, se for
   especial, nome e efeito). O jogador MUST poder escolher 1, que entra no baralho da run, ou
   não pegar nenhuma. Com menos de 3 cartas no conjunto, aparecem todas as que houver.
-- **FR-022**: Vitórias em luta MUST dar a recompensa de cartas da FR-021 conforme a regra
-  definida no esclarecimento da história 3, cenário 5.
+- **FR-022**: A vitória numa luta de elite ou de chefe dos atos 1 e 2 MUST abrir, depois do
+  aviso de vitória, uma recompensa igual à da FR-021. A vitória numa batalha comum MUST NOT dar
+  recompensa. O chefe do ato 3 encerra a run (FR-024) e não dá recompensa.
 
 **Fim de ato e fim de run**
 
-- **FR-023**: Vencer o chefe dos atos 1 ou 2 MUST levar ao mapa do ato seguinte (salões, depois
-  torre), com o Arthur antes do primeiro andar, a vida e o baralho mantidos.
+- **FR-023**: Vencer o chefe dos atos 1 ou 2 MUST levar, depois da recompensa da FR-022, ao
+  mapa do ato seguinte (salões, depois torre), com o Arthur antes do primeiro andar, a vida e
+  o baralho mantidos.
 - **FR-024**: A run MUST acabar com derrota quando a vida do Arthur chega a 0 em qualquer
   luta, e com vitória quando ele vence o chefe do ato 3. Nos dois casos, uma tela simples de
   fim de run MUST mostrar o resultado, o ato e o andar alcançados e quantas lutas foram
@@ -335,7 +357,7 @@ Conjunto de recompensas padrão: números 6 a 10, ×, ÷, x2, /2, ^2, Chama, Foc
 
 - A luta é a da 001, sem mudança de regra; esta funcionalidade só escolhe com que vida,
   baralho, inimigo e faixa de alvo cada luta começa e o que acontece depois dela.
-- Os números padrão (tabela das entidades, cura, tamanho dos mapas) são provisórios e servem
+- Os números padrão (tabela das entidades e quantidade de casas de cada tipo) são provisórios e servem
   para jogar; o equilíbrio fino é feito depois, mudando só o arquivo de dados.
 - O Arthur não se cura sozinho entre os atos; só o descanso cura.
 - Nada é guardado entre runs (nem melhor resultado nem progresso): fechar o jogo perde a run
