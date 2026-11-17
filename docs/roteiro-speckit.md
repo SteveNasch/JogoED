@@ -8,15 +8,19 @@ Escrito em 13/11/2026, com a 001 implementada (falta só o T035).
 
 ## Calendário
 
+Replanejado em 17/11: a 001 não fechou até 17/11 e de 23 a 27/11 não sobra hora livre (provas,
+aulas, trabalho e apresentações). Por isso a 004 e a 005 viraram uma funcionalidade só, e a 003
+ficou enxuta (chefes dos atos 1 e 2 como elites reforçadas; prova com até 3 questões). Os blocos
+estão na agenda como "JOGOED" em 20, 22, 28 e 29/11.
+
 | Data | Meta |
 |---|---|
-| até 17/11 | 001 fechada (T035 jogado, converge sem pendência) |
-| até 20/11 | 002 Run e mapa |
-| até 23/11 | 003 Chefes e a prova |
-| até 25/11 | 004 Telas e história |
-| até 27/11 | 005 Lado educativo |
-| 28 e 29/11 | Trocar placeholders pela arte, corrigir, exportar e ensaiar |
-| 30/11 | Entrega |
+| sex 20/11 (feriado) | 001 fechada (T035 jogado, converge sem pendência) e 002 Run e mapa |
+| dom 22/11, manhã | 003 Chefes e a prova: specify, clarify, plan e tasks |
+| 23 a 27/11 | Sem hora livre |
+| sáb 28/11, tarde | 003 implement; 004 Telas, história e tutorial: specify, clarify, plan e tasks |
+| dom 29/11 | 004 implement; trocar placeholders pela arte, corrigir, exportar e ensaiar |
+| seg 30/11 | Entrega |
 
 Se uma funcionalidade atrasar mais de um dia, corte escopo na próxima (por exemplo, menos
 regras de questão na prova) em vez de empurrar todas.
@@ -38,7 +42,7 @@ regras de questão na prova) em vez de empurrar todas.
 
 ## Modelo e esforço por etapa
 
-| Etapa | 002 | 003, 004, 005 |
+| Etapa | 002 | 003 e 004 |
 |---|---|---|
 | specify | Opus `high` | Opus `high` |
 | clarify | Opus `high` (repetir até não sobrar dúvida) | Opus `high` |
@@ -72,7 +76,7 @@ Joguei o cenário N do quickstart da 001 e aconteceu isto: <descreva o que viu e
 
 ---
 
-## Parte 2: ciclo de cada funcionalidade (002 a 005)
+## Parte 2: ciclo de cada funcionalidade (002 a 004)
 
 Repita os passos abaixo para cada funcionalidade. Os prompts do `plan` mudam por
 funcionalidade e estão na Parte 3.
@@ -89,9 +93,9 @@ dizer que não há ambiguidade relevante. Os pontos em aberto da visão que entr
 
 - **002:** quantas casas tem cada ato; quanto o descanso cura (no jogo antigo, 8); se existe
   registro entre runs (melhor resultado).
-- **003:** quantas questões a prova tem e a regra de cada uma; o que muda nos chefes dos
-  atos 1 e 2 além de vida e ataque.
-- **004 e 005:** o clarify encontra sozinho.
+- **003:** a regra de cada questão da prova (até 3, decidido em 17/11). Os chefes dos atos 1
+  e 2 são elites reforçadas: só mudam vida e ataque.
+- **004:** o clarify encontra sozinho.
 
 Depois do clarify, atualize a seção "Pontos em aberto" de `docs/visao-do-jogo.md` riscando o
 que foi decidido (como foi feito com a divisão na 001).
@@ -186,24 +190,18 @@ Cada prompt já pede para atualizar a seção "Funcionalidade atual" do `CLAUDE.
 ### 003, chefes e a prova (Opus `xhigh`)
 
 ```text
-/speckit-plan Siga a constituição e reaproveite a 001 e a 002 sem reescrevê-las. Orientações: (1) os chefes dos atos 1 e 2 são dados (.tres em dados/) e entram na casa de chefe que a 002 deixou preparada; (2) a prova é uma sequência de questões, cada uma uma fase com regra própria; as regras ficam em dados, e a Batalha recebe a regra da fase sem virar uma classe gigante (prefira um modificador pequeno por tipo de regra, com enum + match como os efeitos das cartas); (3) a busca do alvo continua garantindo alvo alcançável também sob cada regra de questão, com teste comparando com força bruta; (4) vencer a última questão encerra a run com vitória e devolve o resultado por sinal, para a 004 mostrar a cena final; (5) cada regra de questão tem teste próprio, e há simulação de muitas provas com sementes diferentes provando que toda questão tem solução; (6) placeholders dos chefes em docs/assets-pendentes.md; (7) ordem de construção e trabalho em paralelo pela equipe; (8) atualize a seção "Funcionalidade atual" do CLAUDE.md para a 003.
+/speckit-plan Siga a constituição e reaproveite a 001 e a 002 sem reescrevê-las. Orientações: (1) os chefes dos atos 1 e 2 são elites reforçadas, sem regra própria: só valores de vida e ataque em dados (.tres em dados/), na casa de chefe que a 002 deixou preparada; (2) a prova é uma sequência de no máximo 3 questões, cada uma uma fase com regra própria; as regras ficam em dados, e a Batalha recebe a regra da fase sem virar uma classe gigante (prefira um modificador pequeno por tipo de regra, com enum + match como os efeitos das cartas); (3) a busca do alvo continua garantindo alvo alcançável também sob cada regra de questão, com teste comparando com força bruta; (4) vencer a última questão encerra a run com vitória e devolve o resultado por sinal, para a 004 mostrar a cena final; (5) cada regra de questão tem teste próprio, e há simulação de muitas provas com sementes diferentes provando que toda questão tem solução; (6) placeholders dos chefes em docs/assets-pendentes.md; (7) ordem de construção e trabalho em paralelo pela equipe; (8) atualize a seção "Funcionalidade atual" do CLAUDE.md para a 003.
 ```
 
-### 004, telas e história (Opus `xhigh`)
+### 004, telas, história e tutorial (Opus `xhigh`; as antigas 004 e 005, juntas em 17/11)
 
 ```text
-/speckit-plan Siga a constituição e reaproveite a 001 a 003 sem reescrevê-las. Orientações: (1) a troca entre telas (menu, abertura, run, derrota, cena final, créditos) passa por um único ponto simples e testável, sem cada cena conhecer as outras; (2) volume separado de música e de efeitos com dois barramentos de áudio, e a escolha do jogador salva em user:// com ConfigFile; (3) pausa com get_tree().paused, sem a lógica da luta depender da pausa; (4) as cenas de história (abertura e final) são sequências de quadros e falas em dados, para a equipe trocar texto e imagem sem mexer no código; (5) os créditos leem um arquivo de dados com a equipe (docs/equipe.md) e a origem e a licença de cada asset; (6) todos os textos em português; placeholders em docs/assets-pendentes.md; (7) testes de cada transição de tela e do volume salvo; (8) ordem de construção e trabalho em paralelo; (9) atualize a seção "Funcionalidade atual" do CLAUDE.md para a 004.
-```
-
-### 005, lado educativo (Opus `xhigh`)
-
-```text
-/speckit-plan Siga a constituição e reaproveite a 001 a 004 sem reescrevê-las. Orientações: (1) o tutorial é uma sequência de passos em dados (texto, o que destacar na tela, o que o jogador precisa fazer para avançar), e a luta do tutorial usa semente e mão fixas para os passos sempre funcionarem; (2) a lógica da Batalha não muda: o tutorial só observa os sinais e bloqueia ou libera ações pela tela; (3) "pular tutorial" sempre disponível; (4) a explicação de cada símbolo na primeira vez fica em dados (símbolo, texto, exemplo curto), e o registro de quais já foram explicados é salvo em user:// junto com as opções da 004; (5) testes provando que cada passo do tutorial avança com a ação certa, que pular funciona em qualquer passo e que cada símbolo é explicado uma vez só; (6) ordem de construção e trabalho em paralelo; (7) atualize a seção "Funcionalidade atual" do CLAUDE.md para a 005.
+/speckit-plan Siga a constituição e reaproveite a 001 a 003 sem reescrevê-las. Orientações: (1) a troca entre telas (menu, abertura, run, derrota, cena final, créditos) passa por um único ponto simples e testável, sem cada cena conhecer as outras; (2) volume separado de música e de efeitos com dois barramentos de áudio, e a escolha do jogador salva em user:// com ConfigFile; (3) pausa com get_tree().paused, sem a lógica da luta depender da pausa; (4) abertura e cena final são telas de texto com imagem fixa, com o texto em dados para a equipe trocar sem mexer no código; (5) os créditos leem um arquivo de dados com a equipe (docs/equipe.md) e a origem e a licença de cada asset; (6) o tutorial é uma sequência de dicas de texto em dados na primeira batalha da primeira run, com semente e mão fixas para as dicas sempre fazerem sentido; a lógica da Batalha não muda (o tutorial só observa os sinais) e "pular tutorial" fica sempre disponível; (7) a explicação de cada símbolo na primeira vez é uma dica curta em dados (símbolo, texto, exemplo), e o registro de quais já foram explicados é salvo em user:// junto com as opções de volume; (8) todos os textos em português; placeholders em docs/assets-pendentes.md; (9) testes de cada transição de tela, do volume salvo, do pular tutorial e de cada símbolo explicado uma vez só; (10) ordem de construção e trabalho em paralelo; (11) atualize a seção "Funcionalidade atual" do CLAUDE.md para a 004.
 ```
 
 ---
 
-## Parte 4: arte, som e entrega (28 e 29/11)
+## Parte 4: arte, som e entrega (tarde de 29/11)
 
 ### Trocar placeholders
 

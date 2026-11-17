@@ -96,7 +96,8 @@ tipo de inimigo.
 
 ## Pontos em aberto (para os `/speckit-clarify`)
 
-- Quantas questões a prova tem e qual a regra de cada uma.
+- ~~Quantas questões a prova tem~~ Decidido em 17/11 (corte de escopo): até 3. A regra de cada
+  uma fica para o clarify da 003.
 - ~~Quanto o descanso cura (no jogo antigo, 8 de vida)~~ Decidido em 13/11 (spec 002): 30%
   da vida máxima (12).
 - ~~Quantas casas tem cada ato~~ Decidido em 13/11 (spec 002): 5 andares (4 comuns, de 2 a 3
@@ -113,14 +114,13 @@ implement.
 
 | # | Funcionalidade | Prazo sugerido | Modelo no `plan` |
 |---|---|---|---|
-| 001 | Núcleo da batalha | 17/11 | Fable 5.2, `high` |
+| 001 | Núcleo da batalha | 20/11 | Fable 5.2, `high` |
 | 002 | Run e mapa | 20/11 | Fable 5.2, `high` |
-| 003 | Chefes e a prova | 23/11 | Opus 5.5, `xhigh` |
-| 004 | Telas e história | 25/11 | Opus 5.5, `xhigh` |
-| 005 | Lado educativo | 27/11 | Opus 5.5, `xhigh` |
+| 003 | Chefes e a prova (enxuta) | 28/11 | Opus 5.5, `xhigh` |
+| 004 | Telas, história e tutorial (antigas 004 e 005) | 29/11 | Opus 5.5, `xhigh` |
 
-28 e 29/11: folga para trocar placeholders pela arte da equipe, corrigir e ensaiar. Entrega:
-30/11.
+Tarde de 29/11: trocar placeholders pela arte da equipe, corrigir e ensaiar. Entrega: 30/11.
+Replanejado em 17/11; o calendário dia a dia está em [roteiro-speckit.md](roteiro-speckit.md).
 
 Arte e som não têm specify próprio: pela constituição (princípio IV), o código usa
 placeholders neutros registrados como pendência, e a equipe troca conforme os arquivos chegam.
@@ -142,17 +142,11 @@ placeholders neutros registrados como pendência, e a equipe troca conforme os a
 003, chefes e a prova:
 
 ```text
-/speckit-specify Leia docs/visao-do-jogo.md para entender o jogo inteiro. A batalha (001) e a run com mapa (002) já existem. Esta funcionalidade cobre SÓ os chefes: o chefe do calabouço e o dos salões, no fim dos atos 1 e 2, e a prova como chefe final da torre, conforme a seção "Chefe final: a prova" da visão (questões em sequência, cada uma uma fase com regra própria; vencer todas vence a prova e encerra a run com vitória). Fora desta funcionalidade: cenas de história, menus e tutorial.
+/speckit-specify Leia docs/visao-do-jogo.md para entender o jogo inteiro. A batalha (001) e a run com mapa (002) já existem. Esta funcionalidade cobre SÓ os chefes, em versão enxuta: o chefe do calabouço e o dos salões, no fim dos atos 1 e 2, são batalhas de elite reforçadas (mais vida e mais ataque, sem regra própria), com os valores no arquivo de dados de dificuldade; e a prova como chefe final da torre, conforme a seção "Chefe final: a prova" da visão, com no máximo 3 questões em sequência, cada uma uma fase com regra própria; vencer todas vence a prova e encerra a run com vitória. Fora desta funcionalidade: cenas de história, menus e tutorial.
 ```
 
-004, telas e história:
+004, telas, história e tutorial (as antigas 004 e 005, juntas em 17/11):
 
 ```text
-/speckit-specify Leia docs/visao-do-jogo.md para entender o jogo inteiro. Batalha (001), run e mapa (002) e chefes (003) já existem. Esta funcionalidade cobre SÓ as telas e a história, conforme as seções "História e tema" e "Telas" da visão: menu principal, cena de abertura (Arthur estudando e sendo engolido pelo livro), tela de derrota, cena final (Arthur acorda depois de vencer a prova), pausa durante a run com volume separado de música e de efeitos, e créditos com a equipe e a origem e licença de cada asset. Textos só em português. Fora desta funcionalidade: tutorial e explicação dos símbolos.
-```
-
-005, lado educativo:
-
-```text
-/speckit-specify Leia docs/visao-do-jogo.md para entender o jogo inteiro. O jogo completo (001 a 004) já existe. Esta funcionalidade cobre SÓ o lado educativo, conforme a seção "Lado educativo" da visão: a primeira batalha da primeira run vira um tutorial que ensina a montar a expressão, a precedência dos operadores, o Pular e o efeito das cartas especiais; e cada símbolo matemático é explicado ao jogador na primeira vez em que aparece, com um exemplo curto. O jogador deve poder pular o tutorial.
+/speckit-specify Leia docs/visao-do-jogo.md para entender o jogo inteiro. Batalha (001), run e mapa (002) e chefes (003) já existem. Esta funcionalidade cobre as telas, a história e o lado educativo, em versão enxuta, conforme as seções "História e tema", "Telas" e "Lado educativo" da visão: menu principal; cena de abertura e cena final como telas de texto com imagem fixa (Arthur estudando e sendo engolido pelo livro; Arthur acorda depois de vencer a prova); tela de derrota; pausa durante a run com volume separado de música e de efeitos; créditos com a equipe e a origem e licença de cada asset; e a primeira batalha da primeira run como tutorial por dicas de texto, passo a passo (montar a expressão, precedência dos operadores, Pular e cartas especiais), que o jogador pode pular, com cada símbolo matemático explicado numa dica curta na primeira vez em que aparece. Textos só em português.
 ```
