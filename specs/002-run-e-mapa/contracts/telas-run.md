@@ -62,7 +62,8 @@ Comportamento:
   | já percorrida (as duas casas visitadas) | branca, `Color(0.95, 0.95, 0.95)` |
   | da casa atual para uma disponível | amarela, `Color(0.95, 0.8, 0.3)` |
 
-- Marcador do Arthur: `ColorRect` 8×8 azul, `Color(0.25, 0.4, 0.8)` (a cor do Arthur na luta).
+- Marcador do Arthur: `ColorRect` 8×8 azul, `Color(0.25, 0.4, 0.8)` (a cor do Arthur na luta),
+  com `mouse_filter = IGNORE`, para não tapar a dica da casa em que está (research D9).
 - A cena não sabe de vida, baralho nem ato: isso fica na barra da cena principal.
 
 ## `mapa/casa_mapa.tscn` (raiz `Button`, 32×32)
@@ -90,6 +91,10 @@ Estados (FR-012):
 
 A casa não recebe se foi visitada: o que separa a visitada das demais é o caminho branco das
 ligações e o marcador do Arthur, desenhados pela `tela_mapa` (FR-012).
+
+Mouse: o `ColorRect` e a moldura (se ela for um nó) usam `mouse_filter = IGNORE`; o `Label` já
+vem assim. O `ColorRect` vem com `STOP` e, cobrindo o botão inteiro, ficaria com o clique e com a
+dica (research D9). É o mesmo cuidado do fundo da `cartas/carta.tscn` da 001.
 
 ## `descanso/tela_descanso.tscn` (raiz `Control`, tela inteira)
 

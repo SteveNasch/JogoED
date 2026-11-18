@@ -351,6 +351,13 @@ mistura de mãos são outros). Os testes contam avaliações, não tempo.
   até um `queue_redraw()`; que o desenho do pai sai antes dos filhos (as linhas ficam embaixo
   das casas); e que linhas de largura ímpar precisam ser deslocadas meio pixel, o que a largura
   2 evita. `draw_line()` tem a suavização desligada por padrão, o certo para pixel art.
+- **Mouse nos filhos da casa** (**medido**): o `ColorRect` vem com `mouse_filter` `STOP` (valor
+  0) e o `Label` com `IGNORE` (valor 2). Com `STOP`, o nó fica com o evento do mouse e ele não
+  chega ao pai, então um `ColorRect` do tamanho do `Button` deixaria a casa sem clique e sem
+  dica. Por isso o `ColorRect` da casa, a moldura e o marcador do Arthur usam `IGNORE`, como o
+  fundo da `cartas/carta.tscn` da 001 (`mouse_filter = 2`). O teste confere esse valor: a
+  simulação de clique com `push_input()` em modo headless não chegou nem a um `Button` sozinho
+  nesta máquina, então não serve para provar o clique.
 - **Exceção à regra de contêineres**: a 001 (D16) e a skill `godot-ui` pedem contêineres em
   vez de posições à mão. No mapa isso não serve: com uma `HBoxContainer` por andar, a posição de
   cada casa só existe depois que o contêiner arruma os filhos, e as linhas teriam que esperar
@@ -362,6 +369,7 @@ mistura de mãos são outros). Os testes contam avaliações, não tempo.
   [Custom drawing in 2D](https://docs.godotengine.org/en/4.7/tutorials/2d/custom_drawing_in_2d.html)
   (seções "Updating" e "Coordinates and line width alignment");
   [CanvasItem.draw_line()](https://docs.godotengine.org/en/4.7/classes/class_canvasitem.html#class-canvasitem-method-draw-line);
+  [Control.mouse_filter](https://docs.godotengine.org/en/4.7/classes/class_control.html#class-control-property-mouse-filter);
   [Using Containers](https://docs.godotengine.org/en/4.7/tutorials/ui/gui_containers.html) (já
   citada na 001, D16).
 
