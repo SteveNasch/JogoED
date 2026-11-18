@@ -79,8 +79,11 @@ func mostrar(tipo: Casa.Tipo, disponivel: bool) -> void
 | `BATALHA` | B | `Color(0.55, 0.3, 0.3)` | "Batalha" |
 | `ELITE` | E | `Color(0.75, 0.2, 0.2)` | "Elite: inimigo mais forte, dá carta" |
 | `DESCANSO` | D | `Color(0.3, 0.6, 0.35)` | "Descanso: cura parte da vida" |
-| `RECOMPENSA` | R | `Color(0.75, 0.6, 0.25)` | "Recompensa: escolha 1 entre 3 cartas" |
+| `RECOMPENSA` | R | `Color(0.75, 0.6, 0.25)` | "Recompensa: escolha uma carta" |
 | `CHEFE` | C | `Color(0.5, 0.2, 0.55)` | "Chefe do ato" |
+
+As dicas não citam números do equilíbrio (quantas cartas a recompensa oferece, quanto o
+descanso cura): eles vêm de `dados/dificuldade.tres` e mudariam sem a dica mudar (FR-027).
 
 Estados (FR-012):
 
