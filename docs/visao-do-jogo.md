@@ -115,7 +115,7 @@ implement.
 | # | Funcionalidade | Prazo sugerido | Modelo no `plan` |
 |---|---|---|---|
 | 001 | Núcleo da batalha | 20/11 | Fable 5.2, `high` |
-| 002 | Run e mapa | 20/11 | Fable 5.2, `high` |
+| 002 | Run e mapa | 20/11 | Opus 5.5, `xhigh` |
 | 003 | Chefes e a prova (enxuta) | 28/11 | Opus 5.5, `xhigh` |
 | 004 | Telas, história e tutorial (antigas 004 e 005) | 29/11 | Opus 5.5, `xhigh` |
 

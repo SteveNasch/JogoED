@@ -27,14 +27,14 @@ regras de questão na prova) em vez de empurrar todas.
 
 ## Regras gerais (valem para toda etapa)
 
-- **Trocar modelo:** `/model opus` ou `/model fable`.
+- **Trocar modelo:** `/model opus`.
 - **Trocar esforço só na sessão:** `/effort`, escolher o nível e apertar `s`.
 - **`/clear` entre etapas.** Sessão longa gasta mais token a cada mensagem. Exceção: a
   correção do analyze fica na mesma sessão do analyze, porque o relatório não é salvo.
 - **Uma funcionalidade só começa** com a anterior com os testes passando, commit feito e
   converge sem pendência.
-- **Fable 5.2 só onde a tabela manda** (plan e analyze da 002), mais duas exceções: bug que o
-  Opus não resolveu em duas tentativas, e revisão visual por print do jogo.
+- **Opus `xhigh` no lugar do Fable 5.2** (sem acesso desde 18/11): plan e analyze da 002,
+  bug que o Opus `high` não resolveu em duas tentativas e revisão visual por print do jogo.
 - **Se o Claude errar com contexto suficiente:** troque para um modelo maior. **Se pular
   arquivo ou largar a tarefa no meio:** suba o esforço.
 - **Se o Claude decidir uma regra do jogo sozinho** (aparece na spec como "Q (no analyze)"
@@ -46,9 +46,9 @@ regras de questão na prova) em vez de empurrar todas.
 |---|---|---|
 | specify | Opus `high` | Opus `high` |
 | clarify | Opus `high` (repetir até não sobrar dúvida) | Opus `high` |
-| plan | **Fable `high`** | Opus `xhigh` |
+| plan | Opus `xhigh` | Opus `xhigh` |
 | tasks | Opus `medium` | Opus `medium` |
-| analyze (1ª vez) | **Fable `high`** | Opus `xhigh` |
+| analyze (1ª vez) | Opus `xhigh` | Opus `xhigh` |
 | correção do analyze | Opus `high` (mesma sessão) | Opus `high` (mesma sessão) |
 | analyze (2ª vez) | Opus `xhigh` | Opus `xhigh` |
 | implement | Opus `high` | Opus `high` |
@@ -181,7 +181,7 @@ Sinais de alerta (aí vale chamar o Claude para revisar):
 
 Cada prompt já pede para atualizar a seção "Funcionalidade atual" do `CLAUDE.md`.
 
-### 002, run e mapa (Fable `high`)
+### 002, run e mapa (Opus `xhigh`)
 
 ```text
 /speckit-plan Siga a constituição e reaproveite a 001 sem reescrevê-la: a batalha entra pela interface tela_batalha.iniciar(cartas, vida_arthur, dados_inimigo, regras, semente) e devolve o sinal luta_terminou(resultado); a luta avulsa da 001 sai de cena principal e o mapa entra no lugar. Orientações: (1) o estado da run (ato, casa atual, vida do Arthur, baralho) fica numa classe RefCounted sem cena, testável sozinha; (2) a geração do mapa usa um único RandomNumberGenerator com semente vinda de fora, e os testes provam com muitas sementes que todo mapa tem caminho do início até o chefe e que toda casa é alcançável; (3) toda a dificuldade por profundidade (faixa do alvo, vida e ataque dos inimigos, quantas casas de cada tipo, quanto o descanso cura) fica num único arquivo .tres em dados/, editável sem mexer no código; (4) recompensa (1 de 3 cartas) e descanso são cenas pequenas e separadas, que avisam por sinal; (5) a casa de chefe usa por enquanto uma batalha comum mais forte, com um ponto claro para a 003 trocar; (6) derrota recomeça do calabouço com mapa novo e baralho inicial; (7) pixel art em 640x360 como na 001, com placeholders listados em docs/assets-pendentes.md; (8) diga a ordem de construção e o que dá para fazer em paralelo pela equipe de 6; (9) atualize a seção "Funcionalidade atual" do CLAUDE.md para a 002.
@@ -212,7 +212,7 @@ Opus `medium`:
 Chegaram estes assets: <lista de arquivos, de onde vieram e a licença de cada um>. Troque os placeholders correspondentes de docs/assets-pendentes.md por eles, sem criar nem editar imagem ou som. Registre a origem e a licença de cada um nos créditos, tire a linha da pendência, rode a suíte inteira e faça um commit por asset trocado.
 ```
 
-Para conferir o visual com print do jogo: Fable `high`, mandando o print e perguntando o que
+Para conferir o visual com print do jogo: Opus `xhigh`, mandando o print e perguntando o que
 está desalinhado, ilegível ou fora da pixel art.
 
 ### Exportar
@@ -238,5 +238,5 @@ Configure a exportação do jogo para Windows e Linux em export_presets.cfg, exp
 
 - Um sinal de alerta do Passo 7.
 - O analyze apontou algo que você não entendeu.
-- Bug que o Opus não resolveu em duas tentativas (tente antes o Fable `high`).
+- Bug que o Opus não resolveu em duas tentativas (tente antes o Opus `xhigh`).
 - Fim de cada funcionalidade, se quiser uma segunda opinião antes da próxima.
