@@ -90,8 +90,8 @@ automático da 001 pronto para ser usado pela simulação da run.
 **Purpose**: os dados de equilíbrio conferidos e o mapa gerado e testado, sem nenhuma cena.
 Tudo que a `Run` e as cenas usam.
 
-**⚠️ CRITICAL**: a `Run` (fase 3) espera esta fase inteira. As cenas do mapa (T020 em diante)
-só precisam de T005.
+**⚠️ CRITICAL**: a `Run` (fase 3) espera esta fase inteira. O T020 só precisa do T005; o T021
+precisa também do T010.
 
 **Desvio pequeno da ordem do plano**: a `Casa` (passo 3) entra antes de `DadosAto` (passo 2)
 porque `DadosAto.inimigo()` recebe um `Casa.Tipo`.
