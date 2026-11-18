@@ -50,7 +50,10 @@ principal ir ganhando uma história por commit.
   cada mudança dessas tem a sua tarefa.
 - **Dados só leitura**: a `Run` nunca escreve nos objetos de `dificuldade` (research D5); os
   testes que mudam um valor usam uma cópia (`duplicate(true)`) e conferem que o arquivo
-  carregado ficou igual.
+  carregado ficou igual. O `duplicate(true)` copia o que está dentro de `dificuldade.tres`
+  (atos, inimigos, mapas), mas não os arquivos apontados por ele (`regras_base` e as cartas):
+  o teste que muda algo em `regras_base` copia também ela, com
+  `copia.regras_base = copia.regras_base.duplicate()` (research D12, **medido**).
 - Nenhuma imagem, som ou fonte é criado (princípio IV). Os placeholders da 002 já estão em
   `docs/assets-pendentes.md` (itens 24 a 34); se a cena feita pela tarefa mudar um placeholder,
   a linha muda no mesmo commit.
@@ -193,8 +196,9 @@ o mapa (quickstart, cenários 2 a 7).
 
 Todas as tarefas desta fase mexem em `run/tela_run.gd`, em sequência (frente C, depois que as
 frentes A, B, D e E estão no `main`). Nos testes, `dificuldade` é trocada, antes de pôr a cena
-na árvore, por uma cópia com `regras_base.tempo_resultado` de centésimos de segundo (research
-D12); para vencer uma luta, a cópia põe 1 de vida nos inimigos e o teste joga pela
+na árvore, por uma cópia (`duplicate(true)`) com a própria cópia de `regras_base`
+(`regras_base.duplicate()`, porque ela é outro arquivo e o `duplicate(true)` não a copia) e
+`tempo_resultado` de centésimos de segundo nela (research D12); para vencer uma luta, a cópia põe 1 de vida nos inimigos e o teste joga pela
 `tela_batalha.batalha` aberta (achada entre os filhos da raiz), como nos testes da luta avulsa
 da 001.
 

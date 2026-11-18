@@ -436,7 +436,21 @@ mistura de mãos são outros). Os testes contam avaliações, não tempo.
   `add_child_autofree()`, recebe os dados, e o teste aciona os botões e confere textos e sinais.
   Nos testes da cena principal, a dificuldade é trocada antes de pôr a cena na árvore por uma
   cópia com `tempo_resultado` de centésimos de segundo.
-- **Documentação**: a do GUT e a da linha de comando, já citadas na 001 (D17).
+- **Cópia dos dados nos testes** (**medido** no Godot 4.7.2, num projeto de rascunho): o
+  `duplicate(true)` de um recurso copia os sub-recursos salvos dentro do mesmo arquivo,
+  inclusive os de dentro de listas, mas mantém o mesmo objeto para um recurso que é outro
+  arquivo; mudar esse recurso na cópia mudou o arquivo carregado. Em `dificuldade.tres`, atos,
+  inimigos e mapas são copiados, e `regras_base` e as cartas não. Como o motor carrega cada
+  arquivo uma vez só (D5), mudar o `tempo_resultado` da cópia mudaria o `regras_batalha.tres`
+  de todos os testes seguintes. Por isso o teste que muda `regras_base` faz
+  `copia.regras_base = copia.regras_base.duplicate()` antes, como os testes da 001 já fazem com
+  `REGRAS.duplicate()`. A alternativa `duplicate_deep(Resource.DEEP_DUPLICATE_ALL)` copia
+  também as cartas, e os testes que comparam uma carta com o arquivo dela deixariam de achar o
+  mesmo objeto.
+- **Documentação**: a do GUT e a da linha de comando, já citadas na 001 (D17);
+  [Resource.duplicate()](https://docs.godotengine.org/en/4.7/classes/class_resource.html#class-resource-method-duplicate)
+  e
+  [Resource.duplicate_deep()](https://docs.godotengine.org/en/4.7/classes/class_resource.html#class-resource-method-duplicate-deep).
 
 ## D13. Pixel art e placeholders
 
