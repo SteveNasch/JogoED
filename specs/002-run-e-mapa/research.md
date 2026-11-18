@@ -27,6 +27,7 @@ Não ficou nenhum "NEEDS CLARIFICATION" do contexto técnico.
   | Arquivo da 001 | Mudança | Por quê |
   |---|---|---|
   | `project.godot` | `application/run/main_scene` passa a ser `res://run/tela_run.tscn` | o mapa entra no lugar da luta avulsa |
+  | `.gutconfig.json` | 4 pastas novas em `dirs` (`mapa/`, `run/`, `descanso/`, `recompensa/`, cada uma com `testes/`) | o GUT só roda os testes das pastas listadas |
   | `cartas/testes/teste_arquivos_cartas.gd` | 5 linhas novas na tabela (números 6 a 10) | o teste confere que a pasta `dados/cartas/` tem só as cartas da tabela; as cartas 6 a 10 entram agora, com os valores da tabela de cartas da spec da 001 |
   | `batalha/testes/teste_simulacao.gd` | passa a usar o jogador automático extraído para `batalha/testes/jogador_automatico.gd` | a simulação de runs da 002 também precisa jogar lutas de verdade; extrair evita duas cópias do mesmo jogador (princípio I) |
   | `luta_avulsa/luta_avulsa.gd` | só o comentário do topo: deixa de dizer "cena principal" | o código continua igual |
