@@ -325,5 +325,5 @@ commit.
 ## Phase 8: Convergence
 
 - [X] T036 Alinhar a faixa da mão com a divisão da tela: o contrato pede a mão de y 280 a 344, mas `batalha/tela_batalha.tscn` a põe de 288 a 352 (a margem de 8 px embaixo empurra a mão; com essa margem a tabela do contrato não fecha); ajustar a cena para 280 a 344 ou, com aprovação do Estêvão, corrigir a tabela do contrato, e conferir a posição num teste em `batalha/testes/teste_tela_batalha.gd` per plan: contracts/tela-batalha.md, "Divisão da tela" (contradicts)
-- [ ] T037 Versionar `batalha/testes/teste_simulacao.gd.uid`, que o Godot gerou para o script da simulação e ficou fora do commit do T032 (os outros 37 scripts do projeto têm o `.uid` no repositório) per T032 (partial)
+- [X] T037 Versionar `batalha/testes/teste_simulacao.gd.uid`, que o Godot gerou para o script da simulação e ficou fora do commit do T032 (os outros 37 scripts do projeto têm o `.uid` no repositório) per T032 (partial)
 - [ ] T038 Registrar em `specs/001-nucleo-batalha/research.md` a decisão do `tema.tres` (fonte padrão de 10 px em todo o jogo), com o motivo e o link da documentação do Godot 4.7, ou removê-lo se a equipe não quiser a mudança; nenhum documento da funcionalidade pede esse arquivo per plan: Project Structure (unrequested)
