@@ -59,7 +59,7 @@ busca do alvo da 001 com média abaixo de 10 ms nas faixas dos atos 2 e 3 e pior
 **Constraints**: resolução base 640×360 com escala inteira; nenhum asset criado; código, dados e
 textos em português; a mesma semente reproduz a run inteira; a 001 não é reescrita
 
-**Scale/Scope**: 1 cena principal + 7 cenas pequenas novas; 7 classes novas de lógica e dados;
+**Scale/Scope**: 1 cena principal + 6 cenas pequenas novas; 7 classes novas de lógica e dados;
 1 arquivo de dificuldade e 5 cartas novas; uma run tem 3 atos de 5 andares (13 a 15 lutas)
 
 ## Constitution Check
@@ -73,7 +73,7 @@ Constituição v1.0.1 (`.specify/memory/constitution.md`).
 |---|---|---|
 | **I. Código Limpo e Minimalista** | Uma classe de lógica por responsabilidade (`Run`, `GeradorMapa`, `MapaAto`, `Casa`) e quatro de dados pequenas. Etapas da run num `enum` com `match`, sem classes de estado. Sem campos de textura para arte que ainda não existe. A única extração de código da 001 (o jogador automático dos testes) existe para não duplicar. A luta avulsa continua com testes e uso documentado (cena de teste); não é código morto. Nada da 003 ou da 004 é implementado. | passa |
 | **II. Testes Reais (inegociável)** | Cada pasta nova tem `testes/`. Mapa conferido em 1.000 sementes por ato com verificações independentes do algoritmo (busca em largura, contagem de caminhos, cruzamentos). `Run` testada transição por transição e em 1.000 runs com a `Batalha` real da 001; 20 runs com lutas jogadas de verdade. Cada cena testada pelos seus sinais. Sem mocks: o resultado de luta nas 1.000 runs é dado de entrada da `Run` sob teste, e a luta tem a própria simulação na 001 (research D12). | passa |
-| **III. Cenas Pequenas e Separadas** | Oito cenas (a principal e sete pequenas), cada uma com um papel, recebendo dados por método e avisando por sinal; só a principal conhece as outras. Pastas por área (`mapa/`, `run/`, `descanso/`, `recompensa/`), com cena, script e testes juntos. | passa |
+| **III. Cenas Pequenas e Separadas** | Sete cenas novas (a principal e seis pequenas), cada uma com um papel, recebendo dados por método e avisando por sinal; só a principal conhece as outras. Pastas por área (`mapa/`, `run/`, `descanso/`, `recompensa/`), com cena, script e testes juntos. | passa |
 | **IV. Assets Vêm da Equipe (inegociável)** | Só `ColorRect`, `Button`, `Label`, linhas do `_draw()` e a fonte padrão. Lista da 002 em `docs/assets-pendentes.md` (itens 24 a 34), com tamanho, quadros, formato e uso. | passa |
 | **V. Tudo em Português** | Classes, arquivos, sinais, campos, comentários e textos em português, sem acento nos identificadores. Ficam em inglês os nomes do Godot e do GUT e os títulos do modelo do Spec Kit, como na 001 (notas do plano da 001). A palavra "run" é o termo da visão e da spec (ver nota abaixo). | passa, com as exceções justificadas |
 | **Restrições Técnicas** | Godot 4.7.2-stable, GDScript tipado, GUT 9.7.1, como na 001; nenhuma dependência nova. | passa |
