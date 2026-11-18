@@ -1,0 +1,134 @@
+[gd_resource type="Resource" script_class="DadosDificuldade" format=3]
+
+[ext_resource type="Script" path="res://run/dados_dificuldade.gd" id="1_dific"]
+[ext_resource type="Script" path="res://run/dados_ato.gd" id="2_ato"]
+[ext_resource type="Script" path="res://combatentes/dados_inimigo.gd" id="3_inimigo"]
+[ext_resource type="Script" path="res://mapa/dados_mapa.gd" id="4_mapa"]
+[ext_resource type="Script" path="res://cartas/dados_carta.gd" id="5_carta"]
+[ext_resource type="Resource" path="res://dados/regras_batalha.tres" id="6_regras"]
+[ext_resource type="Resource" path="res://dados/cartas/numero_1.tres" id="7_numero_1"]
+[ext_resource type="Resource" path="res://dados/cartas/numero_2.tres" id="8_numero_2"]
+[ext_resource type="Resource" path="res://dados/cartas/numero_3.tres" id="9_numero_3"]
+[ext_resource type="Resource" path="res://dados/cartas/numero_4.tres" id="10_numero_4"]
+[ext_resource type="Resource" path="res://dados/cartas/numero_5.tres" id="11_numero_5"]
+[ext_resource type="Resource" path="res://dados/cartas/soma.tres" id="12_soma"]
+[ext_resource type="Resource" path="res://dados/cartas/subtracao.tres" id="13_subtracao"]
+[ext_resource type="Resource" path="res://dados/cartas/multiplicacao.tres" id="14_multiplicacao"]
+[ext_resource type="Resource" path="res://dados/cartas/numero_6.tres" id="15_numero_6"]
+[ext_resource type="Resource" path="res://dados/cartas/numero_7.tres" id="16_numero_7"]
+[ext_resource type="Resource" path="res://dados/cartas/numero_8.tres" id="17_numero_8"]
+[ext_resource type="Resource" path="res://dados/cartas/numero_9.tres" id="18_numero_9"]
+[ext_resource type="Resource" path="res://dados/cartas/numero_10.tres" id="19_numero_10"]
+[ext_resource type="Resource" path="res://dados/cartas/divisao.tres" id="20_divisao"]
+[ext_resource type="Resource" path="res://dados/cartas/dobro.tres" id="21_dobro"]
+[ext_resource type="Resource" path="res://dados/cartas/metade.tres" id="22_metade"]
+[ext_resource type="Resource" path="res://dados/cartas/quadrado.tres" id="23_quadrado"]
+[ext_resource type="Resource" path="res://dados/cartas/chama.tres" id="24_chama"]
+[ext_resource type="Resource" path="res://dados/cartas/foco.tres" id="25_foco"]
+[ext_resource type="Resource" path="res://dados/cartas/guarda.tres" id="26_guarda"]
+[ext_resource type="Resource" path="res://dados/cartas/vital.tres" id="27_vital"]
+
+[sub_resource type="Resource" id="comum_calabouco"]
+script = ExtResource("3_inimigo")
+nome = "Inimigo do calabouço"
+vida = 12
+ataque = 3
+
+[sub_resource type="Resource" id="elite_calabouco"]
+script = ExtResource("3_inimigo")
+nome = "Elite do calabouço"
+vida = 18
+ataque = 4
+
+[sub_resource type="Resource" id="chefe_calabouco"]
+script = ExtResource("3_inimigo")
+nome = "Chefe do calabouço"
+vida = 26
+ataque = 5
+
+[sub_resource type="Resource" id="mapa_calabouco"]
+script = ExtResource("4_mapa")
+
+[sub_resource type="Resource" id="comum_saloes"]
+script = ExtResource("3_inimigo")
+nome = "Inimigo dos salões"
+vida = 18
+ataque = 4
+
+[sub_resource type="Resource" id="elite_saloes"]
+script = ExtResource("3_inimigo")
+nome = "Elite dos salões"
+vida = 26
+ataque = 5
+
+[sub_resource type="Resource" id="chefe_saloes"]
+script = ExtResource("3_inimigo")
+nome = "Chefe dos salões"
+vida = 36
+ataque = 6
+
+[sub_resource type="Resource" id="mapa_saloes"]
+script = ExtResource("4_mapa")
+
+[sub_resource type="Resource" id="comum_torre"]
+script = ExtResource("3_inimigo")
+nome = "Inimigo da torre"
+vida = 24
+ataque = 5
+
+[sub_resource type="Resource" id="elite_torre"]
+script = ExtResource("3_inimigo")
+nome = "Elite da torre"
+vida = 34
+ataque = 6
+
+[sub_resource type="Resource" id="chefe_torre"]
+script = ExtResource("3_inimigo")
+nome = "Chefe da torre"
+vida = 46
+ataque = 7
+
+[sub_resource type="Resource" id="mapa_torre"]
+script = ExtResource("4_mapa")
+
+[sub_resource type="Resource" id="ato_calabouco"]
+script = ExtResource("2_ato")
+nome = "Calabouço"
+alvo_minimo = 5
+alvo_maximo = 12
+comum = SubResource("comum_calabouco")
+elite = SubResource("elite_calabouco")
+chefe = SubResource("chefe_calabouco")
+vida_extra_por_andar = 1
+mapa = SubResource("mapa_calabouco")
+
+[sub_resource type="Resource" id="ato_saloes"]
+script = ExtResource("2_ato")
+nome = "Salões"
+alvo_minimo = 8
+alvo_maximo = 18
+comum = SubResource("comum_saloes")
+elite = SubResource("elite_saloes")
+chefe = SubResource("chefe_saloes")
+vida_extra_por_andar = 1
+mapa = SubResource("mapa_saloes")
+
+[sub_resource type="Resource" id="ato_torre"]
+script = ExtResource("2_ato")
+nome = "Torre"
+alvo_minimo = 12
+alvo_maximo = 24
+comum = SubResource("comum_torre")
+elite = SubResource("elite_torre")
+chefe = SubResource("chefe_torre")
+vida_extra_por_andar = 1
+mapa = SubResource("mapa_torre")
+
+[resource]
+script = ExtResource("1_dific")
+regras_base = ExtResource("6_regras")
+baralho_inicial = Array[ExtResource("5_carta")]([ExtResource("7_numero_1"), ExtResource("7_numero_1"), ExtResource("8_numero_2"), ExtResource("8_numero_2"), ExtResource("9_numero_3"), ExtResource("9_numero_3"), ExtResource("10_numero_4"), ExtResource("10_numero_4"), ExtResource("11_numero_5"), ExtResource("11_numero_5"), ExtResource("12_soma"), ExtResource("13_subtracao"), ExtResource("14_multiplicacao")])
+cartas_de_recompensa = Array[ExtResource("5_carta")]([ExtResource("15_numero_6"), ExtResource("16_numero_7"), ExtResource("17_numero_8"), ExtResource("18_numero_9"), ExtResource("19_numero_10"), ExtResource("14_multiplicacao"), ExtResource("20_divisao"), ExtResource("21_dobro"), ExtResource("22_metade"), ExtResource("23_quadrado"), ExtResource("24_chama"), ExtResource("25_foco"), ExtResource("26_guarda"), ExtResource("27_vital")])
+cartas_por_recompensa = 3
+cura_do_descanso = 30
+atos = Array[ExtResource("2_ato")]([SubResource("ato_calabouco"), SubResource("ato_saloes"), SubResource("ato_torre")])
