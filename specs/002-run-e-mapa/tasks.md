@@ -328,7 +328,7 @@ commit.
   002").
 - O desvio da ordem do plano é só a `Casa` antes de `DadosAto` (fase 2, explicado lá).
 - A simulação de 1.000 runs não chama `Batalha.iniciar()` de propósito (a busca do alvo de
-  15.000 lutas deixaria o teste lento); as lutas de verdade ficam nas 20 runs do T019
+  cerca de 10.000 lutas, até 15.000, deixaria o teste lento; de 6 a 15 lutas por run); as lutas de verdade ficam nas 20 runs do T019
   (research D12).
 - O ponto de troca da 003 é só `_abrir_chefe()` em `run/tela_run.gd` (T027); nenhuma tarefa
   implementa nada da 003 ou da 004.

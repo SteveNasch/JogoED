@@ -60,7 +60,7 @@ busca do alvo da 001 com média abaixo de 10 ms nas faixas dos atos 2 e 3 e pior
 textos em português; a mesma semente reproduz a run inteira; a 001 não é reescrita
 
 **Scale/Scope**: 1 cena principal + 6 cenas pequenas novas; 7 classes novas de lógica e dados;
-1 arquivo de dificuldade e 5 cartas novas; uma run tem 3 atos de 5 andares (13 a 15 lutas)
+1 arquivo de dificuldade e 5 cartas novas; uma run tem 3 atos de 5 andares (6 a 15 lutas: 2 a 5 por ato, conforme o caminho)
 
 ## Constitution Check
 

@@ -477,7 +477,9 @@ mistura de mãos são outros). Os testes contam avaliações, não tempo.
 
 ## Riscos que ficam para a implementação
 
-- **Duração da run (SC-007)**: com 13 a 15 lutas por run e até 5 minutos por luta (meta da
+- **Duração da run (SC-007)**: cada ato tem de 2 a 5 lutas no caminho do jogador (a do andar 1,
+  a do chefe e de 0 a 3 nos andares 2 a 4, onde 4 das 8 casas são descanso ou recompensa), ou
+  seja, de 6 a 15 lutas por run (cerca de 10 em média, D12). Com até 5 minutos por luta (meta da
   001), a run pode passar de 30 minutos. Só dá para saber jogando; a alavanca é o arquivo de
   dificuldade (vida dos inimigos e quantidade de batalhas por ato).
 - **Pausa de até 0,1 s** no começo de rodadas raras dos atos 2 e 3 (D7).

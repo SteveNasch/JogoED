@@ -36,7 +36,7 @@ godot --path .
 Ou, pelo editor, F5. A cena principal passa a ser `run/tela_run.tscn`. A luta solta da 001
 continua existindo: abra `luta_avulsa/luta_avulsa.tscn` no editor e aperte F6.
 
-**Dica para testar rápido**: para chegar aos atos 2 e 3 sem jogar 15 lutas, mude por um momento
+**Dica para testar rápido**: para chegar aos atos 2 e 3 sem jogar até 15 lutas, mude por um momento
 a vida dos inimigos em `dados/dificuldade.tres` para 1 e desfaça depois com
 `git checkout dados/dificuldade.tres`.
 
