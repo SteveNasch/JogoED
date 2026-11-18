@@ -45,6 +45,9 @@ em si é a da 001 (`specs/001-nucleo-batalha/spec.md`) e não muda aqui.
   ganhas durante a run que tornam as faixas maiores alcançáveis; até lá, o alvo é o valor
   possível mais próximo da faixa (regra da 001). Os valores padrão ficam (medição no research
   da 002, D7).
+- Q (no analyze): A run nova tem de ter um mapa diferente do anterior? → A: tem de ter uma
+  semente nova; duas sementes podem, muito raramente, dar o mesmo mapa. O teste da cena confere
+  a semente nova, e a diferença de mapa é conferida na lógica, com sementes fixas (SC-006).
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -364,7 +367,7 @@ Conjunto de recompensas padrão: números 6 a 10, ×, ÷, x2, /2, ^2, Chama, Foc
 - **SC-005**: Mudar um valor do arquivo de dificuldade (por exemplo a cura do descanso) muda a
   run seguinte sem nenhuma alteração no código.
 - **SC-006**: Depois de uma derrota, a run nova começa com uma única ação do jogador, no ato
-  1, com 40 de vida, as 13 cartas iniciais e um mapa diferente do anterior.
+  1, com 40 de vida, as 13 cartas iniciais e uma semente nova (na prática, outro mapa).
 - **SC-007**: Uma pessoa da equipe que conhece a regra da luta leva de 20 a 30 minutos para
   uma run que chega ao chefe do ato 3 (meta da visão), medido em pelo menos duas runs jogadas.
 - **SC-008**: A run pode ser jogada do início até a derrota e até a vitória sem nenhum asset
