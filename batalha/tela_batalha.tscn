@@ -129,7 +129,11 @@ text = "Pular"
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Mao" parent="Margem/Coluna" instance=ExtResource("3_fila")]
+[node name="FaixaMao" type="MarginContainer" parent="Margem/Coluna"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 8
+
+[node name="Mao" parent="Margem/Coluna/FaixaMao" instance=ExtResource("3_fila")]
 unique_name_in_owner = true
 layout_mode = 2
 

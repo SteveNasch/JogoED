@@ -290,3 +290,11 @@ func test_guarda_mostra_o_escudo_so_no_painel_do_arthur() -> void:
 	assert_eq(_tela.batalha.rodada, 2)
 	assert_eq(_escudos_visiveis(), [] as Array[String])
 	assert_false((_no("PainelInimigo").get_node("Escudo") as Label).visible)
+
+
+func test_mao_fica_na_faixa_do_contrato() -> void:
+	# contracts/tela-batalha.md, "Divisão da tela": mão de y 280 a 344 na tela de 640×360.
+	await wait_physics_frames(1)
+	var faixa: Rect2 = (_no("Mao") as Control).get_global_rect()
+	assert_eq(faixa.position.y, 280.0)
+	assert_eq(faixa.end.y, 344.0)
