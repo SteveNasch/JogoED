@@ -53,7 +53,8 @@ A suíte precisa conter e passar, no mínimo:
   FR-028;
 - 1.000 runs com escolhas automáticas conferindo vida e baralho no começo de cada luta (SC-003)
   e 20 runs com lutas jogadas de verdade, com alvo alcançável e mão mínima em toda rodada
-  (FR-029) e a mesma semente repetindo a run (SC-002);
+  (FR-029), o baralho da run igual depois de cada luta (FR-004) e a mesma semente repetindo a
+  run (SC-002);
 - os testes de cena: mapa, casa, descanso, recompensa, aviso de vitória, fim de run e a cena
   principal.
 

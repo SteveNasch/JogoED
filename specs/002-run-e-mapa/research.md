@@ -428,8 +428,9 @@ mistura de mãos são outros). Os testes contam avaliações, não tempo.
      a luta já tem a própria simulação na 001.
   2. **20 runs com lutas jogadas de verdade** pelo jogador automático da 001 (extraído para
      `batalha/testes/jogador_automatico.gd`, D1), do ato 1 até a vitória ou a derrota: em toda
-     rodada, o alvo tem conta de exemplo e a mão tem o mínimo (FR-029), e a mesma semente com as
-     mesmas escolhas repete a run inteira (SC-002).
+     rodada, o alvo tem conta de exemplo e a mão tem o mínimo (FR-029), o baralho da run sai de
+     cada luta igual ao que entrou (FR-004), e a mesma semente com as mesmas escolhas repete a
+     run inteira (SC-002).
 - **Sementes**: `hash(i)` (D3). **Tempo**: os testes contam avaliações e casas, nunca relógio,
   como na 001.
 - **Testes de cena**: como na 001 (D17): a cena é instanciada, posta na árvore com
