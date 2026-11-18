@@ -70,7 +70,7 @@ Comportamento:
 ```gdscript
 signal escolhida
 
-func mostrar(tipo: Casa.Tipo, disponivel: bool, visitada: bool) -> void
+func mostrar(tipo: Casa.Tipo, disponivel: bool) -> void
 ```
 
 | Tipo | Letra | Cor do placeholder (`ColorRect` 32×32) | Dica (`tooltip_text`) |
@@ -86,10 +86,10 @@ Estados (FR-012):
 | Estado | `disabled` | Aparência |
 |---|---|---|
 | disponível | `false` | cor cheia e moldura de 1 px clara em volta (destaque) |
-| visitada | `true` | cor escurecida (`modulate` 0,5) |
-| as demais | `true` | cor escurecida (`modulate` 0,5) |
+| não disponível (visitada ou não) | `true` | cor escurecida (`modulate` 0,5) |
 
-O que separa a visitada das demais é o caminho branco das ligações e o marcador do Arthur.
+A casa não recebe se foi visitada: o que separa a visitada das demais é o caminho branco das
+ligações e o marcador do Arthur, desenhados pela `tela_mapa` (FR-012).
 
 ## `descanso/tela_descanso.tscn` (raiz `Control`, tela inteira)
 
