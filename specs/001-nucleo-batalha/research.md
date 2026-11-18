@@ -482,6 +482,25 @@ teste de simulação abaixo confere que nenhuma rodada chega ao teto
   [Creating Tests](https://gut.readthedocs.io/en/v9.7.1/Creating-Tests.html) e
   [Awaiting](https://gut.readthedocs.io/en/v9.7.1/Awaiting.html).
 
+## D18. Fonte padrão de 10 px em `tema.tres`
+
+- **Decisão**: o projeto tem um `Theme` em `tema.tres` com `default_font_size = 10`, ligado
+  em `gui/theme/custom`, e por isso vale para todos os `Control` do jogo. Um texto que precise
+  de outro tamanho (o número do alvo, por exemplo) usa `theme_override_font_sizes/font_size`
+  no próprio nó.
+- **Motivo**: a fonte padrão do Godot tem 16 px e não cabe nas cartas de 48×64 nem nos
+  painéis da tela de 640×360. O Godot 4.7 não tem configuração de projeto para o tamanho da
+  fonte (**testado**: entre as propriedades `gui/theme/*` do Godot 4.7.2 só existem as de
+  serrilhado, hinting, posição de subpixel, MSDF, mipmaps, subpixel do LCD, `custom`,
+  `custom_font` e `default_theme_scale`), então o tamanho fica num `Theme`.
+- **Alternativas**: `theme_override_font_sizes` em cada nó (repetido em dezenas de nós e fácil
+  de esquecer num nó novo); `gui/theme/default_theme_scale` (escala o tema inteiro, margens e
+  ícones junto, não só a fonte); um `Theme` na raiz de cada cena (repetido a cada cena da 002
+  em diante).
+- **Documentação**:
+  [ProjectSettings: gui/theme/custom](https://docs.godotengine.org/en/4.7/classes/class_projectsettings.html#class-projectsettings-property-gui-theme-custom);
+  [Theme.default_font_size](https://docs.godotengine.org/en/4.7/classes/class_theme.html#class-theme-property-default-font-size).
+
 ## Riscos que ficam para a implementação
 
 - **Leitura do texto em 640×360 com a fonte padrão**: só dá para julgar com o jogo aberto.
