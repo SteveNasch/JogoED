@@ -175,7 +175,7 @@ vencer o chefe do ato 3 e conferir o fim da run com vitória.
    uma do primeiro andar do ato 3, **Then** a da torre tem faixa de alvo, vida e ataque do
    inimigo maiores.
 3. **Given** o arquivo de dificuldade com a vida do inimigo comum do ato 1 trocada de 12 para
-   20, **When** uma run nova começa e o jogador entra numa batalha do ato 1, **Then** o
+   20, **When** o jogo é aberto de novo e o jogador entra numa batalha do ato 1, **Then** o
    inimigo tem 20 de vida, sem nenhuma mudança no código.
 4. **Given** o Arthur na casa do chefe da torre, **When** vence a luta, **Then** a run acaba
    com vitória e aparece a tela de fim de run com o resumo e a opção de começar de novo.
