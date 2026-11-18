@@ -98,8 +98,8 @@ e o baralho inicial; nada da run anterior fica.
 da história 1 e é pequena.
 
 **Independent Test**: perder uma luta de propósito no meio de uma run em que o baralho já
-ganhou cartas, conferir o resumo da derrota e conferir que a run nova tem mapa diferente,
-vida 40 e as 13 cartas do baralho inicial.
+ganhou cartas, conferir o resumo da derrota e conferir que a run nova tem semente nova (na
+prática, outro mapa), vida 40 e as 13 cartas do baralho inicial.
 
 **Acceptance Scenarios**:
 

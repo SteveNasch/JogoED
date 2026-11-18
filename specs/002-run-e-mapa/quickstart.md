@@ -78,7 +78,7 @@ A suíte precisa conter e passar, no mínimo:
 
 1. Numa luta, use Pular até a vida do Arthur zerar. **Esperado**: sem aviso de vitória, aparece
    "Fim da run" com o ato e o andar em que ele caiu e quantas lutas venceu.
-2. Clique em "Começar de novo". **Esperado**: o mapa do calabouço, diferente do anterior (compare
+2. Clique em "Começar de novo". **Esperado**: o mapa do calabouço gerado de novo, quase sempre diferente do anterior (compare
    a posição das casas de descanso e de recompensa), "Vida 40/40" e "Baralho: 13 cartas"
    (SC-006: um clique só).
 
