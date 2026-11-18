@@ -12,6 +12,11 @@ const TABELA := [
 	["numero_3", "", DadosCarta.Tipo.NUMERO, 3, 3, DadosCarta.Efeito.NENHUM, 0],
 	["numero_4", "", DadosCarta.Tipo.NUMERO, 4, 4, DadosCarta.Efeito.NENHUM, 0],
 	["numero_5", "", DadosCarta.Tipo.NUMERO, 5, 5, DadosCarta.Efeito.NENHUM, 0],
+	["numero_6", "", DadosCarta.Tipo.NUMERO, 6, 3, DadosCarta.Efeito.NENHUM, 0],
+	["numero_7", "", DadosCarta.Tipo.NUMERO, 7, 4, DadosCarta.Efeito.NENHUM, 0],
+	["numero_8", "", DadosCarta.Tipo.NUMERO, 8, 4, DadosCarta.Efeito.NENHUM, 0],
+	["numero_9", "", DadosCarta.Tipo.NUMERO, 9, 5, DadosCarta.Efeito.NENHUM, 0],
+	["numero_10", "", DadosCarta.Tipo.NUMERO, 10, 6, DadosCarta.Efeito.NENHUM, 0],
 	["soma", "", DadosCarta.Tipo.SOMA, 0, 1, DadosCarta.Efeito.NENHUM, 0],
 	["subtracao", "", DadosCarta.Tipo.SUBTRACAO, 0, 1, DadosCarta.Efeito.NENHUM, 0],
 	["multiplicacao", "", DadosCarta.Tipo.MULTIPLICACAO, 0, 3, DadosCarta.Efeito.NENHUM, 0],
@@ -24,6 +29,10 @@ const TABELA := [
 	["guarda", "Guarda", DadosCarta.Tipo.NUMERO, 6, 2, DadosCarta.Efeito.ESCUDO, 5],
 	["vital", "Vital", DadosCarta.Tipo.NUMERO, 7, 3, DadosCarta.Efeito.CURA, 2],
 ]
+
+# Cartas que entraram na 002, só para o conjunto de recompensas da run; não estão no baralho
+# da luta avulsa.
+const FORA_DA_LUTA_AVULSA := ["numero_6", "numero_7", "numero_8", "numero_9", "numero_10"]
 
 
 func _carregar_carta(arquivo: String) -> DadosCarta:
@@ -78,6 +87,8 @@ func test_baralho_da_luta_avulsa_tem_as_21_cartas_da_fr_002() -> void:
 		quantidades[arquivo] = quantidades.get(arquivo, 0) + 1
 	var esperadas := {}
 	for linha in TABELA:
+		if linha[0] in FORA_DA_LUTA_AVULSA:
+			continue
 		esperadas[linha[0]] = 2 if linha[0].begins_with("numero_") else 1
 	assert_eq_deep(quantidades, esperadas)
 
