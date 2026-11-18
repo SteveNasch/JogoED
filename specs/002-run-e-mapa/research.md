@@ -415,7 +415,7 @@ mistura de mãos são outros). Os testes contam avaliações, não tempo.
   1. **1.000 runs com escolhas automáticas**: em cada casa de luta, o teste cria a `Batalha` real
      da 001 com o que a `Run` entrega e confere, no Arthur e na pilha de compra dessa `Batalha`
      (`baralho.compra`, onde estão todas as cartas antes de `iniciar()`), a vida e as cartas
-     esperadas (SC-003). O resultado da luta é sorteado pelo teste (vitória com uma
+     esperadas (SC-003), e que a luta começa sem escudo e com a mão vazia (FR-005). O resultado da luta é sorteado pelo teste (vitória com uma
      vida entre 1 e a atual, ou derrota), sem jogar as rodadas. É a `Run` que está sendo testada;
      a luta já tem a própria simulação na 001.
   2. **20 runs com lutas jogadas de verdade** pelo jogador automático da 001 (extraído para
