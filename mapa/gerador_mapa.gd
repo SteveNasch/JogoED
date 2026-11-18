@@ -1,6 +1,7 @@
 class_name GeradorMapa
-## Gera o mapa de um ato a partir dos dados e de uma semente (research D4). Mesma semente e
-## mesmos dados, mesmo mapa. Todo sorteio usa o mesmo gerador, criado aqui.
+## Gera o mapa de um ato a partir dos dados e de uma semente (research D4): tamanho dos andares,
+## tipo das casas e ligações. Mesma semente e mesmos dados, mesmo mapa. Todo sorteio usa o
+## mesmo gerador, criado aqui.
 
 
 ## Pré-condição: dados.erros() vazio.
@@ -16,6 +17,9 @@ static func gerar(dados: DadosMapa, semente: int) -> MapaAto:
 			mapa.casas.append(Casa.new(Casa.Tipo.BATALHA, andar, indice))
 	_sortear_tipos(dados, mapa.casas.filter(func(casa: Casa) -> bool: return casa.andar > 1), rng)
 	mapa.casas.append(Casa.new(Casa.Tipo.CHEFE, mapa.total_de_andares, 0))
+	# Com uma casa só em cima (o chefe), a escada liga todas as casas de baixo a ela.
+	for andar in range(1, mapa.total_de_andares):
+		_ligar_em_escada(mapa.casas_do_andar(andar), mapa.casas_do_andar(andar + 1), rng)
 	return mapa
 
 
@@ -59,3 +63,28 @@ static func _ocupar(livres: Array[Casa], candidatas: Array[Casa], tipo: Casa.Tip
 	var casa: Casa = candidatas.pop_at(rng.randi_range(0, candidatas.size() - 1))
 	casa.tipo = tipo
 	livres.erase(casa)
+
+
+## Passo 3 (FR-009, FR-010): anda numa grade de baixo × cima, do canto (0, 0) ao canto oposto,
+## sorteando a cada passo entre avançar embaixo, em cima ou nos dois; cada ponto do caminho é uma
+## ligação. Como os índices nunca diminuem, as ligações não se cruzam, e como o caminho passa
+## por todas as linhas e colunas, toda casa liga para cima e recebe ligação de baixo.
+static func _ligar_em_escada(baixo: Array[Casa], cima: Array[Casa], rng: RandomNumberGenerator) -> void:
+	var i := 0
+	var j := 0
+	baixo[i].ligacoes.append(cima[j])
+	while i < baixo.size() - 1 or j < cima.size() - 1:
+		if i == baixo.size() - 1:
+			j += 1
+		elif j == cima.size() - 1:
+			i += 1
+		else:
+			match rng.randi_range(0, 2):
+				0:
+					i += 1
+				1:
+					j += 1
+				_:
+					i += 1
+					j += 1
+		baixo[i].ligacoes.append(cima[j])

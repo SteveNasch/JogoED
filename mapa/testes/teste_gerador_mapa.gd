@@ -78,17 +78,19 @@ func test_sementes_diferentes_dao_mapas_diferentes() -> void:
 	assert_gt(mapas.size(), 1)
 
 
-## Tipo, andar e índice de cada casa, na ordem da lista.
+## Andar, índice, tipo e ligações (pelo índice) de cada casa, na ordem da lista.
 func _descricao(mapa: MapaAto) -> Array:
 	var descricao: Array = [mapa.total_de_andares]
 	for casa in mapa.casas:
-		descricao.append([casa.andar, casa.indice, casa.tipo])
+		descricao.append([casa.andar, casa.indice, casa.tipo, casa.ligacoes.map(func(outra: Casa) -> int: return outra.indice)])
 	return descricao
 
 
 func _conferir_mapa(mapa: MapaAto, dados: DadosMapa, onde: String) -> void:
 	_conferir_andares(mapa, dados, onde)
 	_conferir_tipos(mapa, dados, onde)
+	_conferir_ligacoes(mapa, onde)
+	_conferir_alcance(mapa, onde)
 
 
 ## Andares no lugar, tamanhos entre o mínimo e o máximo, índices em ordem e a lista ordenada.
@@ -140,3 +142,64 @@ func _conferir_tipos(mapa: MapaAto, dados: DadosMapa, onde: String) -> void:
 	var ultimo_comum := mapa.casas_do_andar(dados.andares_comuns)
 	if not ultimo_comum.any(func(casa: Casa) -> bool: return casa.tipo == Casa.Tipo.DESCANSO):
 		_falhou("último andar comum sem descanso", onde)
+
+
+## Ligações só para o andar seguinte, sem repetição, em ordem de índice e sem cruzamento
+## (FR-010); o chefe não liga para ninguém.
+func _conferir_ligacoes(mapa: MapaAto, onde: String) -> void:
+	for casa in mapa.casas:
+		for posicao in casa.ligacoes.size():
+			var outra := casa.ligacoes[posicao]
+			if outra.andar != casa.andar + 1 or not outra in mapa.casas:
+				_falhou("ligação fora do andar seguinte", "%s, andar %d" % [onde, casa.andar])
+			if posicao > 0 and casa.ligacoes[posicao - 1].indice >= outra.indice:
+				_falhou("ligações repetidas ou fora de ordem", "%s, andar %d" % [onde, casa.andar])
+	if not mapa.casas_do_andar(mapa.total_de_andares)[0].ligacoes.is_empty():
+		_falhou("chefe com ligação", onde)
+	for andar in range(1, mapa.total_de_andares):
+		var pares: Array = []
+		for casa in mapa.casas_do_andar(andar):
+			for outra in casa.ligacoes:
+				pares.append([casa.indice, outra.indice])
+		for primeiro in pares:
+			for segundo in pares:
+				if primeiro[0] < segundo[0] and primeiro[1] > segundo[1]:
+					_falhou("ligações cruzadas", "%s, andar %d: %s e %s" % [onde, andar, primeiro, segundo])
+
+
+## Busca em largura do andar 1 para cima e do chefe para baixo: toda casa é alcançada nos dois
+## sentidos (FR-009). Contagem de caminhos do andar 1 ao chefe, andar a andar: pelo menos 2.
+func _conferir_alcance(mapa: MapaAto, onde: String) -> void:
+	var de_baixo := _alcancadas(mapa.casas_do_andar(1), func(casa: Casa) -> Array[Casa]: return casa.ligacoes)
+	if de_baixo.size() != mapa.casas.size():
+		_falhou("casa que o andar 1 não alcança", onde)
+	var chegam_em := {}
+	for casa in mapa.casas:
+		for outra in casa.ligacoes:
+			if not chegam_em.has(outra):
+				chegam_em[outra] = [] as Array[Casa]
+			chegam_em[outra].append(casa)
+	var chefe := mapa.casas_do_andar(mapa.total_de_andares)[0]
+	var de_cima := _alcancadas([chefe] as Array[Casa], func(casa: Casa) -> Array[Casa]: return chegam_em.get(casa, [] as Array[Casa]))
+	if de_cima.size() != mapa.casas.size():
+		_falhou("casa sem caminho até o chefe", onde)
+	var caminhos := {}
+	for casa in mapa.casas:
+		if casa.andar == 1:
+			caminhos[casa] = 1
+		for outra in casa.ligacoes:
+			caminhos[outra] = caminhos.get(outra, 0) + caminhos.get(casa, 0)
+	if caminhos.get(chefe, 0) < 2:
+		_falhou("menos de dois caminhos até o chefe", "%s: %d" % [onde, caminhos.get(chefe, 0)])
+
+
+func _alcancadas(inicio: Array[Casa], vizinhas: Callable) -> Dictionary:
+	var vistas := {}
+	var fila: Array[Casa] = inicio.duplicate()
+	while not fila.is_empty():
+		var casa: Casa = fila.pop_front()
+		if vistas.has(casa):
+			continue
+		vistas[casa] = true
+		fila.append_array(vizinhas.call(casa))
+	return vistas
