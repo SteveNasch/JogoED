@@ -93,8 +93,9 @@ automático da 001 pronto para ser usado pela simulação da run.
 **Purpose**: os dados de equilíbrio conferidos e o mapa gerado e testado, sem nenhuma cena.
 Tudo que a `Run` e as cenas usam.
 
-**⚠️ CRITICAL**: a `Run` (fase 3) espera esta fase inteira. O T020 só precisa do T005; o T021
-precisa também do T010.
+**⚠️ CRITICAL**: a `Run` (fase 3) espera os dados (T008) e o gerador completo (T010); o T011,
+só de testes, pode terminar em paralelo com ela. O T020 só precisa do T005; o T021 precisa
+também do T010.
 
 **Desvio pequeno da ordem do plano**: a `Casa` (passo 3) entra antes de `DadosAto` (passo 2)
 porque `DadosAto.inimigo()` recebe um `Casa.Tipo`.
@@ -155,8 +156,9 @@ principal.
 **Goal**: cada cena da run abre e funciona sozinha, recebendo dados por método e avisando por
 sinal ([contracts/telas-run.md](contracts/telas-run.md)).
 
-**Independent Test**: os testes de cena de cada área passando; cada cena pode ser aberta com F6
-depois de chamar o seu `mostrar()` num teste.
+**Independent Test**: os testes de cena de cada área passando. Cada teste instancia a cena
+sozinha e chama o `mostrar()` dela; aberta com F6, a cena aparece sem dados, porque ninguém
+chama o `mostrar()`.
 
 Os testes de cena seguem a 001 (research D12): instanciar a cena, pôr na árvore com
 `add_child_autofree()`, chamar o método de entrada, acionar os botões e conferir textos e
@@ -191,8 +193,9 @@ dependem, em paralelo com a fase 3 (frentes D e E do plano).
 **Goal**: `run/tela_run.tscn` junta a `Run` com as cenas, uma história por commit, e vira a
 cena principal do jogo.
 
-**Independent Test**: `run/testes/teste_tela_run.gd` passando e o jogo aberto com F5 mostrando
-o mapa (quickstart, cenários 2 a 7).
+**Independent Test**: `run/testes/teste_tela_run.gd` passando e, depois do T032, o jogo aberto
+com F5 mostrando o mapa (quickstart, cenários 2 a 7). Antes do T032 o F5 ainda abre a luta
+avulsa; a cena nova abre com F6 em `run/tela_run.tscn`.
 
 Todas as tarefas desta fase mexem em `run/tela_run.gd`, em sequência (frente C, depois que as
 frentes A, B, D e E estão no `main`). Nos testes, `dificuldade` é trocada, antes de pôr a cena
