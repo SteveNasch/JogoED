@@ -14,3 +14,10 @@ As regras do projeto estão na constituição: `.specify/memory/constitution.md`
 - Testes: `godot --headless --path . --import` e depois
   `godot --headless --path . -s addons/gut/gut_cmdln.gd` (detalhes no `quickstart.md`).
 - Assets: nunca criar; registrar o que falta em `docs/assets-pendentes.md`.
+
+## GodotPrompter
+
+- Antes de implementar qualquer sistema Godot (cena, UI, sinais, testes etc.), procurar a skill
+  `godot-prompter:*` correspondente e usá-la; vale também para subagentes. Índice:
+  `godot-prompter:using-godot-prompter`.
+- Antes de construir, dizer qual padrão foi escolhido, qual alternativa foi descartada e por quê.
