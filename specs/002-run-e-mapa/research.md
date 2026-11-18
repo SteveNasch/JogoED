@@ -202,8 +202,8 @@ máximo):
   uma vez" e devolve a mesma cópia a todos. Por isso a run nunca escreve nos dados: o baralho da
   run é uma cópia da lista (`Array.duplicate()`, que copia a lista mas compartilha as cartas,
   que são só leitura); as regras de cada luta são `regras_base.duplicate()` com a faixa do ato
-  trocada; o inimigo de cada casa é um `DadosInimigo.new()` montado com os valores da
-  profundidade.
+  trocada; o inimigo de cada casa é um `DadosInimigo.new()` montado com os valores do ato e do
+  andar da casa.
 - **"Mudar o arquivo vale a partir da run seguinte" (FR-027)**: a cena principal recebe o
   arquivo por `@export`, então ele é lido quando o jogo abre. Mudou o arquivo no editor, a
   próxima run jogada (rodando o jogo de novo) usa os valores novos, sem mexer no código
