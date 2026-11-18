@@ -25,8 +25,8 @@ Abordagem técnica (detalhes e fontes em [research.md](research.md)):
   vinda da run; tamanho dos andares, tipos e ligações "em escada", que nunca se cruzam e deixam
   toda casa alcançável. Testado com 1.000 sementes por ato (D3, D4).
 - **Um arquivo de dificuldade.** `dados/dificuldade.tres`, com os três atos, os inimigos e o
-  tamanho do mapa dentro dele como sub-recursos; conferido antes de cada run, com a frase do
-  valor errado na tela (D5, D6, D7).
+  tamanho do mapa dentro dele como sub-recursos; lido e conferido uma vez, ao abrir o jogo,
+  com a frase do valor errado na tela (D5, D6, D7).
 - **Cena principal como raiz de composição.** Ela abre e fecha a cena de cada casa (luta,
   descanso, recompensa) e as telas de vitória e de fim de run, todas pequenas e avisando por
   sinal (D8, D10).
