@@ -236,6 +236,11 @@ máximo):
   rodando, e não só nos testes. Uma função por classe mantém cada regra perto do campo que ela
   confere (funções pequenas, princípio I) e é testável sem tela. `push_error()` "envia a
   mensagem de erro ao depurador e ao terminal", útil para quem roda pelo editor.
+- **Mapa que cabe na tela** (decisão do Estêvão em 18/11, no analyze): `DadosMapa` recusa mais
+  de 7 casas num andar e mais de 8 andares comuns, o que a tela do mapa comporta (D9 e
+  [contracts/telas-run.md](contracts/telas-run.md)). Os dois máximos são constantes de
+  `DadosMapa`, e o teste da `tela_mapa` confere com `posicao_da_casa()` que eles cabem e que um a
+  mais não cabe; assim a regra e a tela não se desencontram sem um teste falhar.
 - **Diferença para a 001**: na 001 as regras dos arquivos eram só convenções conferidas nos
   testes (data-model da 001). Na 002 a spec exige a conferência em jogo, porque quem equilibra
   muda o arquivo à mão.

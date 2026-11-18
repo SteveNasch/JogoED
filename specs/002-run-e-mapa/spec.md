@@ -51,6 +51,9 @@ em si é a da 001 (`specs/001-nucleo-batalha/spec.md`) e não muda aqui.
 - Q (no analyze): Mudar o arquivo de dificuldade vale já no "Começar de novo"? → A: não; o
   arquivo é lido uma vez, então a mudança vale na próxima vez que o jogo abrir (FR-027,
   SC-005). Ler de novo a cada run seria código que nada pede.
+- Q (no analyze): E se os dados pedirem um mapa que não cabe na tela (casas saindo pelas
+  pontas ou andares sobrepostos)? → A: é erro de dados (FR-028): no máximo 7 casas num andar e
+  8 andares comuns, o que cabe na tela do mapa de 640×360.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -200,6 +203,8 @@ vencer o chefe do ato 3 e conferir o fim da run com vitória.
 - Os dados pedem mais casas de um tipo do que o ato comporta (por exemplo, 10 descansos num
   ato de 12 casas, com o primeiro andar só de batalhas): é um erro de dados, tratado como no
   cenário 5 da história 4.
+- Os dados pedem um mapa que não cabe na tela (mais de 7 casas num andar ou mais de 8 andares
+  comuns): também é erro de dados, tratado como no cenário 5 da história 4.
 - O jogador clica no mapa enquanto uma casa está aberta (luta, descanso, recompensa): o mapa
   não reage até o jogador voltar a ele.
 - O jogador fecha o jogo no meio da run: a run se perde; ao abrir de novo começa uma run nova.
@@ -311,7 +316,8 @@ vencer o chefe do ato 3 e conferir o fim da run com vitória.
 - **FR-028**: Ao abrir, antes da primeira run, o jogo MUST conferir o arquivo de dificuldade e, se houver
   valor impossível (faixa de alvo invertida, vida ou ataque menor que 1, mapa sem andares,
   mais casas de um tipo do que o ato comporta, ato sem casa de descanso, elite sem andar
-  acima do 2 para ficar, baralho inicial sem carta de número), MUST NOT
+  acima do 2 para ficar, mapa que não cabe na tela, com mais de 7 casas num andar ou mais de 8
+  andares comuns, baralho inicial sem carta de número), MUST NOT
   começar a run e MUST mostrar qual valor está errado.
 - **FR-029**: A luta MUST continuar garantindo mão mínima e alvo alcançável (001, FR-006 e
   FR-007) com qualquer baralho da run e qualquer faixa de alvo dos dados.

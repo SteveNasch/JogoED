@@ -57,8 +57,12 @@ de cada `DadosAto`.
 Função: `casas_acima_do_primeiro() -> int` = `batalhas + elites + descansos + recompensas` (8
 no padrão).
 
+Constantes: `MAXIMO_CASAS_POR_ANDAR = 7` e `MAXIMO_ANDARES_COMUNS = 8`, o que cabe na tela do
+mapa ([contracts/telas-run.md](contracts/telas-run.md)). Não são equilíbrio: vêm da disposição
+da tela, e o teste da `tela_mapa` confere que esses máximos cabem e que um a mais não cabe.
+
 `erros()`, nesta ordem (as regras 7 a 9 só são conferidas se as de 1 a 6 passaram, porque
-dependem delas):
+dependem delas; as 10 e 11 são sempre conferidas):
 
 1. `andares_comuns` menor que 2: o andar 1 só tem batalhas e o último andar comum precisa de
    um descanso, então são pelo menos dois andares ("mapa sem andares" da FR-028).
@@ -76,6 +80,11 @@ dependem delas):
    máximo de casas: `T − min(casas_maximas_por_andar, T − (andares_comuns − 2) ×
    casas_minimas_por_andar) − 1`, com `T = casas_acima_do_primeiro()` (o −1 é o descanso
    reservado no último andar comum). No padrão: 8 − 3 − 1 = 4 vagas para 1 elite.
+10. `casas_maximas_por_andar` maior que `MAXIMO_CASAS_POR_ANDAR`: as casas das pontas sairiam
+    da tela ("mapa que não cabe na tela" da FR-028). O andar 1 fica coberto junto, porque a
+    regra 4 já o limita a `casas_maximas_por_andar`.
+11. `andares_comuns` maior que `MAXIMO_ANDARES_COMUNS`: os andares ficariam a menos de 32 px um
+    do outro e as casas se sobreporiam ("mapa que não cabe na tela").
 
 ### DadosAto (`run/dados_ato.gd`)
 

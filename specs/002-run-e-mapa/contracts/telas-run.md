@@ -47,8 +47,11 @@ Disposição (640×360), com os 5 andares do padrão:
 | marcador do Arthur antes do primeiro andar | `x = 320`, `y = 344` |
 | marcador do Arthur numa casa | canto de cima e da esquerda da casa |
 
-Os valores são arredondados para o pixel inteiro. Com mais de 6 casas num andar a fileira passa
-de 600 px; os dados padrão têm no máximo 3.
+Os valores são arredondados para o pixel inteiro. O `DadosMapa.erros()` só aceita o que cabe
+nesta disposição (FR-028): até 7 casas num andar (com 7, as pontas vão de `x = 16` a `x = 624`;
+com 8, saem da tela) e até 8 andares comuns (com 8, 33 px entre andares, mais que a casa de
+32 px; com 9, 29 px, e as casas se sobrepõem). Os dados padrão têm no máximo 3 casas e 4
+andares comuns.
 
 Comportamento:
 
