@@ -163,3 +163,13 @@ cenários 2 a 7 e anota o resultado no fim deste arquivo (tarefa T035).
   4, 7 a 22 e o ícone, 23); nenhum arquivo de imagem, som ou fonte existe fora de
   `addons/gut/`; nenhum `.gitkeep` sobrou nas pastas `testes/`.
 - **Falta (T035)**: os cenários 2 a 7, jogados por uma pessoa da equipe.
+
+### 2026-11-18: cenários 2 a 7, jogados pelo Estêvão (T035)
+
+- **Cenário 2 (vencer uma luta)**: passou.
+- **Cenário 3 (errar e perder)**: passou.
+- **Cenário 4 (desfazer, limpar e Pular)**: passou.
+- **Cenário 5 (cartas especiais)**: passou.
+- **Cenário 6 (pixel art e leitura)**: passou.
+- **Cenário 7 (mudar o equilíbrio sem mexer em código)**: passou.
+- Nenhuma falha; nenhuma tarefa de correção nova.
