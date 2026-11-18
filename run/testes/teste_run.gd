@@ -199,3 +199,61 @@ func test_sementes_diferentes_dao_mapas_diferentes() -> void:
 	for i in 20:
 		mapas[_descricao_dos_mapas(Run.new(DIFICULDADE, hash(i)))] = true
 	assert_gt(mapas.size(), 1)
+
+
+# --- História 1, cenário 4, e a subida pelo mapa ---
+
+## Invariantes do data-model: vida entre 1 e a máxima, e as casas visitadas do ato formam um
+## caminho, uma por andar, do andar 1 até a casa atual, cada uma ligada à seguinte.
+func _conferir_invariantes(onde: String) -> void:
+	assert_between(run.vida_arthur, 1, run.vida_maxima, "%s: vida" % onde)
+	var caminho := run.mapa().casas.filter(func(casa: Casa) -> bool: return casa.visitada)
+	assert_eq(caminho.size(), run.andar_alcancado(), "%s: uma casa visitada por andar" % onde)
+	for posicao in caminho.size():
+		assert_eq(caminho[posicao].andar, posicao + 1, "%s: andar da casa visitada" % onde)
+		if posicao > 0:
+			assert_has(caminho[posicao - 1].ligacoes, caminho[posicao], "%s: casas visitadas ligadas" % onde)
+	if not caminho.is_empty():
+		assert_eq(caminho.back(), run.casa_atual, "%s: o caminho termina na casa atual" % onde)
+
+
+func test_vitoria_numa_batalha_volta_ao_mapa_com_a_vida_que_sobrou() -> void:
+	var casa := run.mapa().casas_do_andar(1)[1]
+	run.escolher_casa(casa)
+	run.terminar_luta(ResultadoLuta.new(true, 24, 0, 5))
+	assert_eq(run.etapa, Run.Etapa.MAPA)
+	assert_eq(run.casa_atual, casa)
+	assert_true(casa.visitada)
+	assert_eq(run.vida_arthur, 24)
+	assert_eq(run.lutas_vencidas, 1)
+	assert_eq(run.oferta, [] as Array[DadosCarta])
+	assert_eq(run.casas_disponiveis(), casa.ligacoes)
+
+
+func test_terminar_luta_fora_da_luta_nao_faz_nada() -> void:
+	var antes := _estado()
+	run.terminar_luta(ResultadoLuta.new(true, 10, 0, 5))
+	assert_eq(_estado(), antes)
+	assert_eq(run.lutas_vencidas, 0)
+
+
+func test_subida_do_andar_1_ao_4_por_batalhas_mantem_o_caminho() -> void:
+	for i in 20:
+		run = Run.new(DIFICULDADE, hash(i))
+		var vida := run.vida_maxima
+		var vencidas := 0
+		for andar in range(1, 5):
+			var disponiveis := run.casas_disponiveis()
+			var batalhas := disponiveis.filter(func(casa: Casa) -> bool: return casa.tipo == Casa.Tipo.BATALHA)
+			if batalhas.is_empty():
+				# Sem batalha ligada à atual: a run é posicionada numa casa ligada a ela.
+				_posicionar(disponiveis[0])
+			else:
+				assert_true(run.escolher_casa(batalhas[0]), "semente hash(%d), andar %d" % [i, andar])
+				vida -= 4
+				run.terminar_luta(ResultadoLuta.new(true, vida, 0, 3))
+				vencidas += 1
+			_conferir_invariantes("semente hash(%d), andar %d" % [i, andar])
+		assert_eq(run.andar_alcancado(), 4)
+		assert_eq(run.lutas_vencidas, vencidas)
+		assert_eq(run.vida_arthur, vida)

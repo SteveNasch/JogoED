@@ -101,3 +101,12 @@ func andar_alcancado() -> int:
 	if casa_atual == null:
 		return 0
 	return casa_atual.andar
+
+
+## Leva o resultado da luta para a run. Só vale nas etapas LUTA e CHEFE.
+func terminar_luta(resultado: ResultadoLuta) -> void:
+	if etapa not in [Etapa.LUTA, Etapa.CHEFE] or not resultado.venceu:
+		return
+	vida_arthur = resultado.vida_arthur
+	lutas_vencidas += 1
+	etapa = Etapa.MAPA
