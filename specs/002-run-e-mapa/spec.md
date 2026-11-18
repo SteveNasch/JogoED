@@ -37,6 +37,9 @@ em si é a da 001 (`specs/001-nucleo-batalha/spec.md`) e não muda aqui.
 
 - Q: O jogo deve guardar alguma coisa entre uma run e outra? → A: não; nada é guardado (nem a
   run em andamento nem o melhor resultado), e fechar o jogo perde a run.
+- Q: Nos andares 2 a 4, onde podem cair a elite, os descansos e as recompensas? → A: sorteio
+  com duas regras: a elite nunca fica no andar 2, e o último andar comum (o 4, no padrão) tem
+  pelo menos um descanso.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -231,7 +234,9 @@ vencer o chefe do ato 3 e conferir o fim da run com vitória.
   chefe. Os dados definem quantas casas de cada tipo (batalha, elite, descanso e recompensa)
   cada ato tem (padrão por ato: 3 batalhas no primeiro andar e, nos andares 2 a 4, 8 casas: 3
   batalhas, 1 elite, 2 descansos e 2 recompensas). O primeiro andar de cada ato MUST ter só
-  casas de batalha, e o andar do topo, só o chefe.
+  casas de batalha, e o andar do topo, só o chefe. Nos outros andares comuns os tipos são
+  sorteados, com duas regras: a casa de elite MUST NOT ficar no andar 2, e o último andar
+  comum (o 4, no padrão) MUST ter pelo menos uma casa de descanso.
 - **FR-012**: O mapa MUST mostrar o ato inteiro de uma vez: todas as casas com o seu tipo,
   as ligações, a casa em que o Arthur está e o caminho já percorrido. As casas que o jogador
   pode escolher naquele momento MUST ficar destacadas.
@@ -294,7 +299,8 @@ vencer o chefe do ato 3 e conferir o fim da run com vitória.
   seguinte.
 - **FR-028**: Ao começar uma run, o jogo MUST conferir o arquivo de dificuldade e, se houver
   valor impossível (faixa de alvo invertida, vida ou ataque menor que 1, mapa sem andares,
-  mais casas de um tipo do que o ato comporta, baralho inicial sem carta de número), MUST NOT
+  mais casas de um tipo do que o ato comporta, ato sem casa de descanso, elite sem andar
+  acima do 2 para ficar, baralho inicial sem carta de número), MUST NOT
   começar a run e MUST mostrar qual valor está errado.
 - **FR-029**: A luta MUST continuar garantindo mão mínima e alvo alcançável (001, FR-006 e
   FR-007) com qualquer baralho da run e qualquer faixa de alvo dos dados.
@@ -340,7 +346,8 @@ Conjunto de recompensas padrão: números 6 a 10, ×, ÷, x2, /2, ^2, Chama, Foc
 - **SC-001**: Em 1.000 mapas gerados com sementes diferentes para cada ato, 100% cumprem as
   regras de FR-008 a FR-011: toda casa alcançável, caminho de toda casa até o chefe, pelo
   menos dois caminhos diferentes, ligações sem cruzamento, quantidades de cada tipo iguais às
-  dos dados, primeiro andar só de batalhas e chefe sozinho no topo.
+  dos dados, primeiro andar só de batalhas, nenhuma elite no andar 2, pelo menos um descanso
+  no último andar comum e chefe sozinho no topo.
 - **SC-002**: A mesma semente produz o mesmo mapa, os mesmos inimigos e as mesmas ofertas de
   recompensa em 100% das repetições.
 - **SC-003**: Em 1.000 runs simuladas com escolhas automáticas, em 100% das lutas a vida
