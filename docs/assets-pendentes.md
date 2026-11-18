@@ -96,7 +96,7 @@ e a fonte (asset 14) da 001.
 | 24 | Fundo do mapa do calabouço | 640×360 | 1 | tela do mapa no ato 1 | cor de fundo padrão do Godot (sem nó) | pendente | |
 | 25 | Fundo do mapa dos salões | 640×360 | 1 | tela do mapa no ato 2 | cor de fundo padrão do Godot (sem nó) | pendente | |
 | 26 | Fundo do mapa da torre | 640×360 | 1 | tela do mapa no ato 3 | cor de fundo padrão do Godot (sem nó) | pendente | |
-| 27 | Ícones das casas: batalha, elite, descanso, recompensa, chefe | 32×32 cada (5 imagens) | 1 | cada casa do mapa | `ColorRect` 32×32 com a cor do tipo e uma letra (B, E, D, R, C) num `Label` (`mapa/casa_mapa.tscn`) | pendente | |
+| 27 | Ícones das casas: batalha, elite, descanso, recompensa, chefe | 32×32 cada (5 imagens) | 1 | cada casa do mapa | `ColorRect` 32×32 com a cor do tipo e uma letra (B, E, D, R, C) num `Label`; a casa disponível ganha uma moldura clara de 1 px (`ReferenceRect`) e as outras ficam escurecidas (`mapa/casa_mapa.tscn`) | pendente | |
 | 28 | Marcador do Arthur no mapa | 16×16 | 1 a 2 | casa em que o Arthur está | `ColorRect` 8×8 azul, `Color(0.25, 0.4, 0.8)` (`mapa/tela_mapa.tscn`) | pendente | |
 | 29 | Trilha entre as casas (opcional) | 4×4, para repetir ao longo da linha | 1 | ligações do mapa | linhas de 2 px desenhadas pelo código: cinza, branca no caminho percorrido, amarela até as casas disponíveis (`mapa/tela_mapa.gd`) | pendente | |
 | 30 | Inimigos comuns: calabouço, salões, torre | 64×64 cada (3) | 2 a 4 | painel do inimigo nas batalhas de cada ato | o `ColorRect` vermelho do painel do inimigo da 001 (asset 4), com o nome do inimigo do ato | pendente | |
