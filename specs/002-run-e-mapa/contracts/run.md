@@ -43,8 +43,9 @@ func terminar_luta(resultado: ResultadoLuta) -> void
 func sair_do_descanso() -> void
 func escolher_recompensa(carta: DadosCarta) -> void   # null = não pegar nenhuma
 func andar_alcancado() -> int
-func terminou() -> bool                           # VITORIA ou DERROTA
 ```
+
+O fim da run se lê na `etapa` (`VITORIA` ou `DERROTA`); não há função `terminou()`.
 
 Regras de uso:
 

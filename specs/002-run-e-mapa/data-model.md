@@ -210,10 +210,12 @@ dentro de listas tipadas (research D5).
 Funções:
 
 - `casas_do_andar(andar: int) -> Array[Casa]`, em ordem de `indice`.
-- `chefe() -> Casa`: a casa única do último andar.
 - `disponiveis(atual: Casa) -> Array[Casa]`: com `atual` nulo (antes do primeiro andar), as
   casas do andar 1; senão, `atual.ligacoes` (FR-013). É o único lugar com essa regra: a `Run` e
   a tela do mapa usam esta função.
+
+Não há função para achar o chefe: o jogo não precisa dela (o gerador cria o chefe, e a `Run`
+reconhece a casa pelo `tipo`). Os testes o acham com `casas_do_andar(total_de_andares)`.
 
 ### GeradorMapa (`mapa/gerador_mapa.gd`)
 
@@ -274,7 +276,7 @@ O que cada transição faz:
 | `escolher_casa(casa)` | `MAPA`, com `casa` em `casas_disponiveis()` | `casa_atual = casa`, `casa.visitada = true`; luta ou chefe: `semente_da_luta` sorteada; descanso: cura `floori(vida_maxima × cura_do_descanso / 100.0)`, sem passar da máxima, e guarda em `cura` quanto curou de fato; recompensa: sorteia a `oferta` |
 | `terminar_luta(resultado)` | `LUTA` ou `CHEFE` | derrota: `vida_arthur = 0`, etapa `DERROTA`; vitória: `vida_arthur = resultado.vida_arthur`, `lutas_vencidas += 1` e a etapa da tabela acima (elite e chefe de ato que não é o último sorteiam a `oferta`) |
 | `sair_do_descanso()` | `DESCANSO` | etapa `MAPA` |
-| `escolher_recompensa(carta)` | `RECOMPENSA`, com `carta` nula ou da `oferta` | carta não nula vai para o fim de `baralho`; `oferta` esvazia; se a casa atual é o chefe, `ato += 1` e `casa_atual = null` (FR-023); etapa `MAPA` |
+| `escolher_recompensa(carta)` | `RECOMPENSA`, com `carta` nula ou da `oferta` | carta não nula vai para o fim de `baralho`; `oferta` esvazia; se a casa atual é o chefe (`casa_atual.tipo == CHEFE`), `ato += 1` e `casa_atual = null` (FR-023); etapa `MAPA` |
 
 Fora da etapa certa, ou com casa ou carta que não vale, o método não faz nada (e
 `escolher_casa` devolve `false`). Em `VITORIA` e `DERROTA` nenhum método muda nada; a run nova é
@@ -286,7 +288,9 @@ cartas. Com menos cartas no conjunto, vêm todas; com o conjunto vazio, a oferta
 
 Outras funções: `mapa()`, `dados_do_ato()`, `ultimo_ato() -> bool`, `casas_disponiveis()`
 (vazia fora do `MAPA`), `inimigo_da_luta()` e `regras_da_luta()` (da casa atual, pelo
-`DadosAto`), `andar_alcancado() -> int` (andar da casa atual, ou 0) e `terminou() -> bool`.
+`DadosAto`) e `andar_alcancado() -> int` (andar da casa atual, ou 0). O fim da run se lê na
+`etapa` (`VITORIA` ou `DERROTA`), que é o que a cena principal já consulta para abrir cada tela;
+uma função `terminou()` só seria usada pelos testes.
 
 Invariantes (viram testes):
 
