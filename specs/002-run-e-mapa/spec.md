@@ -40,6 +40,11 @@ em si é a da 001 (`specs/001-nucleo-batalha/spec.md`) e não muda aqui.
 - Q: Nos andares 2 a 4, onde podem cair a elite, os descansos e as recompensas? → A: sorteio
   com duas regras: a elite nunca fica no andar 2, e o último andar comum (o 4, no padrão) tem
   pelo menos um descanso.
+- Q (no plan): Com o baralho inicial, a mão do começo de uma luta chega no máximo a 10, abaixo
+  da faixa padrão do ato 3 (12 a 24). Isso precisa mudar? → A: não; é esperado. São as cartas
+  ganhas durante a run que tornam as faixas maiores alcançáveis; até lá, o alvo é o valor
+  possível mais próximo da faixa (regra da 001). Os valores padrão ficam (medição no research
+  da 002, D7).
 
 ## User Scenarios & Testing *(mandatory)*
 
