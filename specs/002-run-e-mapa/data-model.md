@@ -194,7 +194,8 @@ andares de todos os atos:
 | `ligacoes` | `Array[Casa]` | casas do andar seguinte ligadas a esta, em ordem de `indice` (vazio no chefe) |
 | `visitada` | `bool` | o Arthur já passou por ela nesta run |
 
-A profundidade (FR-025) não fica na casa: depende do ato e é calculada pela `Run`.
+A profundidade (FR-025) não é guardada nem calculada: é a ordem (ato, andar), e os dados a
+seguem (um `DadosAto` por ato e `DadosAto.inimigo(tipo, andar)` dentro dele).
 
 ### MapaAto (`mapa/mapa_ato.gd`)
 
@@ -285,8 +286,7 @@ cartas. Com menos cartas no conjunto, vêm todas; com o conjunto vazio, a oferta
 
 Outras funções: `mapa()`, `dados_do_ato()`, `ultimo_ato() -> bool`, `casas_disponiveis()`
 (vazia fora do `MAPA`), `inimigo_da_luta()` e `regras_da_luta()` (da casa atual, pelo
-`DadosAto`), `profundidade(casa) -> int` (research D7), `andar_alcancado() -> int` (andar da
-casa atual, ou 0) e `terminou() -> bool`.
+`DadosAto`), `andar_alcancado() -> int` (andar da casa atual, ou 0) e `terminou() -> bool`.
 
 Invariantes (viram testes):
 
@@ -304,7 +304,7 @@ Invariantes (viram testes):
 | Run | `Run` |
 | Ato | `DadosAto` (dados) + `Run.ato` e `Run.mapas` (em jogo) |
 | Mapa do ato | `MapaAto` (gerado por `GeradorMapa` a partir de `DadosMapa`) |
-| Casa | `Casa`; a profundidade é `Run.profundidade(casa)` |
+| Casa | `Casa`; a profundidade é a ordem (ato, `casa.andar`) |
 | Inimigo da casa | `DadosInimigo` novo, criado por `DadosAto.inimigo()` |
 | Dados de dificuldade | `DadosDificuldade` em `dados/dificuldade.tres` |
 | Oferta de recompensa | `Run.oferta` + a escolha em `Run.escolher_recompensa()` |

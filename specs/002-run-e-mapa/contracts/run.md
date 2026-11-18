@@ -42,7 +42,6 @@ func regras_da_luta() -> RegrasBatalha            # regras_base com a faixa do a
 func terminar_luta(resultado: ResultadoLuta) -> void
 func sair_do_descanso() -> void
 func escolher_recompensa(carta: DadosCarta) -> void   # null = não pegar nenhuma
-func profundidade(casa: Casa) -> int
 func andar_alcancado() -> int
 func terminou() -> bool                           # VITORIA ou DERROTA
 ```

@@ -250,7 +250,8 @@ máximo):
 
 - **Profundidade** (FR-025) de uma casa do andar `a` do ato `n`: a soma dos andares dos atos
   anteriores (cada ato tem `andares_comuns + 1`) mais `a`. Com os dados padrão vai de 1 (andar
-  1 do calabouço) a 15 (chefe da torre).
+  1 do calabouço) a 15 (chefe da torre). Não vira função no código: os dados seguem ato e
+  andar.
 - **Inimigo comum e elite** do andar `a`: vida = vida do `DadosInimigo` do ato +
   `vida_extra_por_andar × (a − 1)`; ataque = ataque do ato. **Chefe**: os valores do ato, sem
   acréscimo (ele está sempre no topo).
