@@ -1,0 +1,58 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://run/tela_run.gd" id="1_tela_run"]
+[ext_resource type="Resource" path="res://dados/dificuldade.tres" id="2_dificuldade"]
+[ext_resource type="PackedScene" path="res://mapa/tela_mapa.tscn" id="3_mapa"]
+
+[node name="TelaRun" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tela_run")
+dificuldade = ExtResource("2_dificuldade")
+
+[node name="Mapa" parent="." instance=ExtResource("3_mapa")]
+unique_name_in_owner = true
+layout_mode = 1
+
+[node name="Barra" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 8.0
+offset_right = -8.0
+offset_bottom = 24.0
+grow_horizontal = 2
+theme_override_constants/separation = 16
+
+[node name="Ato" type="Label" parent="Barra"]
+unique_name_in_owner = true
+layout_mode = 2
+vertical_alignment = 1
+
+[node name="Vida" type="Label" parent="Barra"]
+unique_name_in_owner = true
+layout_mode = 2
+vertical_alignment = 1
+
+[node name="Baralho" type="Label" parent="Barra"]
+unique_name_in_owner = true
+layout_mode = 2
+vertical_alignment = 1
+
+[node name="ErroDados" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
