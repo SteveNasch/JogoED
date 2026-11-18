@@ -305,8 +305,9 @@ Se o Claude implementar sozinho em 20/11 (roteiro do projeto), as tarefas seguem
 1. Fases 1 e 2.
 2. Da fase 3, T012 a T017 (a história 1 precisa da recompensa e do chefe para passar de ato,
    porque o chefe abre a recompensa antes do ato seguinte); T018 e T019 podem esperar.
-3. Da fase 4, T020 a T024 e T026; T025 (descanso) pode esperar.
-4. Da fase 5, T027, T028, T030 e T032; T029 e T031 podem esperar.
+3. Da fase 4, T020 a T026, todas: sem a tela de descanso (T025) o jogo trava ao entrar num
+   descanso, e todo ato tem dois (um deles no último andar comum).
+4. Da fase 5, T027 a T032 (a T032 depende de todas as outras da fase); a T033 pode esperar.
 5. **Parar e validar**: quickstart, cenários 2 e 3. Já é uma run jogável para mostrar, com
    derrota e recomeço.
 
