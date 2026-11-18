@@ -130,3 +130,76 @@ func test_maximo_de_casas_por_andar_cabe_na_tela_e_um_a_mais_nao() -> void:
 func test_maximo_de_andares_comuns_cabe_na_tela_e_um_a_mais_nao() -> void:
 	assert_true(_andares_cabem(DadosMapa.MAXIMO_ANDARES_COMUNS))
 	assert_false(_andares_cabem(DadosMapa.MAXIMO_ANDARES_COMUNS + 1))
+
+
+# --- Ligações e marcador (T022) ---
+
+## Mapa montado à mão: 3 batalhas, descanso e recompensa no andar 2, chefe no andar 3. O Arthur
+## passou pela batalha do meio e está no descanso.
+##
+##        chefe
+##       /     \
+##   descanso  recompensa
+##    /   \     /   \
+##   b0    b1       b2
+func _mapa_percorrido() -> MapaAto:
+	var mapa := MapaAto.new()
+	mapa.total_de_andares = 3
+	for indice in 3:
+		mapa.casas.append(Casa.new(Casa.Tipo.BATALHA, 1, indice))
+	mapa.casas.append(Casa.new(Casa.Tipo.DESCANSO, 2, 0))
+	mapa.casas.append(Casa.new(Casa.Tipo.RECOMPENSA, 2, 1))
+	mapa.casas.append(Casa.new(Casa.Tipo.CHEFE, 3, 0))
+	var c := mapa.casas
+	c[0].ligacoes.assign([c[3]])
+	c[1].ligacoes.assign([c[3], c[4]])
+	c[2].ligacoes.assign([c[4]])
+	c[3].ligacoes.assign([c[5]])
+	c[4].ligacoes.assign([c[5]])
+	c[1].visitada = true
+	c[3].visitada = true
+	return mapa
+
+
+func test_cor_de_cada_tipo_de_ligacao() -> void:
+	var mapa := _mapa_percorrido()
+	var c := mapa.casas
+	var atual := c[3]
+	assert_eq(TelaMapa.cor_da_ligacao(c[1], c[3], atual), Color(0.95, 0.95, 0.95), "percorrida")
+	assert_eq(TelaMapa.cor_da_ligacao(c[3], c[5], atual), Color(0.95, 0.8, 0.3), "da atual para uma disponível")
+	assert_eq(TelaMapa.cor_da_ligacao(c[0], c[3], atual), Color(0.45, 0.45, 0.45), "de casa não visitada")
+	assert_eq(TelaMapa.cor_da_ligacao(c[1], c[4], atual), Color(0.45, 0.45, 0.45), "para casa não visitada")
+	assert_eq(TelaMapa.cor_da_ligacao(c[4], c[5], atual), Color(0.45, 0.45, 0.45), "de outra casa do andar")
+
+
+func test_antes_do_andar_1_todas_as_ligacoes_sao_comuns() -> void:
+	var mapa := _mapa(7)
+	for casa in mapa.casas:
+		for outra in casa.ligacoes:
+			assert_eq(TelaMapa.cor_da_ligacao(casa, outra, null), Color(0.45, 0.45, 0.45))
+
+
+func test_marcador_antes_do_andar_1_fica_centrado_em_320_344() -> void:
+	tela.mostrar(_mapa(7), null)
+	var marcador := tela.get_node("Marcador") as ColorRect
+	assert_eq(marcador.position + marcador.size / 2, Vector2(320, 344))
+
+
+func test_marcador_fica_no_canto_de_cima_e_da_esquerda_da_casa_atual() -> void:
+	var mapa := _mapa_percorrido()
+	var atual := mapa.casas[3]
+	tela.mostrar(mapa, atual)
+	var marcador := tela.get_node("Marcador") as ColorRect
+	var no_da_casa := _nos_das_casas()[3] as Control
+	assert_eq(marcador.position, no_da_casa.position)
+
+
+func test_marcador_e_o_placeholder_do_asset_28() -> void:
+	var marcador := tela.get_node("Marcador") as ColorRect
+	assert_eq(marcador.size, Vector2(8, 8))
+	assert_eq(marcador.color, Color(0.25, 0.4, 0.8))
+	assert_eq(marcador.mouse_filter, Control.MOUSE_FILTER_IGNORE)
+
+
+func test_marcador_fica_por_cima_das_casas() -> void:
+	assert_gt(tela.get_node("Marcador").get_index(), tela.get_node("Casas").get_index())
