@@ -244,8 +244,9 @@ em commits pequenos e separados.
 
 ```mermaid
 flowchart LR
-    A[A. Dados] --> C[C. Run]
-    B[B. Gerador do mapa] --> C
+    B[B. Gerador do mapa] --> A[A. Dados]
+    A --> C[C. Run]
+    B --> C
     B --> D[D. Mapa na tela]
     C --> P[Cena principal]
     D --> P
