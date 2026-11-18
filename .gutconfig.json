@@ -4,7 +4,11 @@
 		"res://contas/testes",
 		"res://combatentes/testes",
 		"res://batalha/testes",
-		"res://luta_avulsa/testes"
+		"res://luta_avulsa/testes",
+		"res://mapa/testes",
+		"res://run/testes",
+		"res://descanso/testes",
+		"res://recompensa/testes"
 	],
 	"include_subdirs": true,
 	"prefix": "teste_",
