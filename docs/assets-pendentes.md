@@ -80,3 +80,42 @@ Clima pedido na visão do jogo: aventura séria, no estilo de Slay the Spire.
 | Sons e música | `batalha/sons/` |
 
 As pastas são criadas quando o primeiro arquivo chegar.
+
+## Funcionalidade 002: run e mapa
+
+Itens pedidos no plano da 002 (`specs/002-run-e-mapa/research.md`, D13). As cenas ainda não
+existem: a coluna "Placeholder atual" diz o que a implementação vai pôr no lugar, e a tarefa que
+criar cada cena confere e ajusta esta coluna. As telas novas (barra da run, descanso,
+recompensa, aviso de vitória, fim de run) usam também a moldura de painel e de botão (asset 13)
+e a fonte (asset 14) da 001.
+
+### Imagens
+
+| # | Asset | Tamanho (px) | Quadros | Onde é usado | Placeholder atual | Situação | Origem e licença |
+|---|---|---|---|---|---|---|---|
+| 24 | Fundo do mapa do calabouço | 640×360 | 1 | tela do mapa no ato 1 | cor de fundo padrão do Godot (sem nó) | pendente | |
+| 25 | Fundo do mapa dos salões | 640×360 | 1 | tela do mapa no ato 2 | cor de fundo padrão do Godot (sem nó) | pendente | |
+| 26 | Fundo do mapa da torre | 640×360 | 1 | tela do mapa no ato 3 | cor de fundo padrão do Godot (sem nó) | pendente | |
+| 27 | Ícones das casas: batalha, elite, descanso, recompensa, chefe | 32×32 cada (5 imagens) | 1 | cada casa do mapa | `ColorRect` 32×32 com a cor do tipo e uma letra (B, E, D, R, C) num `Label` (`mapa/casa_mapa.tscn`) | pendente | |
+| 28 | Marcador do Arthur no mapa | 16×16 | 1 a 2 | casa em que o Arthur está | `ColorRect` 8×8 azul, `Color(0.25, 0.4, 0.8)` (`mapa/tela_mapa.tscn`) | pendente | |
+| 29 | Trilha entre as casas (opcional) | 4×4, para repetir ao longo da linha | 1 | ligações do mapa | linhas de 2 px desenhadas pelo código: cinza, branca no caminho percorrido, amarela até as casas disponíveis (`mapa/tela_mapa.gd`) | pendente | |
+| 30 | Inimigos comuns: calabouço, salões, torre | 64×64 cada (3) | 2 a 4 | painel do inimigo nas batalhas de cada ato | o `ColorRect` vermelho do painel do inimigo da 001 (asset 4), com o nome do inimigo do ato | pendente | |
+| 31 | Elites: calabouço, salões, torre | 64×64 cada (3) | 2 a 4 | painel do inimigo nas casas de elite | o mesmo `ColorRect` vermelho, com o nome da elite | pendente | |
+| 32 | Chefes: calabouço, salões, torre | 64×64 cada (3) | 2 a 4 | painel do inimigo na casa de chefe (o da torre pode mudar com a prova, na 003) | o mesmo `ColorRect` vermelho, com o nome do chefe | pendente | |
+| 33 | Fundo da luta: salões e torre | 640×360 cada (2) | 1 | tela de luta nos atos 2 e 3 (o do calabouço é o asset 7) | cor de fundo padrão do Godot (sem nó) | pendente | |
+| 34 | Imagem do descanso (por exemplo, uma fogueira) | 96×96 | 1 a 4 | tela de descanso | `ColorRect` 96×96 laranja, `Color(0.85, 0.5, 0.2)` (`descanso/tela_descanso.tscn`) | pendente | |
+
+Os ícones das casas (27) precisam ser legíveis em 32×32 e diferentes entre si também na forma,
+não só na cor. Fundos e sprites que mudam por ato ou por tipo vão precisar de um campo de
+textura nos dados quando chegarem (research da 002, D13); essa mudança é feita na troca.
+
+### Onde colocar os arquivos
+
+| Tipo | Pasta |
+|---|---|
+| Fundos do mapa, ícones das casas, marcador, trilha | `mapa/sprites/` |
+| Inimigos dos atos | `combatentes/sprites/` |
+| Fundos da luta | `batalha/sprites/` |
+| Imagem do descanso | `descanso/sprites/` |
+
+A 002 não pede sons: a luta continua com os sons da 001 e o mapa fica em silêncio até a 004.
