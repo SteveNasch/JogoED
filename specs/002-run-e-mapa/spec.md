@@ -48,6 +48,9 @@ em si é a da 001 (`specs/001-nucleo-batalha/spec.md`) e não muda aqui.
 - Q (no analyze): A run nova tem de ter um mapa diferente do anterior? → A: tem de ter uma
   semente nova; duas sementes podem, muito raramente, dar o mesmo mapa. O teste da cena confere
   a semente nova, e a diferença de mapa é conferida na lógica, com sementes fixas (SC-006).
+- Q (no analyze): Mudar o arquivo de dificuldade vale já no "Começar de novo"? → A: não; o
+  arquivo é lido uma vez, então a mudança vale na próxima vez que o jogo abrir (FR-027,
+  SC-005). Ler de novo a cada run seria código que nada pede.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -160,7 +163,7 @@ histórias 1 e 2.
 
 **Independent Test**: vencer o chefe do ato 1 e conferir a passagem para o ato 2 com a vida
 e o baralho mantidos; conferir nos dados padrão que alvo, vida e ataque crescem com a
-profundidade; mudar um número no arquivo de dificuldade e conferir o efeito na run seguinte;
+profundidade; mudar um número no arquivo de dificuldade e conferir o efeito ao abrir o jogo de novo;
 vencer o chefe do ato 3 e conferir o fim da run com vitória.
 
 **Acceptance Scenarios**:
@@ -303,8 +306,8 @@ vencer o chefe do ato 3 e conferir o fim da run com vitória.
 - **FR-027**: Todo o equilíbrio da run MUST ficar num único arquivo de dados, editável sem
   mexer no código: os números da FR-026, o tamanho dos mapas e a quantidade de casas de cada
   tipo por ato, a cura do descanso, o conjunto de cartas de recompensa, o baralho inicial e
-  os nomes provisórios dos inimigos de cada ato. Mudar o arquivo MUST valer a partir da run
-  seguinte.
+  os nomes provisórios dos inimigos de cada ato. Mudar o arquivo MUST valer na próxima vez
+  que o jogo for aberto.
 - **FR-028**: Ao começar uma run, o jogo MUST conferir o arquivo de dificuldade e, se houver
   valor impossível (faixa de alvo invertida, vida ou ataque menor que 1, mapa sem andares,
   mais casas de um tipo do que o ato comporta, ato sem casa de descanso, elite sem andar
@@ -365,7 +368,7 @@ Conjunto de recompensas padrão: números 6 a 10, ×, ÷, x2, /2, ^2, Chama, Foc
   ataque nunca diminuem com a profundidade, que a elite é mais forte que o inimigo comum da
   mesma profundidade e que o chefe provisório é mais forte que a elite do ato.
 - **SC-005**: Mudar um valor do arquivo de dificuldade (por exemplo a cura do descanso) muda a
-  run seguinte sem nenhuma alteração no código.
+  run da próxima vez que o jogo abrir, sem nenhuma alteração no código.
 - **SC-006**: Depois de uma derrota, a run nova começa com uma única ação do jogador, no ato
   1, com 40 de vida, as 13 cartas iniciais e uma semente nova (na prática, outro mapa).
 - **SC-007**: Uma pessoa da equipe que conhece a regra da luta leva de 20 a 30 minutos para
