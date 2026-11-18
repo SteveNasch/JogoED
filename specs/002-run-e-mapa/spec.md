@@ -87,7 +87,8 @@ cada luta é a que sobrou da anterior.
    volta ao mapa, **Then** a casa aparece como visitada, o Arthur está nela, a vida mostrada é
    24 de 40 e só as casas do andar seguinte ligadas a ela ficam disponíveis.
 5. **Given** o Arthur no último andar antes do chefe, **When** escolhe a casa do chefe e
-   vence a luta, **Then** o ato 1 termina e começa o ato 2 (história 4).
+   vence a luta, **Then** o ato 1 termina e, depois da recompensa do chefe (FR-022), começa o
+   ato 2 (história 4).
 
 ---
 
