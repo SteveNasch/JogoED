@@ -180,7 +180,7 @@ vencer o chefe do ato 3 e conferir o fim da run com vitória.
 4. **Given** o Arthur na casa do chefe da torre, **When** vence a luta, **Then** a run acaba
    com vitória e aparece a tela de fim de run com o resumo e a opção de começar de novo.
 5. **Given** um arquivo de dificuldade com um erro (por exemplo, faixa de alvo com mínimo
-   maior que o máximo), **When** a run começa, **Then** o jogo não começa a run e mostra qual
+   maior que o máximo), **When** o jogo abre, **Then** o jogo não começa a run e mostra qual
    valor está errado.
 
 ---
@@ -308,7 +308,7 @@ vencer o chefe do ato 3 e conferir o fim da run com vitória.
   tipo por ato, a cura do descanso, o conjunto de cartas de recompensa, o baralho inicial e
   os nomes provisórios dos inimigos de cada ato. Mudar o arquivo MUST valer na próxima vez
   que o jogo for aberto.
-- **FR-028**: Ao começar uma run, o jogo MUST conferir o arquivo de dificuldade e, se houver
+- **FR-028**: Ao abrir, antes da primeira run, o jogo MUST conferir o arquivo de dificuldade e, se houver
   valor impossível (faixa de alvo invertida, vida ou ataque menor que 1, mapa sem andares,
   mais casas de um tipo do que o ato comporta, ato sem casa de descanso, elite sem andar
   acima do 2 para ficar, baralho inicial sem carta de número), MUST NOT
