@@ -33,6 +33,11 @@ em si é a da 001 (`specs/001-nucleo-batalha/spec.md`) e não muda aqui.
 - Q: Quanto a casa de descanso cura? → A: 30% da vida máxima, arredondado para baixo (12 com
   a máxima de 40); a porcentagem fica nos dados.
 
+### Session 2026-11-18
+
+- Q: O jogo deve guardar alguma coisa entre uma run e outra? → A: não; nada é guardado (nem a
+  run em andamento nem o melhor resultado), e fechar o jogo perde a run.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Atravessar o calabouço pelo mapa (Priority: P1)
@@ -361,8 +366,8 @@ Conjunto de recompensas padrão: números 6 a 10, ×, ÷, x2, /2, ^2, Chama, Foc
   para jogar; o equilíbrio fino é feito depois, mudando só o arquivo de dados.
 - O Arthur não se cura sozinho entre os atos; só o descanso cura.
 - Nada é guardado entre runs (nem melhor resultado nem progresso): fechar o jogo perde a run
-  em andamento. Registro entre runs é um ponto em aberto da visão e, se for querido, pede uma
-  funcionalidade própria. A confirmar no `/speckit-clarify`.
+  em andamento (decidido no clarify de 2026-11-18). Se a equipe quiser registro entre runs
+  depois, ele pede uma funcionalidade própria.
 - A tela de fim de run é simples e provisória; a tela de derrota definitiva e a cena final
   são da funcionalidade 004, e a prova como chefe do ato 3 é da 003.
 - Inimigos diferentes só mudam nome, vida e ataque (a visão exclui comportamentos diferentes
@@ -371,4 +376,4 @@ Conjunto de recompensas padrão: números 6 a 10, ×, ÷, x2, /2, ^2, Chama, Foc
   listadas na visão.
 - Jogo para PC, jogado com mouse, na mesma resolução da 001.
 - Fora do escopo: chefes especiais, prova, história, menus, pausa, tutorial, explicação dos
-  símbolos, arte e som finais.
+  símbolos, arte e som finais, salvar e carregar.
