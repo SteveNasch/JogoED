@@ -52,6 +52,15 @@ func test_mil_sementes_cumprem_as_regras_do_mapa() -> void:
 	_assert_sem_falhas()
 
 
+## SC-001 nos dados padrão: o mapa de cada ato de dados/dificuldade.tres.
+func test_mil_sementes_por_ato_nos_dados_padrao() -> void:
+	var dificuldade: DadosDificuldade = load("res://dados/dificuldade.tres")
+	assert_eq(dificuldade.atos.size(), 3)
+	for ato in dificuldade.atos:
+		for i in SEMENTES:
+			_conferir_mapa(GeradorMapa.gerar(ato.mapa, hash(i)), ato.mapa, "%s, semente hash(%d)" % [ato.nome, i])
+	_assert_sem_falhas()
+
 func test_padroes_so_dividem_os_andares_em_3_3_2_3_2_3_e_2_3_3() -> void:
 	var divisoes := {}
 	for i in SEMENTES:
