@@ -78,3 +78,9 @@ func test_regra_1_quebrada_nao_gera_as_frases_de_7_a_9() -> void:
 	var mapa := _mapa_com({"andares_comuns": 1})
 	assert_eq(mapa.erros().size(), 1)
 	assert_string_starts_with(mapa.erros()[0], "andares_comuns (1)")
+
+
+func test_dois_andares_comuns_sem_elite_valem() -> void:
+	# Sem andar 3 não há vaga de elite, e sem elite isso não é erro (research D4).
+	var mapa := _mapa_com({"andares_comuns": 2, "elites": 0, "batalhas": 1, "descansos": 1, "recompensas": 1})
+	assert_eq(mapa.erros(), [] as Array[String])

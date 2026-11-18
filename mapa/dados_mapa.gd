@@ -68,7 +68,7 @@ func _erros_de_distribuicao() -> Array[String]:
 		lista.append("batalhas + elites + descansos + recompensas (%d) precisa ficar entre %d e %d para caber nos andares 2 a %d." % [total, menor_total, maior_total, andares_comuns])
 	if elites > 0 and andares_comuns < 3:
 		lista.append("elites (%d) precisa de um andar acima do 2, mas andares_comuns é %d." % [elites, andares_comuns])
-	elif elites > _vagas_para_elites():
+	elif elites > 0 and elites > _vagas_para_elites():
 		lista.append("elites (%d) é maior que as vagas do andar 3 em diante com o andar 2 cheio (%d)." % [elites, _vagas_para_elites()])
 	return lista
 
