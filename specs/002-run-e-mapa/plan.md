@@ -230,7 +230,7 @@ equipe):
 
 | Frente | O que faz | Pastas e arquivos | Pode começar | Depende de |
 |---|---|---|---|---|
-| A. Dados | `DadosAto`, `DadosDificuldade`, `erros()`, `dificuldade.tres`, cartas 6 a 10, teste SC-004 | `run/dados_*.gd`, `dados/` | já | nada (usa classes da 001) |
+| A. Dados | `DadosAto`, `DadosDificuldade`, `erros()`, `dificuldade.tres`, cartas 6 a 10, teste SC-004 | `run/dados_*.gd`, `dados/` | já, pelas cartas 6 a 10; `DadosAto` depois de `Casa` e `DadosMapa` | `Casa.Tipo` e `DadosMapa` da frente B |
 | B. Gerador do mapa | `DadosMapa`, `Casa`, `MapaAto`, `GeradorMapa`, teste de 1.000 sementes | `mapa/` (lógica) | já | nada |
 | C. Run | `Run`, etapas, simulações | `run/run.gd`, `run/testes/` | já, com dados de teste montados à mão | interfaces de A e B (data-model); junta com elas no fim |
 | D. Mapa na tela | `casa_mapa`, `tela_mapa`, ligações e marcador | `mapa/` (cenas) | já, com `MapaAto` montado à mão | `Casa` e `MapaAto` de B (só os campos) |
