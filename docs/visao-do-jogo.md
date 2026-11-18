@@ -104,7 +104,8 @@ tipo de inimigo.
   casas, e o chefe). Elite e chefe também dão recompensa de carta.
 - ~~Se a divisão que arredonda para baixo continua ou se só vale divisão exata~~ Decidido em
   13/11 (spec 001): continua arredondando para baixo.
-- Se existe algum registro entre runs, como o melhor resultado.
+- ~~Se existe algum registro entre runs, como o melhor resultado~~ Decidido em 18/11 (spec
+  002): não; nada é guardado entre runs.
 
 ## Funcionalidades
 
