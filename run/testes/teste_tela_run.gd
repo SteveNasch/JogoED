@@ -331,3 +331,22 @@ func test_chefe_do_ato_1_vencido_abre_a_recompensa_e_depois_o_ato_2() -> void:
 	for casa in _run().mapa().casas:
 		assert_eq(_no_da_casa(casa).disabled, casa.andar != 1)
 	await wait_process_frames(1)
+
+
+# --- História 4, cenário 5: dados errados ---
+
+func test_dados_errados_nao_comecam_a_run_e_mostram_o_valor_errado() -> void:
+	var dados := DIFICULDADE.duplicate(true) as DadosDificuldade
+	dados.atos[0].alvo_minimo = 13
+	var tela: Control = CENA.instantiate()
+	tela.dificuldade = dados
+	add_child_autofree(tela)
+	var frase := "Ato 1 (Calabouço): alvo_minimo (13) é maior que alvo_maximo (12)."
+	assert_push_error(frase)
+	assert_null(tela.run)
+	assert_false(tela.get_node("%Mapa").visible)
+	assert_false(tela.get_node("%Barra").visible)
+	var erro := tela.get_node("%ErroDados") as Label
+	assert_true(erro.visible)
+	assert_eq(erro.text, "O arquivo de dificuldade tem valores errados. A run não começou.\n- " + frase)
+	assert_eq(DIFICULDADE.atos[0].alvo_minimo, 5, "o arquivo carregado não mudou")

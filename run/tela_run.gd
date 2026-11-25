@@ -13,7 +13,7 @@ const CENA_RECOMPENSA: PackedScene = preload("res://recompensa/tela_recompensa.t
 ## a cena na árvore.
 @export var dificuldade: DadosDificuldade
 
-## A run em andamento.
+## A run em andamento; null se o arquivo de dificuldade tem erro.
 var run: Run
 
 @onready var _barra: HBoxContainer = %Barra
@@ -21,11 +21,29 @@ var run: Run
 @onready var _vida: Label = %Vida
 @onready var _baralho: Label = %Baralho
 @onready var _mapa: TelaMapa = %Mapa
+@onready var _erro_dados: Label = %ErroDados
 
 
 func _ready() -> void:
 	_mapa.casa_escolhida.connect(_ao_escolher_casa)
+	var erros := dificuldade.erros()
+	if not erros.is_empty():
+		_mostrar_erros(erros)
+		return
 	_comecar_run()
+
+
+## Dados errados (FR-028, research D6): a run não começa e o aviso diz qual valor está errado,
+## na tela e na saída de erros.
+func _mostrar_erros(erros: Array[String]) -> void:
+	_barra.hide()
+	_mapa.hide()
+	var linhas: Array[String] = ["O arquivo de dificuldade tem valores errados. A run não começou."]
+	for frase in erros:
+		linhas.append("- " + frase)
+		push_error(frase)
+	_erro_dados.text = "\n".join(linhas)
+	_erro_dados.show()
 
 
 ## Run nova com semente nova (FR-001, FR-006); é a única chamada solta de randi() da 002.
