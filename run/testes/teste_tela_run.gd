@@ -211,3 +211,45 @@ func test_vencer_o_chefe_da_torre_mostra_o_aviso_e_depois_a_vitoria_da_run() -> 
 	assert_eq(abertas[0].get_node("%Onde").text, "Arthur venceu o chefe do ato 3 (Torre), andar 5.")
 	assert_eq(abertas[0].get_node("%Lutas").text, "Lutas vencidas: 14")
 	await wait_process_frames(1)
+
+
+# --- História 3, cenário 1: descanso ---
+
+## Uma casa do tipo pedido do andar 2 em diante, com a run posicionada na casa anterior ligada a
+## ela (null se o mapa não tem).
+func _posicionar_antes_de(tipo: Casa.Tipo) -> Casa:
+	var mapa := _run().mapa()
+	for andar in range(2, mapa.total_de_andares):
+		for casa in mapa.casas_do_andar(andar):
+			if casa.tipo != tipo:
+				continue
+			for anterior in mapa.casas_do_andar(andar - 1):
+				if casa in anterior.ligacoes:
+					_run().casa_atual = anterior
+					anterior.visitada = true
+					return casa
+	return null
+
+
+func test_descanso_mostra_a_cura_e_volta_ao_mapa_com_a_vida_nova() -> void:
+	var descanso := _posicionar_antes_de(Casa.Tipo.DESCANSO)
+	assert_not_null(descanso, "todo mapa padrão tem descanso")
+	if descanso == null:
+		return
+	_run().vida_arthur = 20
+	_tela.get_node("%Mapa").casa_escolhida.emit(descanso)
+	var abertas := _cenas_de_etapa()
+	assert_eq(abertas.size(), 1)
+	if abertas.size() != 1:
+		return
+	assert_eq(abertas[0].get_node("%Frase").text, "Arthur descansou e recuperou 12 de vida.")
+	assert_eq(abertas[0].get_node("%Vida").text, "Vida: 32/40")
+	assert_false(_tela.get_node("%Mapa").visible)
+	_botao_da_cena_aberta().pressed.emit()
+	assert_eq(_cenas_de_etapa(), [] as Array[Node], "nenhuma cena de etapa ficou na árvore")
+	assert_eq(_run().etapa, Run.Etapa.MAPA)
+	assert_true(_tela.get_node("%Mapa").visible)
+	assert_eq(_texto("Vida"), "Vida 32/40")
+	for casa in _run().mapa().casas:
+		assert_eq(_no_da_casa(casa).disabled, casa not in descanso.ligacoes)
+	await wait_process_frames(1)

@@ -6,6 +6,7 @@ extends Control
 const CENA_LUTA: PackedScene = preload("res://batalha/tela_batalha.tscn")
 const CENA_VITORIA: PackedScene = preload("res://run/vitoria_luta.tscn")
 const CENA_FIM: PackedScene = preload("res://run/fim_de_run.tscn")
+const CENA_DESCANSO: PackedScene = preload("res://descanso/tela_descanso.tscn")
 
 ## O arquivo de dificuldade (no editor: dados/dificuldade.tres). Nos testes, trocado antes de pôr
 ## a cena na árvore.
@@ -55,6 +56,8 @@ func _abrir_etapa() -> void:
 			_abrir_luta()
 		Run.Etapa.CHEFE:
 			_abrir_chefe()
+		Run.Etapa.DESCANSO:
+			_abrir_descanso()
 		Run.Etapa.VITORIA, Run.Etapa.DERROTA:
 			_abrir_fim()
 
@@ -85,6 +88,18 @@ func _ao_terminar_luta(resultado: ResultadoLuta, luta: TelaBatalha) -> void:
 func _ao_continuar(cena: Control) -> void:
 	_fechar(cena)
 	_abrir_etapa()
+
+
+## A cura já foi feita pela Run ao entrar na casa; a tela só mostra (FR-020).
+func _abrir_descanso() -> void:
+	var descanso := _abrir(CENA_DESCANSO)
+	descanso.continuou.connect(_ao_sair_do_descanso.bind(descanso))
+	descanso.mostrar(run.cura, run.vida_arthur, run.vida_maxima)
+
+
+func _ao_sair_do_descanso(descanso: Control) -> void:
+	run.sair_do_descanso()
+	_ao_continuar(descanso)
 
 
 ## Fim da run por vitória ou derrota (FR-024); "Começar de novo" cria outra run (SC-006).
