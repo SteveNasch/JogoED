@@ -257,3 +257,85 @@ func test_subida_do_andar_1_ao_4_por_batalhas_mantem_o_caminho() -> void:
 		assert_eq(run.andar_alcancado(), 4)
 		assert_eq(run.lutas_vencidas, vencidas)
 		assert_eq(run.vida_arthur, vida)
+
+
+# --- História 2: derrota ---
+
+## Entra numa batalha do ato atual, do andar 2 em diante, a partir de uma casa ligada a ela.
+func _entrar_numa_batalha_acima_do_andar_1() -> Casa:
+	for andar in range(2, run.mapa().total_de_andares):
+		var achada := _casa_e_anterior(Casa.Tipo.BATALHA, andar)
+		if not achada.is_empty():
+			_posicionar(achada[1])
+			assert_true(run.escolher_casa(achada[0]))
+			return achada[0]
+	return null
+
+
+func test_derrota_no_ato_2_acaba_a_run_com_o_resumo() -> void:
+	run.ato = 2
+	for nome in ["chama", "foco", "guarda"]:
+		run.baralho.append(load("res://dados/cartas/%s.tres" % nome))
+	run.lutas_vencidas = 7
+	var casa := _entrar_numa_batalha_acima_do_andar_1()
+	assert_not_null(casa, "todo mapa padrão tem uma batalha acima do andar 1")
+	if casa == null:
+		return
+	assert_eq(run.baralho.size(), 16)
+	run.terminar_luta(ResultadoLuta.new(false, 0, 5, 4))
+	assert_eq(run.etapa, Run.Etapa.DERROTA)
+	assert_eq(run.vida_arthur, 0)
+	assert_eq(run.ato, 2)
+	assert_eq(run.andar_alcancado(), casa.andar)
+	assert_eq(run.lutas_vencidas, 7)
+	assert_eq(run.casas_disponiveis(), [] as Array[Casa])
+
+
+func test_derrota_zera_a_vida_mesmo_se_o_resultado_diz_outra() -> void:
+	run.escolher_casa(run.mapa().casas_do_andar(1)[0])
+	run.terminar_luta(ResultadoLuta.new(false, 3, 5, 4))
+	assert_eq(run.vida_arthur, 0)
+
+
+func test_run_nova_depois_da_derrota_comeca_do_zero_com_outro_mapa() -> void:
+	run.ato = 2
+	run.baralho.append(load("res://dados/cartas/chama.tres"))
+	_entrar_numa_batalha_acima_do_andar_1()
+	run.terminar_luta(ResultadoLuta.new(false, 0, 5, 4))
+	var nova := Run.new(DIFICULDADE, SEMENTE + 1)
+	var tamanho_ato_1 := run.mapas[0].casas.size()
+	assert_ne(_descricao_dos_mapas(nova).slice(0, nova.mapas[0].casas.size()),
+		_descricao_dos_mapas(run).slice(0, tamanho_ato_1), "o mapa do ato 1 da run nova é outro")
+	assert_eq(nova.ato, 1)
+	assert_eq(nova.etapa, Run.Etapa.MAPA)
+	assert_eq([nova.vida_arthur, nova.vida_maxima], [40, 40])
+	assert_eq(nova.baralho, DIFICULDADE.baralho_inicial)
+	assert_eq(nova.baralho.size(), 13)
+	assert_eq(nova.lutas_vencidas, 0)
+	assert_null(nova.casa_atual)
+	assert_false(nova.mapas.any(func(mapa_ato: MapaAto) -> bool: return mapa_ato.casas.any(func(casa: Casa) -> bool: return casa.visitada)))
+
+
+func test_derrota_no_chefe_e_igual_a_qualquer_derrota() -> void:
+	var chefe := run.mapa().casas_do_andar(run.mapa().total_de_andares)[0]
+	_posicionar(run.mapa().casas_do_andar(run.mapa().total_de_andares - 1)[0])
+	run.lutas_vencidas = 4
+	assert_true(run.escolher_casa(chefe))
+	run.terminar_luta(ResultadoLuta.new(false, 0, 10, 6))
+	assert_eq(run.etapa, Run.Etapa.DERROTA)
+	assert_eq(run.vida_arthur, 0)
+	assert_eq(run.ato, 1)
+	assert_eq(run.andar_alcancado(), 5)
+	assert_eq(run.lutas_vencidas, 4)
+
+
+func test_depois_da_derrota_nenhum_metodo_muda_nada() -> void:
+	var casa := run.mapa().casas_do_andar(1)[0]
+	run.escolher_casa(casa)
+	run.terminar_luta(ResultadoLuta.new(false, 0, 5, 4))
+	var antes := _estado()
+	for outra in casa.ligacoes:
+		assert_false(run.escolher_casa(outra))
+	run.terminar_luta(ResultadoLuta.new(true, 30, 0, 2))
+	assert_eq(_estado(), antes)
+	assert_eq(run.lutas_vencidas, 0)

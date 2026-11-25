@@ -103,9 +103,14 @@ func andar_alcancado() -> int:
 	return casa_atual.andar
 
 
-## Leva o resultado da luta para a run. Só vale nas etapas LUTA e CHEFE.
+## Leva o resultado da luta para a run. Só vale nas etapas LUTA e CHEFE. A derrota acaba a run
+## (FR-024): em DERROTA nenhum método muda mais nada.
 func terminar_luta(resultado: ResultadoLuta) -> void:
-	if etapa not in [Etapa.LUTA, Etapa.CHEFE] or not resultado.venceu:
+	if etapa not in [Etapa.LUTA, Etapa.CHEFE]:
+		return
+	if not resultado.venceu:
+		vida_arthur = 0
+		etapa = Etapa.DERROTA
 		return
 	vida_arthur = resultado.vida_arthur
 	lutas_vencidas += 1
