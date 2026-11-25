@@ -152,4 +152,35 @@ o resultado abaixo.
 
 ## Registro da validação
 
-(vazio; preenchido na implementação)
+### 2026-11-25: validação automática, feita pelo Claude (T034)
+
+- **MCP do Godot indisponível nesta sessão** (o servidor não conectou: tempo esgotado ao abrir).
+  O jogo foi aberto pela linha de comando do Godot, que lê a mesma saída de erros:
+  `godot --path . --quit-after 120` (com janela). Pode ser repetido pelo MCP (`run_project` e
+  `get_debug_output`) quando ele voltar.
+- **Cenário 1 (suíte)**: passou. `--import` e a suíte inteira com código de saída 0: 32 scripts,
+  354 testes passando, 13.001 asserts. A suíte tem cada item da lista: 1.000 sementes por ato
+  com as regras do mapa e a mesma semente dando o mesmo mapa (`teste_gerador_mapa.gd`); os
+  dados padrão e as frases de erro (`teste_dados_mapa.gd`, `teste_dados_ato.gd`,
+  `teste_dados_dificuldade.gd`); 1.000 runs com escolhas automáticas e 20 com lutas jogadas,
+  inclusive a repetição pela semente (`teste_simulacao_run.gd`); os testes de cena do mapa, da
+  casa, do descanso, da recompensa, do aviso de vitória, do fim de run e da cena principal.
+- **Abrir o jogo**: a cena principal (`run/tela_run.tscn`) carregou sem nenhum erro ou aviso do
+  projeto. A saída trouxe só mensagens do ambiente desta máquina, as mesmas da 001: o Mesa
+  procurando a placa NVIDIA (`failed to load driver: nvidia-drm`, `glx: failed to create dri3
+  screen`).
+- **Cenário 7 (dado errado)**: passou. Com `alvo_minimo = 13` no ato 1 de
+  `dados/dificuldade.tres`, a saída trouxe `ERROR: Ato 1 (Calabouço): alvo_minimo (13) é maior
+  que alvo_maximo (12).` (pelo `push_error`). O texto na tela é conferido pelo teste
+  `test_dados_errados_nao_comecam_a_run_e_mostram_o_valor_errado`. A mudança foi desfeita com
+  `git checkout dados/dificuldade.tres`.
+- **Cenário 10 (placeholders)**: passou. Cada `ColorRect`, letra, linha e texto provisório das
+  cenas da 002 tem linha nos itens 24 a 34 de `docs/assets-pendentes.md`, e a coluna do
+  placeholder bate com a cena (só a frase de abertura da seção, que dizia que as cenas ainda não
+  existiam, foi atualizada). Nenhum arquivo de imagem, som ou fonte existe fora de `addons/gut/`.
+- **Outras conferências do T034**: nenhum `shuffle()`, `pick_random()`, `randf()` ou `randi()`
+  solto no código da 002 além da semente da run em `run/tela_run.gd`; nenhum script de jogo de
+  `batalha/`, `cartas/`, `contas/` ou `combatentes/` mudou desde o T001 da 002 (`a0b3032`), e o
+  que mudou fora das pastas novas está na tabela do research D1; nenhum `.gitkeep` sobrou nas
+  pastas `testes/`; todo script tem o `.uid` no repositório.
+- **Falta (T035)**: os cenários 2 a 6, 8, 9 e 11, jogados por uma pessoa da equipe.

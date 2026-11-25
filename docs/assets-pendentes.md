@@ -83,9 +83,9 @@ As pastas são criadas quando o primeiro arquivo chegar.
 
 ## Funcionalidade 002: run e mapa
 
-Itens pedidos no plano da 002 (`specs/002-run-e-mapa/research.md`, D13). As cenas ainda não
-existem: a coluna "Placeholder atual" diz o que a implementação vai pôr no lugar, e a tarefa que
-criar cada cena confere e ajusta esta coluna. As telas novas (barra da run, descanso,
+Itens pedidos no plano da 002 (`specs/002-run-e-mapa/research.md`, D13). A coluna "Placeholder
+atual" foi conferida com as cenas da 002 no T034 (2026-11-25): cada `ColorRect`, letra, linha e
+texto provisório delas tem a sua linha aqui. As telas novas (barra da run, descanso,
 recompensa, aviso de vitória, fim de run) usam também a moldura de painel e de botão (asset 13)
 e a fonte (asset 14) da 001.
 
