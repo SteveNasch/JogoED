@@ -350,3 +350,9 @@ func test_dados_errados_nao_comecam_a_run_e_mostram_o_valor_errado() -> void:
 	assert_true(erro.visible)
 	assert_eq(erro.text, "O arquivo de dificuldade tem valores errados. A run não começou.\n- " + frase)
 	assert_eq(DIFICULDADE.atos[0].alvo_minimo, 5, "o arquivo carregado não mudou")
+
+
+# --- FR-001: o jogo abre na run ---
+
+func test_cena_principal_do_projeto() -> void:
+	assert_eq(ProjectSettings.get_setting("application/run/main_scene"), "res://run/tela_run.tscn")

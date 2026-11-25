@@ -21,7 +21,7 @@ Não ficou nenhum "NEEDS CLARIFICATION" do contexto técnico.
   ([contracts/batalha.md da 001](../001-nucleo-batalha/contracts/batalha.md)):
   `TelaBatalha.iniciar(cartas, vida_arthur, dados_inimigo, regras, semente)` e o sinal
   `luta_terminou(resultado: ResultadoLuta)`. Nenhum script de jogo de `batalha/`, `cartas/`,
-  `contas/` ou `combatentes/` muda (só dois arquivos de teste). O que muda fora das pastas
+  `contas/` ou `combatentes/` muda (só três arquivos de teste). O que muda fora das pastas
   novas:
 
   | Arquivo da 001 | Mudança | Por quê |
@@ -30,6 +30,7 @@ Não ficou nenhum "NEEDS CLARIFICATION" do contexto técnico.
   | `.gutconfig.json` | 4 pastas novas em `dirs` (`mapa/`, `run/`, `descanso/`, `recompensa/`, cada uma com `testes/`) | o GUT só roda os testes das pastas listadas |
   | `cartas/testes/teste_arquivos_cartas.gd` | 5 linhas novas na tabela (números 6 a 10) | o teste confere que a pasta `dados/cartas/` tem só as cartas da tabela; as cartas 6 a 10 entram agora, com os valores da tabela de cartas da spec da 001 |
   | `batalha/testes/teste_simulacao.gd` | passa a usar o jogador automático extraído para `batalha/testes/jogador_automatico.gd` | a simulação de runs da 002 também precisa jogar lutas de verdade; extrair evita duas cópias do mesmo jogador (princípio I) |
+  | `luta_avulsa/testes/teste_luta_avulsa.gd` | sai `test_cena_principal_do_projeto`, que vai para `run/testes/teste_tela_run.gd` conferindo `res://run/tela_run.tscn` (achado no T032) | a luta avulsa deixa de ser a cena principal; o teste fica junto da cena que passa a ser |
   | `luta_avulsa/luta_avulsa.gd` | só o comentário do topo: deixa de dizer "cena principal" | o código continua igual |
   | `specs/001-nucleo-batalha/quickstart.md` | "Abrir o jogo" passa a abrir `luta_avulsa.tscn` com F6 | os cenários da 001 continuam jogáveis |
 

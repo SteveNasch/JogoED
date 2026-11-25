@@ -81,10 +81,6 @@ func test_lutar_de_novo_recomeca_do_zero() -> void:
 	assert_eq(_luta.tela.batalha.baralho.total(), 21)
 
 
-func test_cena_principal_do_projeto() -> void:
-	assert_eq(ProjectSettings.get_setting("application/run/main_scene"), "res://luta_avulsa/luta_avulsa.tscn")
-
-
 func test_ao_perder_aparece_a_derrota() -> void:
 	var tela: TelaBatalha = _luta.tela
 	await _perder()

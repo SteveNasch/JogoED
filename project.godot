@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Answer Quest"
-run/main_scene="res://luta_avulsa/luta_avulsa.tscn"
+run/main_scene="res://run/tela_run.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 
 [display]
