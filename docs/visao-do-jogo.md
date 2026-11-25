@@ -96,8 +96,11 @@ tipo de inimigo.
 
 ## Pontos em aberto (para os `/speckit-clarify`)
 
-- ~~Quantas questões a prova tem~~ Decidido em 17/11 (corte de escopo): até 3. A regra de cada
-  uma fica para o clarify da 003.
+- ~~Quantas questões a prova tem~~ Decidido em 17/11 (corte de escopo): até 3.
+- ~~A regra de cada questão da prova~~ Decidido em 25/11: 3 questões, nesta ordem. Questão 1,
+  alvo maior que o da torre; questão 2, a expressão precisa usar um operador obrigatório (por
+  exemplo, ×); questão 3, a expressão pode ter no máximo 3 cartas. Os valores (faixa do alvo,
+  operador, limite de cartas, vida e ataque de cada questão) ficam no arquivo de dados.
 - ~~Quanto o descanso cura (no jogo antigo, 8 de vida)~~ Decidido em 13/11 (spec 002): 30%
   da vida máxima (12).
 - ~~Quantas casas tem cada ato~~ Decidido em 13/11 (spec 002): 5 andares (4 comuns, de 2 a 3
@@ -143,7 +146,7 @@ placeholders neutros registrados como pendência, e a equipe troca conforme os a
 003, chefes e a prova:
 
 ```text
-/speckit-specify Leia docs/visao-do-jogo.md para entender o jogo inteiro. A batalha (001) e a run com mapa (002) já existem. Esta funcionalidade cobre SÓ os chefes, em versão enxuta: o chefe do calabouço e o dos salões, no fim dos atos 1 e 2, são batalhas de elite reforçadas (mais vida e mais ataque, sem regra própria), com os valores no arquivo de dados de dificuldade; e a prova como chefe final da torre, conforme a seção "Chefe final: a prova" da visão, com no máximo 3 questões em sequência, cada uma uma fase com regra própria; vencer todas vence a prova e encerra a run com vitória. Fora desta funcionalidade: cenas de história, menus e tutorial.
+/speckit-specify Leia docs/visao-do-jogo.md para entender o jogo inteiro. A batalha (001) e a run com mapa (002) já existem. Esta funcionalidade cobre SÓ os chefes, em versão enxuta: o chefe do calabouço e o dos salões, no fim dos atos 1 e 2, são batalhas de elite reforçadas (mais vida e mais ataque, sem regra própria), com os valores no arquivo de dados de dificuldade; e a prova como chefe final da torre, conforme a seção "Chefe final: a prova" da visão, com 3 questões em sequência, cada uma uma fase com regra própria: questão 1, alvo maior que o da torre; questão 2, a expressão precisa usar um operador obrigatório (por exemplo, ×); questão 3, a expressão pode ter no máximo 3 cartas; os valores de cada questão ficam no arquivo de dados; vencer todas vence a prova e encerra a run com vitória. Fora desta funcionalidade: cenas de história, menus e tutorial.
 ```
 
 004, telas, história e tutorial (as antigas 004 e 005, juntas em 17/11):
