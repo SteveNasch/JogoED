@@ -178,7 +178,7 @@ dependem, em paralelo com a fase 3 (frentes D e E do plano).
 
 ### Área: descanso
 
-- [ ] T025 [P] [US3] Criar `descanso/tela_descanso.tscn` (raiz `Control` tela inteira, `CenterContainer` com `VBoxContainer`: título "Descanso", `ColorRect` 96×96 `Color(0.85, 0.5, 0.2)`, a frase da cura, a vida e o botão "Continuar") com `descanso/tela_descanso.gd`: sinal `continuou` e `mostrar(cura, vida, vida_maxima)` com as frases do contrato ("Arthur descansou e recuperou 12 de vida.", "Arthur descansou, mas a vida já estava cheia.", "Vida: 32/40"); testes em `descanso/testes/teste_tela_descanso.gd`: cura 12 com 32/40, cura 5 com 40/40, cura 0 com 40/40; o botão emite `continuou`; remover `descanso/testes/.gitkeep`
+- [X] T025 [P] [US3] Criar `descanso/tela_descanso.tscn` (raiz `Control` tela inteira, `CenterContainer` com `VBoxContainer`: título "Descanso", `ColorRect` 96×96 `Color(0.85, 0.5, 0.2)`, a frase da cura, a vida e o botão "Continuar") com `descanso/tela_descanso.gd`: sinal `continuou` e `mostrar(cura, vida, vida_maxima)` com as frases do contrato ("Arthur descansou e recuperou 12 de vida.", "Arthur descansou, mas a vida já estava cheia.", "Vida: 32/40"); testes em `descanso/testes/teste_tela_descanso.gd`: cura 12 com 32/40, cura 5 com 40/40, cura 0 com 40/40; o botão emite `continuou`; remover `descanso/testes/.gitkeep`
 
 ### Área: recompensa
 
