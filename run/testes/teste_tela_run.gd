@@ -110,7 +110,7 @@ func test_casa_do_chefe_abre_a_luta_com_o_chefe() -> void:
 		assert_eq(luta.batalha.inimigo.vida, 26)
 
 
-# --- História 1, cenário 4 ---
+# --- História 1, cenário 4 (e história 3, cenário 6: batalha vencida volta direto ao mapa) ---
 
 func test_vencer_mostra_a_vitoria_com_a_vida() -> void:
 	_clicar_na_batalha_do_andar_1()
@@ -252,4 +252,82 @@ func test_descanso_mostra_a_cura_e_volta_ao_mapa_com_a_vida_nova() -> void:
 	assert_eq(_texto("Vida"), "Vida 32/40")
 	for casa in _run().mapa().casas:
 		assert_eq(_no_da_casa(casa).disabled, casa not in descanso.ligacoes)
+	await wait_process_frames(1)
+
+
+# --- História 3, cenários 2 a 5, e história 4, cenário 1: recompensa ---
+
+func _cartas_da_recompensa() -> Array[Node]:
+	return _cenas_de_etapa()[0].get_node("%Cartas").get_children()
+
+
+func _entrar_na_recompensa() -> Casa:
+	var casa := _posicionar_antes_de(Casa.Tipo.RECOMPENSA)
+	assert_not_null(casa, "todo mapa padrão tem recompensa")
+	if casa != null:
+		_tela.get_node("%Mapa").casa_escolhida.emit(casa)
+	return casa
+
+
+func test_casa_de_recompensa_mostra_3_cartas_e_escolher_uma_aumenta_o_baralho() -> void:
+	if _entrar_na_recompensa() == null:
+		return
+	assert_eq(_cartas_da_recompensa().size(), 3)
+	assert_false(_tela.get_node("%Mapa").visible)
+	var segunda: DadosCarta = _run().oferta[1]
+	(_cartas_da_recompensa()[1] as Button).pressed.emit()
+	assert_eq(_cenas_de_etapa(), [] as Array[Node], "nenhuma cena de etapa ficou na árvore")
+	assert_eq(_texto("Baralho"), "Baralho: 14 cartas")
+	assert_eq(_run().baralho.back(), segunda)
+	assert_true(_tela.get_node("%Mapa").visible)
+	await wait_process_frames(1)
+
+
+func test_nao_pegar_nenhuma_mantem_o_baralho() -> void:
+	if _entrar_na_recompensa() == null:
+		return
+	_botao_da_cena_aberta().pressed.emit()
+	assert_eq(_run().etapa, Run.Etapa.MAPA)
+	assert_eq(_texto("Baralho"), "Baralho: 13 cartas")
+	assert_true(_tela.get_node("%Mapa").visible)
+	await wait_process_frames(1)
+
+
+func test_elite_vencida_abre_a_recompensa_depois_do_aviso() -> void:
+	var elite := _posicionar_antes_de(Casa.Tipo.ELITE)
+	assert_not_null(elite, "todo mapa padrão tem elite")
+	if elite == null:
+		return
+	_tela.get_node("%Mapa").casa_escolhida.emit(elite)
+	_luta().batalha.inimigo.vida = 1
+	await _vencer(25)
+	assert_eq(_cenas_de_etapa()[0].get_node("%Titulo").text, "Vitória!")
+	_botao_da_cena_aberta().pressed.emit()
+	assert_eq(_cenas_de_etapa().size(), 1)
+	assert_eq(_cartas_da_recompensa().size(), 3)
+	_botao_da_cena_aberta().pressed.emit()
+	assert_eq(_run().etapa, Run.Etapa.MAPA)
+	assert_eq(_texto("Vida"), "Vida 25/40")
+	await wait_process_frames(1)
+
+
+func test_chefe_do_ato_1_vencido_abre_a_recompensa_e_depois_o_ato_2() -> void:
+	var mapa := _run().mapa()
+	_run().casa_atual = mapa.casas_do_andar(mapa.total_de_andares - 1)[0]
+	_run().baralho.append(preload("res://dados/cartas/chama.tres"))
+	_run().baralho.append(preload("res://dados/cartas/foco.tres"))
+	_tela.get_node("%Mapa").casa_escolhida.emit(mapa.casas_do_andar(mapa.total_de_andares)[0])
+	_luta().batalha.inimigo.vida = 1
+	await _vencer(18)
+	_botao_da_cena_aberta().pressed.emit()
+	assert_eq(_cartas_da_recompensa().size(), 3, "o chefe do ato 1 abre a recompensa")
+	_botao_da_cena_aberta().pressed.emit()
+	assert_eq(_cenas_de_etapa(), [] as Array[Node], "nenhuma cena de etapa ficou na árvore")
+	assert_eq(_run().ato, 2)
+	assert_eq(_texto("Ato"), "Ato 2: Salões")
+	assert_eq(_texto("Vida"), "Vida 18/40")
+	assert_eq(_texto("Baralho"), "Baralho: 15 cartas")
+	assert_true(_tela.get_node("%Mapa").visible)
+	for casa in _run().mapa().casas:
+		assert_eq(_no_da_casa(casa).disabled, casa.andar != 1)
 	await wait_process_frames(1)

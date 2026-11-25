@@ -7,6 +7,7 @@ const CENA_LUTA: PackedScene = preload("res://batalha/tela_batalha.tscn")
 const CENA_VITORIA: PackedScene = preload("res://run/vitoria_luta.tscn")
 const CENA_FIM: PackedScene = preload("res://run/fim_de_run.tscn")
 const CENA_DESCANSO: PackedScene = preload("res://descanso/tela_descanso.tscn")
+const CENA_RECOMPENSA: PackedScene = preload("res://recompensa/tela_recompensa.tscn")
 
 ## O arquivo de dificuldade (no editor: dados/dificuldade.tres). Nos testes, trocado antes de pôr
 ## a cena na árvore.
@@ -58,6 +59,8 @@ func _abrir_etapa() -> void:
 			_abrir_chefe()
 		Run.Etapa.DESCANSO:
 			_abrir_descanso()
+		Run.Etapa.RECOMPENSA:
+			_abrir_recompensa()
 		Run.Etapa.VITORIA, Run.Etapa.DERROTA:
 			_abrir_fim()
 
@@ -100,6 +103,20 @@ func _abrir_descanso() -> void:
 func _ao_sair_do_descanso(descanso: Control) -> void:
 	run.sair_do_descanso()
 	_ao_continuar(descanso)
+
+
+## A oferta já foi sorteada pela Run (casa de recompensa, elite ou chefe vencidos; FR-021).
+## Depois da escolha, o mapa é o do ato em que a Run está (o seguinte, depois do chefe).
+func _abrir_recompensa() -> void:
+	var recompensa := _abrir(CENA_RECOMPENSA)
+	recompensa.carta_escolhida.connect(_ao_escolher_recompensa.bind(recompensa))
+	recompensa.nenhuma_escolhida.connect(_ao_escolher_recompensa.bind(null, recompensa))
+	recompensa.mostrar(run.oferta)
+
+
+func _ao_escolher_recompensa(carta: DadosCarta, recompensa: Control) -> void:
+	run.escolher_recompensa(carta)
+	_ao_continuar(recompensa)
 
 
 ## Fim da run por vitória ou derrota (FR-024); "Começar de novo" cria outra run (SC-006).
