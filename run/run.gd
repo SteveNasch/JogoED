@@ -69,8 +69,6 @@ func casas_disponiveis() -> Array[Casa]:
 func escolher_casa(casa: Casa) -> bool:
 	if casa not in casas_disponiveis():
 		return false
-	if casa.tipo == Casa.Tipo.RECOMPENSA:
-		return false
 	casa_atual = casa
 	casa.visitada = true
 	match casa.tipo:
@@ -83,6 +81,8 @@ func escolher_casa(casa: Casa) -> bool:
 		Casa.Tipo.DESCANSO:
 			_descansar()
 			etapa = Etapa.DESCANSO
+		Casa.Tipo.RECOMPENSA:
+			_abrir_recompensa()
 	return true
 
 
@@ -97,6 +97,32 @@ func _descansar() -> void:
 func sair_do_descanso() -> void:
 	if etapa != Etapa.DESCANSO:
 		return
+	etapa = Etapa.MAPA
+
+
+## Sorteia a oferta (FR-021): o conjunto sem cartas repetidas, sorteado sem repetição com o
+## gerador da run, até cartas_por_recompensa cartas. Com o conjunto vazio, a oferta é vazia.
+func _abrir_recompensa() -> void:
+	var conjunto: Array[DadosCarta] = []
+	for carta in dificuldade.cartas_de_recompensa:
+		if carta not in conjunto:
+			conjunto.append(carta)
+	oferta = []
+	while oferta.size() < dificuldade.cartas_por_recompensa and not conjunto.is_empty():
+		oferta.append(conjunto.pop_at(_rng.randi_range(0, conjunto.size() - 1)))
+	etapa = Etapa.RECOMPENSA
+
+
+## Põe a carta escolhida no fim do baralho (null = não pegar nenhuma) e volta ao mapa. Só vale
+## na etapa RECOMPENSA, com uma carta da oferta ou null.
+func escolher_recompensa(carta: DadosCarta) -> void:
+	if etapa != Etapa.RECOMPENSA:
+		return
+	if carta != null and carta not in oferta:
+		return
+	if carta != null:
+		baralho.append(carta)
+	oferta = []
 	etapa = Etapa.MAPA
 
 
@@ -130,4 +156,7 @@ func terminar_luta(resultado: ResultadoLuta) -> void:
 		return
 	vida_arthur = resultado.vida_arthur
 	lutas_vencidas += 1
-	etapa = Etapa.MAPA
+	if casa_atual.tipo == Casa.Tipo.ELITE:
+		_abrir_recompensa()
+	else:
+		etapa = Etapa.MAPA

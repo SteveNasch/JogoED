@@ -420,3 +420,166 @@ func test_sair_do_descanso_depois_da_derrota_nao_faz_nada() -> void:
 	var antes := _estado()
 	run.sair_do_descanso()
 	assert_eq(_estado(), antes)
+
+
+# --- História 3: recompensa ---
+
+## Põe o Arthur na casa antes de uma recompensa e entra nela. Devolve a recompensa.
+func _entrar_numa_recompensa() -> Casa:
+	var achada := _casa_acima_do_andar_1(Casa.Tipo.RECOMPENSA)
+	assert_false(achada.is_empty(), "todo mapa padrão tem recompensa")
+	if achada.is_empty():
+		return null
+	_posicionar(achada[1])
+	assert_true(run.escolher_casa(achada[0]))
+	return achada[0]
+
+
+## Cópia dos dados com outro conjunto de recompensas; o arquivo carregado não muda.
+func _dados_com_recompensas(nomes: Array[String]) -> DadosDificuldade:
+	var copia := DIFICULDADE.duplicate(true) as DadosDificuldade
+	var conjunto: Array[DadosCarta] = []
+	for nome in nomes:
+		conjunto.append(load("res://dados/cartas/%s.tres" % nome))
+	copia.cartas_de_recompensa = conjunto
+	return copia
+
+
+func test_recompensa_abre_3_cartas_diferentes_do_conjunto() -> void:
+	var casa := _entrar_numa_recompensa()
+	assert_eq(run.etapa, Run.Etapa.RECOMPENSA)
+	assert_eq(run.casa_atual, casa)
+	assert_true(casa.visitada)
+	assert_eq(run.oferta.size(), 3)
+	for carta in run.oferta:
+		assert_has(DIFICULDADE.cartas_de_recompensa, carta)
+		assert_eq(run.oferta.count(carta), 1, "carta repetida na oferta")
+	assert_eq(run.casas_disponiveis(), [] as Array[Casa])
+
+
+func test_escolher_a_chama_poe_ela_no_fim_do_baralho() -> void:
+	var chama: DadosCarta = load("res://dados/cartas/chama.tres")
+	var quantas := 0
+	for i in 50:
+		run = Run.new(DIFICULDADE, hash(i))
+		var casa := _entrar_numa_recompensa()
+		if chama not in run.oferta:
+			continue
+		quantas += 1
+		run.escolher_recompensa(chama)
+		assert_eq(run.etapa, Run.Etapa.MAPA)
+		assert_eq(run.baralho.size(), 14)
+		assert_eq(run.baralho.back(), chama)
+		assert_eq(run.baralho.slice(0, 13), DIFICULDADE.baralho_inicial)
+		assert_eq(run.oferta, [] as Array[DadosCarta])
+		assert_eq(run.casas_disponiveis(), casa.ligacoes)
+	assert_gt(quantas, 0, "a Chama aparece em alguma oferta de 50 runs")
+
+
+func test_nao_pegar_nenhuma_deixa_o_baralho_igual() -> void:
+	_entrar_numa_recompensa()
+	run.escolher_recompensa(null)
+	assert_eq(run.etapa, Run.Etapa.MAPA)
+	assert_eq(run.baralho, DIFICULDADE.baralho_inicial)
+	assert_eq(run.oferta, [] as Array[DadosCarta])
+
+
+func test_carta_fora_da_oferta_nao_faz_nada() -> void:
+	_entrar_numa_recompensa()
+	var fora: DadosCarta = null
+	for carta in DIFICULDADE.cartas_de_recompensa:
+		if carta not in run.oferta:
+			fora = carta
+	var oferta_antes := run.oferta.duplicate()
+	var antes := _estado()
+	run.escolher_recompensa(fora)
+	assert_eq(_estado(), antes)
+	assert_eq(run.oferta, oferta_antes)
+
+
+func test_elite_vencida_abre_a_recompensa() -> void:
+	var achada: Array = []
+	for andar in range(3, run.mapa().total_de_andares):
+		if achada.is_empty():
+			achada = _casa_e_anterior(Casa.Tipo.ELITE, andar)
+	assert_false(achada.is_empty(), "todo mapa padrão tem uma elite do andar 3 em diante")
+	if achada.is_empty():
+		return
+	_posicionar(achada[1])
+	run.escolher_casa(achada[0])
+	run.terminar_luta(ResultadoLuta.new(true, 22, 0, 6))
+	assert_eq(run.etapa, Run.Etapa.RECOMPENSA)
+	assert_eq(run.vida_arthur, 22)
+	assert_eq(run.lutas_vencidas, 1)
+	assert_eq(run.oferta.size(), 3)
+	run.escolher_recompensa(run.oferta[0])
+	assert_eq(run.etapa, Run.Etapa.MAPA)
+	assert_eq(run.ato, 1)
+	assert_eq(run.casa_atual, achada[0])
+	assert_eq(run.baralho.size(), 14)
+
+
+func test_batalha_vencida_nao_abre_a_recompensa() -> void:
+	_entrar_numa_batalha_acima_do_andar_1()
+	run.terminar_luta(ResultadoLuta.new(true, 30, 0, 4))
+	assert_eq(run.etapa, Run.Etapa.MAPA)
+	assert_eq(run.oferta, [] as Array[DadosCarta])
+
+
+func test_carta_repetida_no_conjunto_conta_uma_vez() -> void:
+	run = Run.new(_dados_com_recompensas(["chama", "chama", "foco"] as Array[String]), SEMENTE)
+	_entrar_numa_recompensa()
+	assert_eq(run.oferta.size(), 2)
+	assert_eq(run.oferta.count(run.oferta[0]), 1)
+	assert_eq(DIFICULDADE.cartas_de_recompensa.size(), 14)
+
+
+func test_conjunto_de_2_cartas_da_oferta_de_2() -> void:
+	run = Run.new(_dados_com_recompensas(["guarda", "vital"] as Array[String]), SEMENTE)
+	_entrar_numa_recompensa()
+	assert_eq(run.oferta.size(), 2)
+
+
+func test_conjunto_vazio_da_oferta_vazia_e_volta_ao_mapa() -> void:
+	run = Run.new(_dados_com_recompensas([] as Array[String]), SEMENTE)
+	_entrar_numa_recompensa()
+	assert_eq(run.etapa, Run.Etapa.RECOMPENSA)
+	assert_eq(run.oferta, [] as Array[DadosCarta])
+	run.escolher_recompensa(null)
+	assert_eq(run.etapa, Run.Etapa.MAPA)
+	assert_eq(run.baralho, DIFICULDADE.baralho_inicial)
+
+
+func test_baralho_e_o_inicial_mais_as_escolhidas_na_ordem() -> void:
+	var escolhidas: Array[DadosCarta] = []
+	for vez in 3:
+		run.etapa = Run.Etapa.RECOMPENSA
+		run.oferta = [DIFICULDADE.cartas_de_recompensa[vez * 2], DIFICULDADE.cartas_de_recompensa[vez * 2 + 1]]
+		run.escolher_recompensa(run.oferta[1])
+		escolhidas.append(DIFICULDADE.cartas_de_recompensa[vez * 2 + 1])
+	var esperado := DIFICULDADE.baralho_inicial.duplicate()
+	esperado.append_array(escolhidas)
+	assert_eq(run.baralho, esperado)
+
+
+func test_mesma_semente_da_as_mesmas_ofertas() -> void:
+	_entrar_numa_recompensa()
+	var oferta := run.oferta.duplicate()
+	run = Run.new(DIFICULDADE, SEMENTE)
+	_entrar_numa_recompensa()
+	assert_eq(run.oferta, oferta)
+
+
+func test_escolher_recompensa_fora_da_recompensa_nao_faz_nada() -> void:
+	run.escolher_recompensa(DIFICULDADE.cartas_de_recompensa[0])
+	assert_eq(run.etapa, Run.Etapa.MAPA)
+	assert_eq(run.baralho, DIFICULDADE.baralho_inicial)
+
+
+func test_escolher_recompensa_depois_da_derrota_nao_faz_nada() -> void:
+	run.escolher_casa(run.mapa().casas_do_andar(1)[0])
+	run.terminar_luta(ResultadoLuta.new(false, 0, 5, 4))
+	var antes := _estado()
+	run.escolher_recompensa(null)
+	run.escolher_recompensa(DIFICULDADE.cartas_de_recompensa[0])
+	assert_eq(_estado(), antes)
