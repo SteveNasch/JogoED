@@ -50,11 +50,12 @@ Pelo editor: abra o projeto, painel **GUT** na parte de baixo, botão **Run All*
 ## Abrir o jogo
 
 ```bash
-godot --path .
+godot --path . luta_avulsa/luta_avulsa.tscn
 ```
 
-Ou, pelo editor, F5. A cena principal é `luta_avulsa/luta_avulsa.tscn`. A janela abre em
-1280×720 (o jogo em 640×360 ampliado 2×).
+Ou, pelo editor, abra `luta_avulsa/luta_avulsa.tscn` e aperte F6 (roda a cena aberta). Desde a
+002, o F5 abre a cena principal do projeto, que é o mapa da run (`run/tela_run.tscn`), e não
+mais a luta solta. A janela abre em 1280×720 (o jogo em 640×360 ampliado 2×).
 
 ## Cenários de validação
 

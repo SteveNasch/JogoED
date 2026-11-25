@@ -1,7 +1,7 @@
 extends Control
-## A luta solta da 001 e cena principal do projeto (na 002, o mapa entra no lugar). Entrega à
-## tela da luta os dados de dados/, mostra o fim de luta e recomeça do zero com semente nova
-## (FR-026, FR-027).
+## A luta solta da 001, hoje cena de teste da luta: abre no editor com F6 (o F5 abre a run da
+## 002). Entrega à tela da luta os dados de dados/, mostra o fim de luta e recomeça do zero com
+## semente nova (FR-026, FR-027).
 
 const CENA_TELA: PackedScene = preload("res://batalha/tela_batalha.tscn")
 
