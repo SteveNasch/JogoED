@@ -139,3 +139,75 @@ func test_continuar_volta_ao_mapa_com_a_vida_nova_e_a_casa_visitada() -> void:
 	for outra in _run().mapa().casas:
 		assert_eq(_no_da_casa(outra).disabled, outra not in casa.ligacoes)
 	await wait_process_frames(1)
+
+
+# --- História 2: derrota e recomeço ---
+
+## Pula a rodada e espera o fim da luta (com 1 de vida, o ataque do inimigo derruba o Arthur).
+func _perder_pelo_pular() -> void:
+	var luta := _luta()
+	(luta.get_node("%Pular") as Button).pressed.emit()
+	await wait_for_signal(luta.luta_terminou, 1.0)
+
+
+func _botao_da_cena_aberta() -> Button:
+	return _cenas_de_etapa()[0].get_node("%Botao")
+
+
+func test_perder_mostra_o_fim_da_run_sem_o_aviso_de_vitoria() -> void:
+	_run().vida_arthur = 1
+	_clicar_na_batalha_do_andar_1()
+	await _perder_pelo_pular()
+	assert_eq(_run().etapa, Run.Etapa.DERROTA)
+	var abertas := _cenas_de_etapa()
+	assert_eq(abertas.size(), 1, "só o fim de run, sem a luta nem o aviso de vitória")
+	if abertas.size() != 1:
+		return
+	assert_eq(abertas[0].get_node("%Titulo").text, "Fim da run")
+	assert_eq(abertas[0].get_node("%Onde").text, "Arthur caiu no ato 1 (Calabouço), andar 1.")
+	assert_eq(abertas[0].get_node("%Lutas").text, "Lutas vencidas: 0")
+	assert_false(_tela.get_node("%Mapa").visible)
+	assert_false(_tela.get_node("%Barra").visible)
+
+
+func test_comecar_de_novo_cria_uma_run_nova_no_ato_1() -> void:
+	var antiga := _run()
+	antiga.baralho.append(preload("res://dados/cartas/chama.tres"))
+	antiga.vida_arthur = 1
+	_clicar_na_batalha_do_andar_1()
+	await _perder_pelo_pular()
+	_botao_da_cena_aberta().pressed.emit()
+	assert_eq(_cenas_de_etapa(), [] as Array[Node], "nenhuma cena de etapa ficou na árvore")
+	assert_ne(_run(), antiga, "a run é outro objeto")
+	assert_ne(_run().semente, antiga.semente)
+	assert_eq(_run().etapa, Run.Etapa.MAPA)
+	assert_eq(_texto("Ato"), "Ato 1: Calabouço")
+	assert_eq(_texto("Vida"), "Vida 40/40")
+	assert_eq(_texto("Baralho"), "Baralho: 13 cartas")
+	assert_true(_tela.get_node("%Mapa").visible)
+	for casa in _run().mapa().casas:
+		assert_eq(_no_da_casa(casa).disabled, casa.andar != 1)
+	await wait_process_frames(1)
+
+
+# --- História 4, cenário 4: vitória da run ---
+
+func test_vencer_o_chefe_da_torre_mostra_o_aviso_e_depois_a_vitoria_da_run() -> void:
+	_run().ato = 3
+	var mapa := _run().mapa()
+	_run().casa_atual = mapa.casas_do_andar(mapa.total_de_andares - 1)[0]
+	_run().lutas_vencidas = 13
+	_tela.get_node("%Mapa").casa_escolhida.emit(mapa.casas_do_andar(mapa.total_de_andares)[0])
+	_luta().batalha.inimigo.vida = 1
+	await _vencer(20)
+	assert_eq(_run().etapa, Run.Etapa.VITORIA)
+	assert_eq(_cenas_de_etapa()[0].get_node("%LinhaVida").text, "Vida do Arthur: 20/40")
+	_botao_da_cena_aberta().pressed.emit()
+	var abertas := _cenas_de_etapa()
+	assert_eq(abertas.size(), 1)
+	if abertas.size() != 1:
+		return
+	assert_eq(abertas[0].get_node("%Titulo").text, "Vitória!")
+	assert_eq(abertas[0].get_node("%Onde").text, "Arthur venceu o chefe do ato 3 (Torre), andar 5.")
+	assert_eq(abertas[0].get_node("%Lutas").text, "Lutas vencidas: 14")
+	await wait_process_frames(1)

@@ -5,6 +5,7 @@ extends Control
 
 const CENA_LUTA: PackedScene = preload("res://batalha/tela_batalha.tscn")
 const CENA_VITORIA: PackedScene = preload("res://run/vitoria_luta.tscn")
+const CENA_FIM: PackedScene = preload("res://run/fim_de_run.tscn")
 
 ## O arquivo de dificuldade (no editor: dados/dificuldade.tres). Nos testes, trocado antes de pôr
 ## a cena na árvore.
@@ -22,6 +23,11 @@ var run: Run
 
 func _ready() -> void:
 	_mapa.casa_escolhida.connect(_ao_escolher_casa)
+	_comecar_run()
+
+
+## Run nova com semente nova (FR-001, FR-006); é a única chamada solta de randi() da 002.
+func _comecar_run() -> void:
 	run = Run.new(dificuldade, randi())
 	_mostrar_mapa()
 
@@ -49,6 +55,8 @@ func _abrir_etapa() -> void:
 			_abrir_luta()
 		Run.Etapa.CHEFE:
 			_abrir_chefe()
+		Run.Etapa.VITORIA, Run.Etapa.DERROTA:
+			_abrir_fim()
 
 
 func _abrir_luta() -> void:
@@ -65,15 +73,30 @@ func _abrir_chefe() -> void:
 func _ao_terminar_luta(resultado: ResultadoLuta, luta: TelaBatalha) -> void:
 	_fechar(luta)
 	run.terminar_luta(resultado)
-	if resultado.venceu:
-		var vitoria := _abrir(CENA_VITORIA)
-		vitoria.continuou.connect(_ao_continuar.bind(vitoria))
-		vitoria.mostrar(run.vida_arthur, run.vida_maxima)
+	if not resultado.venceu:
+		_abrir_etapa()
+		return
+	var vitoria := _abrir(CENA_VITORIA)
+	vitoria.continuou.connect(_ao_continuar.bind(vitoria))
+	vitoria.mostrar(run.vida_arthur, run.vida_maxima)
 
 
-func _ao_continuar(vitoria: Control) -> void:
-	_fechar(vitoria)
+## Fecha a cena e abre a etapa em que a Run já está.
+func _ao_continuar(cena: Control) -> void:
+	_fechar(cena)
 	_abrir_etapa()
+
+
+## Fim da run por vitória ou derrota (FR-024); "Começar de novo" cria outra run (SC-006).
+func _abrir_fim() -> void:
+	var fim := _abrir(CENA_FIM)
+	fim.jogar_de_novo.connect(_ao_jogar_de_novo.bind(fim))
+	fim.mostrar(run)
+
+
+func _ao_jogar_de_novo(fim: Control) -> void:
+	_fechar(fim)
+	_comecar_run()
 
 
 ## Esconde a barra e o mapa e põe a cena da etapa por cima (o mapa não recebe clique).
