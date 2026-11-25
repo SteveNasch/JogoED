@@ -69,19 +69,35 @@ func casas_disponiveis() -> Array[Casa]:
 func escolher_casa(casa: Casa) -> bool:
 	if casa not in casas_disponiveis():
 		return false
-	var etapa_nova: Etapa
-	match casa.tipo:
-		Casa.Tipo.BATALHA, Casa.Tipo.ELITE:
-			etapa_nova = Etapa.LUTA
-		Casa.Tipo.CHEFE:
-			etapa_nova = Etapa.CHEFE
-		_:
-			return false
+	if casa.tipo == Casa.Tipo.RECOMPENSA:
+		return false
 	casa_atual = casa
 	casa.visitada = true
-	semente_da_luta = _rng.randi()
-	etapa = etapa_nova
+	match casa.tipo:
+		Casa.Tipo.BATALHA, Casa.Tipo.ELITE:
+			semente_da_luta = _rng.randi()
+			etapa = Etapa.LUTA
+		Casa.Tipo.CHEFE:
+			semente_da_luta = _rng.randi()
+			etapa = Etapa.CHEFE
+		Casa.Tipo.DESCANSO:
+			_descansar()
+			etapa = Etapa.DESCANSO
 	return true
+
+
+## Cura uma porcentagem da vida máxima, sem passar dela (FR-020), e guarda quanto curou de fato.
+func _descansar() -> void:
+	var vida_curada := mini(vida_maxima, vida_arthur + floori(vida_maxima * dificuldade.cura_do_descanso / 100.0))
+	cura = vida_curada - vida_arthur
+	vida_arthur = vida_curada
+
+
+## Volta do descanso para o mapa. Só vale na etapa DESCANSO.
+func sair_do_descanso() -> void:
+	if etapa != Etapa.DESCANSO:
+		return
+	etapa = Etapa.MAPA
 
 
 ## O inimigo da casa atual, pelo ato e pelo andar dela (research D7).

@@ -263,13 +263,12 @@ func test_subida_do_andar_1_ao_4_por_batalhas_mantem_o_caminho() -> void:
 
 ## Entra numa batalha do ato atual, do andar 2 em diante, a partir de uma casa ligada a ela.
 func _entrar_numa_batalha_acima_do_andar_1() -> Casa:
-	for andar in range(2, run.mapa().total_de_andares):
-		var achada := _casa_e_anterior(Casa.Tipo.BATALHA, andar)
-		if not achada.is_empty():
-			_posicionar(achada[1])
-			assert_true(run.escolher_casa(achada[0]))
-			return achada[0]
-	return null
+	var achada := _casa_acima_do_andar_1(Casa.Tipo.BATALHA)
+	if achada.is_empty():
+		return null
+	_posicionar(achada[1])
+	assert_true(run.escolher_casa(achada[0]))
+	return achada[0]
 
 
 func test_derrota_no_ato_2_acaba_a_run_com_o_resumo() -> void:
@@ -339,3 +338,85 @@ func test_depois_da_derrota_nenhum_metodo_muda_nada() -> void:
 	run.terminar_luta(ResultadoLuta.new(true, 30, 0, 2))
 	assert_eq(_estado(), antes)
 	assert_eq(run.lutas_vencidas, 0)
+
+
+# --- História 3: descanso ---
+
+## Uma casa do tipo pedido do andar 2 em diante e a casa anterior ligada a ela, ou [].
+func _casa_acima_do_andar_1(tipo: Casa.Tipo) -> Array:
+	for andar in range(2, run.mapa().total_de_andares):
+		var achada := _casa_e_anterior(tipo, andar)
+		if not achada.is_empty():
+			return achada
+	return []
+
+
+## Põe o Arthur com `vida` na casa antes de um descanso e entra nele. Devolve o descanso.
+func _descansar_com(vida: int) -> Casa:
+	var achada := _casa_acima_do_andar_1(Casa.Tipo.DESCANSO)
+	assert_false(achada.is_empty(), "todo mapa padrão tem descanso")
+	if achada.is_empty():
+		return null
+	_posicionar(achada[1])
+	run.vida_arthur = vida
+	assert_true(run.escolher_casa(achada[0]))
+	return achada[0]
+
+
+func test_descanso_com_20_cura_12_e_fica_com_32() -> void:
+	var descanso := _descansar_com(20)
+	assert_eq(run.etapa, Run.Etapa.DESCANSO)
+	assert_eq(run.casa_atual, descanso)
+	assert_true(descanso.visitada)
+	assert_eq(run.vida_arthur, 32)
+	assert_eq(run.cura, 12)
+	assert_eq(run.casas_disponiveis(), [] as Array[Casa])
+	run.sair_do_descanso()
+	assert_eq(run.etapa, Run.Etapa.MAPA)
+	assert_eq(run.vida_arthur, 32)
+	assert_eq(run.casas_disponiveis(), descanso.ligacoes)
+
+
+func test_descanso_com_35_nao_passa_da_maxima_e_cura_5() -> void:
+	_descansar_com(35)
+	assert_eq(run.vida_arthur, 40)
+	assert_eq(run.cura, 5)
+
+
+func test_descanso_com_vida_cheia_cura_0() -> void:
+	_descansar_com(40)
+	assert_eq(run.vida_arthur, 40)
+	assert_eq(run.cura, 0)
+
+
+func test_descanso_nao_sorteia_luta() -> void:
+	var semente_antes := run.semente_da_luta
+	_descansar_com(20)
+	assert_eq(run.semente_da_luta, semente_antes)
+	assert_null(run.inimigo_da_luta())
+
+
+func test_cura_vem_do_arquivo_de_dificuldade_sem_mudar_o_carregado() -> void:
+	var copia := DIFICULDADE.duplicate(true) as DadosDificuldade
+	copia.cura_do_descanso = 50
+	run = Run.new(copia, SEMENTE)
+	_descansar_com(20)
+	assert_eq(run.cura, 20)
+	assert_eq(run.vida_arthur, 40)
+	assert_eq(DIFICULDADE.cura_do_descanso, 30)
+
+
+func test_sair_do_descanso_fora_do_descanso_nao_faz_nada() -> void:
+	run.sair_do_descanso()
+	assert_eq(run.etapa, Run.Etapa.MAPA)
+	run.escolher_casa(run.mapa().casas_do_andar(1)[0])
+	run.sair_do_descanso()
+	assert_eq(run.etapa, Run.Etapa.LUTA)
+
+
+func test_sair_do_descanso_depois_da_derrota_nao_faz_nada() -> void:
+	run.escolher_casa(run.mapa().casas_do_andar(1)[0])
+	run.terminar_luta(ResultadoLuta.new(false, 0, 5, 4))
+	var antes := _estado()
+	run.sair_do_descanso()
+	assert_eq(_estado(), antes)
