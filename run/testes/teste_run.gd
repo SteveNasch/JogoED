@@ -553,6 +553,8 @@ func test_conjunto_vazio_da_oferta_vazia_e_volta_ao_mapa() -> void:
 func test_baralho_e_o_inicial_mais_as_escolhidas_na_ordem() -> void:
 	var escolhidas: Array[DadosCarta] = []
 	for vez in 3:
+		# Recompensa montada à mão numa casa do andar 1 (a Run só chega à recompensa por uma casa).
+		_posicionar(run.mapa().casas_do_andar(1)[0])
 		run.etapa = Run.Etapa.RECOMPENSA
 		run.oferta = [DIFICULDADE.cartas_de_recompensa[vez * 2], DIFICULDADE.cartas_de_recompensa[vez * 2 + 1]]
 		run.escolher_recompensa(run.oferta[1])
@@ -583,3 +585,147 @@ func test_escolher_recompensa_depois_da_derrota_nao_faz_nada() -> void:
 	run.escolher_recompensa(null)
 	run.escolher_recompensa(DIFICULDADE.cartas_de_recompensa[0])
 	assert_eq(_estado(), antes)
+
+
+# --- História 4: chefe, troca de ato e vitória ---
+
+## Põe o Arthur no último andar comum do ato atual, entra no chefe e vence com `vida`.
+func _vencer_o_chefe(vida: int) -> void:
+	var total := run.mapa().total_de_andares
+	_posicionar(run.mapa().casas_do_andar(total - 1)[0])
+	assert_true(run.escolher_casa(run.mapa().casas_do_andar(total)[0]))
+	assert_eq(run.etapa, Run.Etapa.CHEFE)
+	run.terminar_luta(ResultadoLuta.new(true, vida, 0, 8))
+
+
+func test_chefe_do_ato_1_vencido_abre_a_recompensa_e_depois_o_ato_2() -> void:
+	run.baralho.append(load("res://dados/cartas/chama.tres"))
+	run.baralho.append(load("res://dados/cartas/foco.tres"))
+	_vencer_o_chefe(18)
+	assert_eq(run.etapa, Run.Etapa.RECOMPENSA)
+	assert_eq(run.oferta.size(), 3)
+	assert_eq(run.ato, 1)
+	run.escolher_recompensa(null)
+	assert_eq(run.etapa, Run.Etapa.MAPA)
+	assert_eq(run.ato, 2)
+	assert_eq(run.dados_do_ato().nome, "Salões")
+	assert_eq(run.mapa(), run.mapas[1])
+	assert_eq(run.vida_arthur, 18)
+	assert_eq(run.baralho.size(), 15)
+	assert_null(run.casa_atual)
+	assert_eq(run.andar_alcancado(), 0)
+	assert_eq(run.casas_disponiveis(), run.mapas[1].casas_do_andar(1))
+	assert_false(run.mapas[1].casas.any(func(casa: Casa) -> bool: return casa.visitada))
+
+
+func test_carta_escolhida_no_chefe_vai_para_o_ato_seguinte() -> void:
+	_vencer_o_chefe(18)
+	var carta: DadosCarta = run.oferta[2]
+	run.escolher_recompensa(carta)
+	assert_eq(run.ato, 2)
+	assert_eq(run.baralho.size(), 14)
+	assert_eq(run.baralho.back(), carta)
+
+
+func test_batalha_do_andar_1_do_ato_3_e_mais_forte_que_a_do_ato_1() -> void:
+	run.escolher_casa(run.mapa().casas_do_andar(1)[0])
+	var inimigo_1 := run.inimigo_da_luta()
+	var regras_1 := run.regras_da_luta()
+	var torre := Run.new(DIFICULDADE, SEMENTE)
+	torre.ato = 3
+	assert_true(torre.escolher_casa(torre.mapa().casas_do_andar(1)[0]))
+	var inimigo_3 := torre.inimigo_da_luta()
+	var regras_3 := torre.regras_da_luta()
+	assert_eq(torre.dados_do_ato().nome, "Torre")
+	assert_gt(regras_3.alvo_minimo, regras_1.alvo_minimo)
+	assert_gt(regras_3.alvo_maximo, regras_1.alvo_maximo)
+	assert_gt(inimigo_3.vida, inimigo_1.vida)
+	assert_gt(inimigo_3.ataque, inimigo_1.ataque)
+
+
+func test_vida_do_comum_vem_do_arquivo_de_dificuldade() -> void:
+	var copia := DIFICULDADE.duplicate(true) as DadosDificuldade
+	copia.atos[0].comum.vida = 20
+	run = Run.new(copia, SEMENTE)
+	run.escolher_casa(run.mapa().casas_do_andar(1)[0])
+	assert_eq(run.inimigo_da_luta().vida, 20)
+	assert_eq(DIFICULDADE.atos[0].comum.vida, 12)
+
+
+func test_chefe_do_ato_3_vencido_vence_a_run() -> void:
+	run.ato = 3
+	run.lutas_vencidas = 14
+	var total := run.mapa().total_de_andares
+	_posicionar(run.mapa().casas_do_andar(total - 1)[0])
+	run.escolher_casa(run.mapa().casas_do_andar(total)[0])
+	var chefe := run.inimigo_da_luta()
+	assert_eq([chefe.nome, chefe.vida, chefe.ataque], ["Chefe da torre", 46, 7])
+	run.terminar_luta(ResultadoLuta.new(true, 9, 0, 12))
+	assert_true(run.ultimo_ato())
+	assert_eq(run.etapa, Run.Etapa.VITORIA)
+	assert_eq(run.oferta, [] as Array[DadosCarta])
+	assert_eq(run.vida_arthur, 9)
+	assert_eq(run.lutas_vencidas, 15)
+	assert_eq(run.ato, 3)
+	assert_eq(run.andar_alcancado(), 5)
+
+
+func test_depois_da_vitoria_nenhum_metodo_muda_nada() -> void:
+	run.ato = 3
+	_vencer_o_chefe(9)
+	var antes := _estado()
+	for casa in run.mapa().casas:
+		assert_false(run.escolher_casa(casa))
+	run.terminar_luta(ResultadoLuta.new(false, 0, 5, 4))
+	run.escolher_recompensa(null)
+	run.escolher_recompensa(DIFICULDADE.cartas_de_recompensa[0])
+	run.sair_do_descanso()
+	assert_eq(_estado(), antes)
+	assert_eq(run.oferta, [] as Array[DadosCarta])
+
+
+func test_chefe_de_cada_ato_e_o_chefe_dos_dados() -> void:
+	for ato in range(1, 4):
+		run = Run.new(DIFICULDADE, SEMENTE)
+		run.ato = ato
+		var total := run.mapa().total_de_andares
+		_posicionar(run.mapa().casas_do_andar(total - 1)[0])
+		run.escolher_casa(run.mapa().casas_do_andar(total)[0])
+		var chefe := run.inimigo_da_luta()
+		var dados := DIFICULDADE.atos[ato - 1].chefe
+		assert_eq([chefe.nome, chefe.vida, chefe.ataque], [dados.nome, dados.vida, dados.ataque], "ato %d" % ato)
+
+
+# --- SC-002: mesma semente e mesmas chamadas, mesma run ---
+
+## Joga a run do ato 1 até o fim sempre com as mesmas escolhas (a última casa disponível, a
+## primeira carta da oferta, toda luta vencida perdendo 1 de vida) e devolve o que foi sorteado.
+func _jogar_sempre_igual(alvo: Run) -> Array:
+	var sorteado: Array = [_descricao_dos_mapas(alvo)]
+	var vida := alvo.vida_maxima
+	while alvo.etapa not in [Run.Etapa.VITORIA, Run.Etapa.DERROTA]:
+		match alvo.etapa:
+			Run.Etapa.MAPA:
+				alvo.escolher_casa(alvo.casas_disponiveis().back())
+			Run.Etapa.LUTA, Run.Etapa.CHEFE:
+				sorteado.append(alvo.semente_da_luta)
+				vida = maxi(1, alvo.vida_arthur - 1)
+				alvo.terminar_luta(ResultadoLuta.new(true, vida, 0, 5))
+			Run.Etapa.DESCANSO:
+				sorteado.append(alvo.cura)
+				alvo.sair_do_descanso()
+			Run.Etapa.RECOMPENSA:
+				sorteado.append(alvo.oferta.duplicate())
+				alvo.escolher_recompensa(alvo.oferta[0] if not alvo.oferta.is_empty() else null)
+	sorteado.append(alvo.baralho.duplicate())
+	return sorteado
+
+
+func test_mesma_semente_e_mesmas_chamadas_dao_a_mesma_run_ate_a_vitoria() -> void:
+	var primeira := Run.new(DIFICULDADE, SEMENTE)
+	var segunda := Run.new(DIFICULDADE, SEMENTE)
+	var sorteado := _jogar_sempre_igual(primeira)
+	assert_eq(primeira.etapa, Run.Etapa.VITORIA)
+	assert_eq(primeira.ato, 3)
+	assert_eq(_jogar_sempre_igual(segunda), sorteado)
+	assert_ne(_jogar_sempre_igual(Run.new(DIFICULDADE, SEMENTE + 1)), sorteado)

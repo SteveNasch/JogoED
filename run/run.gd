@@ -113,8 +113,9 @@ func _abrir_recompensa() -> void:
 	etapa = Etapa.RECOMPENSA
 
 
-## Põe a carta escolhida no fim do baralho (null = não pegar nenhuma) e volta ao mapa. Só vale
-## na etapa RECOMPENSA, com uma carta da oferta ou null.
+## Põe a carta escolhida no fim do baralho (null = não pegar nenhuma) e volta ao mapa; depois
+## do chefe, já no ato seguinte, antes do primeiro andar (FR-023). Só vale na etapa RECOMPENSA,
+## com uma carta da oferta ou null.
 func escolher_recompensa(carta: DadosCarta) -> void:
 	if etapa != Etapa.RECOMPENSA:
 		return
@@ -123,6 +124,9 @@ func escolher_recompensa(carta: DadosCarta) -> void:
 	if carta != null:
 		baralho.append(carta)
 	oferta = []
+	if casa_atual.tipo == Casa.Tipo.CHEFE:
+		ato += 1
+		casa_atual = null
 	etapa = Etapa.MAPA
 
 
@@ -156,7 +160,10 @@ func terminar_luta(resultado: ResultadoLuta) -> void:
 		return
 	vida_arthur = resultado.vida_arthur
 	lutas_vencidas += 1
-	if casa_atual.tipo == Casa.Tipo.ELITE:
-		_abrir_recompensa()
-	else:
-		etapa = Etapa.MAPA
+	match casa_atual.tipo:
+		Casa.Tipo.CHEFE when ultimo_ato():
+			etapa = Etapa.VITORIA
+		Casa.Tipo.ELITE, Casa.Tipo.CHEFE:
+			_abrir_recompensa()
+		_:
+			etapa = Etapa.MAPA
