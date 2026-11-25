@@ -6,24 +6,63 @@ prontos para colar. A visão do jogo e os prompts do `specify` ficam em
 
 Escrito em 13/11/2026, com a 001 implementada (falta só o T035).
 
-## Calendário
+## Ordem das sessões (replanejada em 25/11)
 
-Replanejado em 17/11: a 001 não fechou até 17/11 e de 23 a 27/11 não sobra hora livre (provas,
-aulas, trabalho e apresentações). Por isso a 004 e a 005 viraram uma funcionalidade só, e a 003
-ficou enxuta (chefes dos atos 1 e 2 como elites reforçadas; prova com até 3 questões). Os blocos
-estão na agenda como "JOGOED" em 20, 22, 28 e 29/11.
+Em 25/11 a 002 estava pela metade (T001 a T013 e T020 a T023 e T027 feitos) e a 003 e a 004
+não tinham começado. Para caber até a entrega (30/11), três cortes, decididos por ele em 25/11:
 
-| Data | Meta |
-|---|---|
-| sex 20/11 (feriado) | 001 fechada (T035 jogado, converge sem pendência) e 002 Run e mapa |
-| dom 22/11, manhã | 003 Chefes e a prova: specify, clarify, plan e tasks |
-| 23 a 27/11 | Sem hora livre |
-| sáb 28/11, tarde | 003 implement; 004 Telas, história e tutorial: specify, clarify, plan e tasks |
-| dom 29/11 | 004 implement; trocar placeholders pela arte, corrigir, exportar e ensaiar |
-| seg 30/11 | Entrega |
+- **Um converge só para a 001 e a 002**, no fim da 002 (a 001 nunca passou pelo converge, mas
+  já tinha 194 testes passando e o T035 jogado).
+- **Um analyze só** por funcionalidade (antes eram dois). A correção dele continua na mesma
+  sessão.
+- **Regras da prova já decididas** (3 questões; ver "Pontos em aberto" da visão), por isso o
+  clarify da 003 deve ser curto.
 
-Se uma funcionalidade atrasar mais de um dia, corte escopo na próxima (por exemplo, menos
-regras de questão na prova) em vez de empurrar todas.
+Siga a lista em ordem, uma sessão nova (`/clear`) por linha, com o modelo e o esforço da
+tabela "Modelo e esforço por etapa". Cada sessão termina com commit; confira com o Passo 7
+antes de passar para a seguinte.
+
+| # | Sessão | O que colar |
+|---|---|---|
+| 1 | 002, implement da fase 3 (T014 a T019) | Prompt "002, retomada 1" abaixo |
+| 2 | 002, implement das fases 4 a 6 (T024 a T034) | Prompt "002, retomada 2" abaixo |
+| 3 | 002, jogar (você, sem o Claude) | T035: cenários do `specs/002-run-e-mapa/quickstart.md` |
+| 4 | Converge da 001 e da 002 | Prompt "Converge duplo" abaixo |
+| 5 | 003, specify | Prompt da 003 em [visao-do-jogo.md](visao-do-jogo.md) |
+| 6 | 003, clarify | `/speckit-clarify` (Passo 2) |
+| 7 | 003, plan | Prompt da 003 na Parte 3 |
+| 8 | 003, tasks | Prompt do Passo 4 |
+| 9 | 003, analyze e correção | Passo 5, uma vez só |
+| 10 | 003, implement A, B e C | Passo 6 (três sessões) e jogar depois da B |
+| 11 | 003, jogar e converge | Passo 8 |
+| 12 | 004, specify até analyze | Sessões 5 a 9 com os prompts da 004 |
+| 13 | 004, implement A, B e C | Passo 6 |
+| 14 | 004, jogar e converge | Passo 8 |
+| 15 | Arte, exportação e ensaio | Parte 4 |
+
+Prompt "002, retomada 1" (Opus `high`):
+
+```text
+/speckit-implement Retome a 002 a partir do T014 e execute só a fase 3 do tasks.md (T014 a T019), até o checkpoint dela. As tarefas já marcadas com [X] estão feitas: não refaça. A 001 não passou pelo converge, e isso foi aceito em 25/11 (o converge da 001 e da 002 será um só, no fim da 002). Uma tarefa por commit, com a suíte inteira do GUT passando antes de cada commit. Marque cada tarefa como [X] no tasks.md no mesmo commit. Se um teste falhar e a correção exigir mudar a spec, o plan ou um contrato, pare e me pergunte. Ao terminar, mostre o resultado da suíte e pare no checkpoint.
+```
+
+Prompt "002, retomada 2" (Opus `high`):
+
+```text
+/speckit-implement Execute as fases restantes do tasks.md da 002 (T024 a T034), na ordem das dependências. As tarefas já marcadas com [X] estão feitas: não refaça. Uma tarefa por commit, com a suíte inteira do GUT passando antes de cada commit. Marque cada tarefa como [X] no tasks.md no mesmo commit. Se um teste falhar e a correção exigir mudar a spec, o plan ou um contrato, pare e me pergunte. No T034, faça a parte que o agente consegue fazer; o T035 fica para a equipe.
+```
+
+Prompt "Converge duplo" (Opus `high`):
+
+```text
+/speckit-converge Confira a 002 (specs/002-run-e-mapa) e também a 001 (specs/001-nucleo-batalha), que nunca passou pelo converge. Para cada uma, acrescente as tarefas que faltarem no tasks.md dela.
+```
+
+Se o converge acrescentar tarefas: `/speckit-implement Execute só as tarefas novas que o converge acrescentou.`
+
+Se uma funcionalidade atrasar, corte escopo na próxima em vez de empurrar todas. Ordem de corte
+na 004: primeiro a explicação de cada símbolo, depois o tutorial; menu, abertura, final, pausa
+e créditos ficam.
 
 ## Regras gerais (valem para toda etapa)
 

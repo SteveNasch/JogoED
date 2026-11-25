@@ -10,7 +10,8 @@ As regras do projeto estão na constituição: `.specify/memory/constitution.md`
 ## Funcionalidade atual: 002, run e mapa
 
 - Plano: `specs/002-run-e-mapa/plan.md` (decisões em `research.md`, interfaces em `contracts/`).
-- Só começar a implementar com a 001 fechada (T035 jogado e converge sem pendência).
+- A 001 está com o T035 jogado (18/11). O converge dela foi adiado de propósito (decisão de
+  25/11): um converge só confere a 001 e a 002 juntas, no fim da 002. Pode implementar a 002.
 - A luta da 001 é usada só pela interface `TelaBatalha.iniciar(...)` e o sinal `luta_terminou`;
   nenhum script de jogo da 001 muda (o que muda fora das pastas novas está no research, D1).
 - A run (`run/run.gd`) é `RefCounted`, sem cena; a cena principal passa a ser `run/tela_run.tscn`.
